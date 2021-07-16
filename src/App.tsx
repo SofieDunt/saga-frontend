@@ -1,9 +1,9 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import "./App.css";
 import PlayerLibrary from "./pages/playerLibrary";
 import NavBar from "./components/navBar";
 import Home from "./pages/home";
+import PlayPage from "./pages/playPage";
 
 export enum Routes {
   HOME = "/",
@@ -18,24 +18,17 @@ export const ParameterizedRoutes = {
 
 function App() {
   return (
-      <div className="App">
-        <NavBar />
-        <Router>
-          <Switch>
-            <Route path={Routes.HOME} exact component={Home} />
-            <Route
-              path={Routes.PLAYER_LIBRARY}
-              exact
-              component={PlayerLibrary}
-            />
-            <Route
-              path={Routes.WRITER_LIBRARY}
-              exact
-              component={PlayerLibrary}
-            />
-          </Switch>
-        </Router>
-      </div>
+    <div className="App">
+      <NavBar />
+      <Router>
+        <Switch>
+          <Route path={Routes.HOME} exact component={Home} />
+          <Route path={Routes.PLAYER_LIBRARY} exact component={PlayerLibrary} />
+          <Route path={Routes.PLAY} exact component={PlayPage} />
+          <Route path={Routes.WRITER_LIBRARY} exact component={PlayerLibrary} />
+        </Switch>
+      </Router>
+    </div>
   );
 }
 

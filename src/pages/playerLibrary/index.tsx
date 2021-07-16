@@ -5,7 +5,7 @@ import { PageContainer } from "../../components/themeComponents";
 import LinkButton from "../../components/linkButton";
 import { ParameterizedRoutes } from "../../App";
 import styled from "@emotion/styled";
-import { BLACK, BLUE, LIGHT_BLUE, SOFT } from "../../themes";
+import { BLACK, BLUE, PURPLE, SOFT } from "../../themes";
 import Alert from "../../components/alert";
 import ExportForm from "../../forms/exportForm";
 import ImportForm from "../../forms/importForm";
@@ -15,7 +15,6 @@ const TitleBox = styled(Box)`
   text-align: left;
   font-size: 52px;
   font-weight: bold;
-  padding-left: 20px;
   margin-top: 30px;
   margin-bottom: 50px;
 `;
@@ -87,7 +86,9 @@ const PlayerLibrary: React.FC = () => {
   const onDelete = (name: string): void => {
     Client.removeStory(name)
       .then()
-      .catch((err) => triggerAlert("Could not delete: " + err.message, true));
+      .catch((err) =>
+        triggerAlert("Could not delete: " + err.data.response.message, true)
+      );
   };
 
   const triggerAlert = (message: string, warn?: boolean): void => {
@@ -122,7 +123,7 @@ const PlayerLibrary: React.FC = () => {
                         <Box mx={"auto"} />
                         <Button
                           onClick={() => onClickExport(title)}
-                          bg={LIGHT_BLUE}
+                          bg={PURPLE}
                         >
                           Export
                         </Button>

@@ -1,5 +1,5 @@
 import React from "react";
-import { Flex, Text, Box, Link } from "rebass";
+import { Flex, Box, Link } from "rebass";
 import { BLUE, WHITE } from "../../themes";
 import { Routes } from "../../App";
 import styled from "@emotion/styled";

@@ -2,13 +2,12 @@ import React from "react";
 import styled from "@emotion/styled";
 import { Box, Flex, Text } from "rebass";
 import { PageContainer } from "../../components/themeComponents";
-import { LIGHT_BLUE, BLUE } from "../../themes";
+import { PURPLE, BLUE } from "../../themes";
 import LinkButton from "../../components/linkButton";
 import { Routes } from "../../App";
 
 const HomePageContainer = styled.div`
   padding-left: 40px;
-  text-align: left;
 `;
 
 const TitleBox = styled(Box)`
@@ -54,7 +53,7 @@ const Home: React.FC = () => {
             <ButtonLabel>Play a story!</ButtonLabel>
           </LinkButton>
           <Box width={15} />
-          <LinkButton to={Routes.WRITER_LIBRARY} bg={LIGHT_BLUE}>
+          <LinkButton to={Routes.WRITER_LIBRARY} bg={PURPLE}>
             <ButtonLabel>Write a new masterpiece!</ButtonLabel>
           </LinkButton>
         </Flex>
