@@ -1,51 +1,21 @@
 import React, { useEffect, useState } from "react";
 import Client from "../../client/client";
 import { Box, Button, Flex, Text } from "rebass";
-import { PageContainer } from "../../components/themeComponents";
-import styled from "@emotion/styled";
-import { BLACK, BLUE, PURPLE, SOFT } from "../../themes";
+import {
+  BottomBox,
+  CardHeader,
+  EmptyLibrary,
+  PageContainer,
+  StoryCard,
+  TitleBox,
+} from "../../components/themeComponents";
+import { BLUE, PURPLE, SOFT } from "../../themes";
 import ExportForm from "../../forms/exportForm";
 import ImportForm from "../../forms/importForm";
 import PopupWindow from "../../components/popupWindow";
 import StoryPlayer from "../../components/storyPlayer";
 import { PageProps } from "../../App";
 import { ApplicationTypes, ErrorResponse } from "../../client/types";
-
-const TitleBox = styled(Box)`
-  text-align: left;
-  font-size: 52px;
-  font-weight: bold;
-  margin-top: 30px;
-  margin-bottom: 50px;
-`;
-
-const EmptyLibrary = styled(Box)`
-  text-align: center;
-  width: 100%;
-  font-size: 20px;
-  padding-top: 30px;
-`;
-
-const StoryCard = styled(Box)`
-  padding: 20px 20px;
-  width: 200px;
-  border: 2px solid ${BLACK};
-  border-radius: 5px;
-  margin-right: 20px;
-`;
-
-const CardHeader = styled(Text)`
-  font-size: 19px;
-  font-weight: bold;
-  padding-top: 5px;
-  padding-bottom: 15px;
-`;
-
-const BottomBox = styled(Box)`
-  position: absolute;
-  bottom: 50px;
-  right: 50px;
-`;
 
 const Player: React.FC<PageProps> = ({ message }) => {
   const [library, setLibrary] = useState<string[]>([]);

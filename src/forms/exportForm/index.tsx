@@ -2,18 +2,9 @@ import React, { useEffect, useState } from "react";
 import Client from "../../client/client";
 import { Button, Text } from "rebass";
 import { Checkbox, Input, Label } from "@rebass/forms";
-import styled from "@emotion/styled";
 import { BLUE, WARN } from "../../themes";
 import { ApplicationTypes, ErrorResponse } from "../../client/types";
-
-const FormContainer = styled.div`
-  width: 450px;
-  height: 200px;
-  color: black;
-  padding: 50px;
-  text-align: left;
-  line-height: 20px;
-`;
+import { FormContainer } from "../../components/themeComponents";
 
 interface ExportFormProps {
   readonly name: string;
@@ -67,36 +58,34 @@ const ExportForm: React.FC<ExportFormProps> = ({
   };
 
   return (
-    <>
-      <FormContainer>
-        <Text mb={20}>Exporting: {name}</Text>
-        <Label>Path to export to</Label>
-        <Input
-          name={"path"}
-          defaultValue={path}
-          placeholder={`${name}.txt`}
-          mb={20}
-          onChange={(e) => setPath(e.target.value)}
-        />
-        {exportStory && (
-          <Label mb={20}>
-            <Checkbox
-              id={"original"}
-              name={"original"}
-              onChange={() => setExportOriginal((prev) => !prev)}
-            />
-            Export With Saved Progress
-          </Label>
-        )}
-        <Button
-          bg={BLUE}
-          onClick={exportStory ? handleStoryExport : handleWorkExport}
-        >
-          Submit
-        </Button>
-        {errorVisible && <Text color={WARN}>{errorMessage}</Text>}
-      </FormContainer>
-    </>
+    <FormContainer>
+      <Text mb={20}>Exporting: {name}</Text>
+      <Label>Path to export to</Label>
+      <Input
+        name={"path"}
+        defaultValue={path}
+        placeholder={`${name}.txt`}
+        mb={20}
+        onChange={(e) => setPath(e.target.value)}
+      />
+      {exportStory && (
+        <Label mb={20}>
+          <Checkbox
+            id={"original"}
+            name={"original"}
+            onChange={() => setExportOriginal((prev) => !prev)}
+          />
+          Export With Saved Progress
+        </Label>
+      )}
+      <Button
+        bg={BLUE}
+        onClick={exportStory ? handleStoryExport : handleWorkExport}
+      >
+        Submit
+      </Button>
+      {errorVisible && <Text color={WARN}>{errorMessage}</Text>}
+    </FormContainer>
   );
 };
 

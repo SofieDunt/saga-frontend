@@ -2,18 +2,9 @@ import React, { useState } from "react";
 import Client from "../../client/client";
 import { Button, Text } from "rebass";
 import { Input, Label } from "@rebass/forms";
-import styled from "@emotion/styled";
-import { BLACK, BLUE, WARN } from "../../themes";
+import { BLUE, WARN } from "../../themes";
 import { ApplicationTypes, ErrorResponse } from "../../client/types";
-
-const FormContainer = styled.div`
-  width: 450px;
-  height: 200px;
-  color: ${BLACK};
-  padding: 50px;
-  text-align: left;
-  line-height: 20px;
-`;
+import { FormContainer } from "../../components/themeComponents";
 
 interface ImportFormProps {
   readonly onSuccess: () => void;
@@ -51,22 +42,20 @@ const ImportForm: React.FC<ImportFormProps> = ({ onSuccess, importType }) => {
   };
 
   return (
-    <>
-      <FormContainer>
-        <Text mb={20}>Import a story!</Text>
-        <Label>Path of story file:</Label>
-        <Input
-          name={"path"}
-          placeholder={`./your-story.txt`}
-          mb={20}
-          onChange={(e) => setImportPath(e.target.value)}
-        />
-        <Button bg={BLUE} onClick={handleImport}>
-          Submit
-        </Button>
-        {errorVisible && <Text color={WARN}>{errorMessage}</Text>}
-      </FormContainer>
-    </>
+    <FormContainer>
+      <Text mb={20}>Import a story!</Text>
+      <Label>Path of story file:</Label>
+      <Input
+        name={"path"}
+        placeholder={`./your-story.txt`}
+        mb={20}
+        onChange={(e) => setImportPath(e.target.value)}
+      />
+      <Button bg={BLUE} onClick={handleImport}>
+        Submit
+      </Button>
+      {errorVisible && <Text color={WARN}>{errorMessage}</Text>}
+    </FormContainer>
   );
 };
 
