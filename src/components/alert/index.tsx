@@ -4,13 +4,10 @@ import { Box, Button, Flex, Text } from "rebass";
 import { BLACK, WARN, WHITE } from "../../themes";
 
 const Banner = styled(Flex)`
-  position: absolute;
-  top: 20px;
-  left: 50%;
-  transform: translate(-50%, 0);
   border: 1px solid ${BLACK};
   border-radius: 20;
   padding: 5px 0 5px 15px;
+  margin-bottom: 10px;
 `;
 
 const CloseButton = styled(Button)`
@@ -18,10 +15,13 @@ const CloseButton = styled(Button)`
   background: 0;
 `;
 
-interface AlertProps {
+export interface AlertMessage {
   readonly visible: boolean;
   readonly message: string;
-  readonly warn?: boolean;
+  readonly warn: boolean;
+}
+
+interface AlertProps extends AlertMessage {
   readonly onClose: () => void;
 }
 

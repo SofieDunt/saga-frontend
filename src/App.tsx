@@ -3,7 +3,16 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Player from "./pages/player";
 import NavBar from "./components/navBar";
 import Home from "./pages/home";
-import Alert from "./components/alert";
+import Alert, { AlertMessage } from "./components/alert";
+import Writer from "./pages/writer";
+import styled from "@emotion/styled";
+import { Box } from "rebass";
+
+const Top = styled(Box)`
+  position: absolute;
+  top: 20px;
+  left: 50%;
+`;
 
 export enum Routes {
   HOME = "/",
@@ -21,19 +30,21 @@ export interface PageProps {
 }
 
 function App() {
-  // Alert
-  const [alertVisible, setAlertVisible] = useState(false);
-  const [alertMessage, setAlertMessage] = useState("");
-  const [alertWarn, setAlertWarn] = useState(false);
+  // Alerts
+  const [alerts, setAlerts] = useState<AlertMessage[]>([]);
 
   const triggerMessage = (message: string): void => {
-    setAlertMessage(message);
-    setAlertVisible(true);
+    setAlerts((prev) => [
+      ...prev,
+      { visible: true, message: message, warn: false },
+    ]);
   };
 
   const triggerAlert = (message: string): void => {
-    triggerAlert(message);
-    setAlertWarn(true);
+    setAlerts((prev) => [
+      ...prev,
+      { visible: true, message: message, warn: true },
+    ]);
   };
 
   const message: Messenger = {
@@ -41,23 +52,42 @@ function App() {
     triggerAlert,
   };
 
+  const deleteAlert = (i: number): void => {
+    const copyAlerts = [...alerts];
+    copyAlerts.splice(i, 1);
+    setAlerts(copyAlerts);
+  };
+
   return (
     <div className="App">
       <NavBar />
       <Router>
         <Switch>
-          <Route path={Routes.HOME} exact component={Home} />
-          <Route path={Routes.PLAYER_LIBRARY} exact component={Player} />
-          <Route path={Routes.WRITER_LIBRARY} exact component={Player} />
+          <Route path={Routes.HOME} exact>
+            <Home message={message} />
+          </Route>
+          <Route path={Routes.PLAYER_LIBRARY} exact>
+            <Player message={message} />
+          </Route>
+          <Route path={Routes.WRITER_LIBRARY} exact>
+            <Writer message={message} />
+          </Route>
         </Switch>
       </Router>
 
-      <Alert
-        visible={alertVisible}
-        message={alertMessage}
-        warn={alertWarn}
-        onClose={() => setAlertVisible(false)}
-      />
+      <Top>
+        {alerts.map((alert, i) => {
+          return (
+            <Alert
+              key={i}
+              visible={alert.visible}
+              message={alert.message}
+              warn={alert.warn}
+              onClose={() => deleteAlert(i)}
+            />
+          );
+        })}
+      </Top>
     </div>
   );
 }
