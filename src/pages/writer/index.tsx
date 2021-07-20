@@ -11,15 +11,15 @@ import { BLUE, PURPLE, SOFT } from "../../themes";
 import ExportForm from "../../forms/exportForm";
 import ImportForm from "../../forms/importForm";
 import PopupWindow from "../../components/popupWindow";
-import StoryPlayer from "../../components/storyPlayer";
 import { PageProps } from "../../App";
+import WorkEditor from "../../components/workEditor";
 import { ApplicationTypes, ErrorResponse } from "../../client/types";
 import BoxCard from "../../components/boxCard";
 
-const Player: React.FC<PageProps> = ({ message }) => {
+const Writer: React.FC<PageProps> = ({ message }) => {
   const [library, setLibrary] = useState<string[]>([]);
   const [manageLibrary, setManageLibrary] = useState(false);
-  const [currentStory, setCurrentStory] = useState<string>();
+  const [currentWork, setCurrentWork] = useState<string>();
   // Export Form
   const [exportVisible, setExportVisible] = useState(false);
   const [exportName, setExportName] = useState<string>();
@@ -27,17 +27,14 @@ const Player: React.FC<PageProps> = ({ message }) => {
   const [importVisible, setImportVisible] = useState(false);
 
   useEffect(() => {
-    Client.getAllStoryNames().then(
+    Client.getAllWorkNames().then(
       (res) => setLibrary(res),
       (err: ErrorResponse) => window.alert(err.message)
     );
   });
 
   const updateLibrary = (): void => {
-    Client.getAllStoryNames().then(
-      (res) => setLibrary(res),
-      message.errorAlert
-    );
+    Client.getAllWorkNames().then((res) => setLibrary(res), message.errorAlert);
   };
 
   const onClickExport = (name: string): void => {
@@ -56,31 +53,29 @@ const Player: React.FC<PageProps> = ({ message }) => {
   };
 
   const onDelete = (name: string): void => {
-    Client.removeStory(name).then(
-      () => {},
-      (err: ErrorResponse) =>
+    Client.removeWork(name)
+      .then()
+      .catch((err: ErrorResponse) =>
         message.triggerAlert("Could not delete: " + err.message)
-    );
+      );
   };
 
-  const loadStory = (name: string): void => {
-    Client.loadStory(name).then(
-      () => setCurrentStory(name),
-      message.errorAlert
-    );
+  const loadWork = (name: string): void => {
+    Client.loadWork(name)
+      .then(() => setCurrentWork(name))
+      .catch((err: ErrorResponse) => message.triggerAlert(err.message));
   };
 
-  const quitStory = (): void => {
-    Client.quitStory().then(
-      () => setCurrentStory(undefined),
-      message.errorAlert
-    );
+  const quitWork = (): void => {
+    Client.quitWork()
+      .then(() => setCurrentWork(undefined))
+      .catch((err: ErrorResponse) => message.triggerAlert(err.message));
   };
 
   return (
     <PageContainer>
       <TitleBox>
-        <Text>Play stories in your library!</Text>
+        <Text>Write your next story!</Text>
       </TitleBox>
       <Flex flexWrap={"wrap"}>
         {library.map((title) => {
@@ -91,8 +86,8 @@ const Player: React.FC<PageProps> = ({ message }) => {
                   case false:
                     return (
                       <Flex mb={"5px"}>
-                        <Button onClick={() => loadStory(title)} bg={BLUE}>
-                          Play
+                        <Button onClick={() => loadWork(title)} bg={BLUE}>
+                          Edit
                         </Button>
                         <Box mx={"auto"} />
                         <Button
@@ -117,8 +112,7 @@ const Player: React.FC<PageProps> = ({ message }) => {
         {library.length === 0 && (
           <EmptyLibrary>
             <Text>
-              You don't have any stories in your library. Import some by
-              clicking "Manage Library." Then click "Import!"
+              You don't have any works in your library. Create a new one!
             </Text>
           </EmptyLibrary>
         )}
@@ -147,14 +141,14 @@ const Player: React.FC<PageProps> = ({ message }) => {
           <ExportForm
             name={exportName}
             onSuccess={onExportSuccess}
-            exportType={ApplicationTypes.STORY}
+            exportType={ApplicationTypes.WORK}
           />
         </PopupWindow>
       )}
 
-      {currentStory && (
-        <PopupWindow visible={true} onClose={quitStory}>
-          <StoryPlayer storyName={currentStory} message={message} />
+      {currentWork && (
+        <PopupWindow visible={true} onClose={quitWork}>
+          <WorkEditor message={message} workName={currentWork} />
         </PopupWindow>
       )}
 
@@ -164,11 +158,11 @@ const Player: React.FC<PageProps> = ({ message }) => {
       >
         <ImportForm
           onSuccess={onImportSuccess}
-          importType={ApplicationTypes.STORY}
+          importType={ApplicationTypes.WORK}
         />
       </PopupWindow>
     </PageContainer>
   );
 };
 
-export default Player;
+export default Writer;

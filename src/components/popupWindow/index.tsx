@@ -24,8 +24,15 @@ const ViewWindow = styled.div`
 `;
 
 const CloseButton = styled(Button)`
-  padding: 0;
   background: ${WHITE};
+  position: absolute;
+  right: 0;
+`;
+
+const ButtonText = styled(Text)`
+  color: ${BLACK};
+  font-size: 25px;
+  padding: 5px;
 `;
 
 interface PopupWindowProps {
@@ -44,11 +51,9 @@ const PopupWindow: React.FC<PopupWindowProps> = ({
         <>
           <CloseBackground onClick={onClose} />
           <ViewWindow>
-            <Box textAlign={"right"}>
-              <CloseButton onClick={onClose}>
-                <Text color={BLACK}>X</Text>
-              </CloseButton>
-            </Box>
+            <CloseButton onClick={onClose}>
+              <ButtonText>X</ButtonText>
+            </CloseButton>
             {children}
           </ViewWindow>
         </>

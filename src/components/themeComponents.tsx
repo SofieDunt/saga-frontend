@@ -11,6 +11,7 @@ export const CurrentContainer = styled(Box)`
   width: 90vw;
   padding: 30px;
   overflow-y: auto;
+  overflow-x: hidden;
 `;
 
 export const StoryTitle = styled(Text)`
@@ -42,21 +43,6 @@ export const EmptyLibrary = styled(Box)`
   width: 100%;
   font-size: 20px;
   padding-top: 30px;
-`;
-
-export const StoryCard = styled(Box)`
-  padding: 20px 20px;
-  width: 200px;
-  border: 2px solid ${BLACK};
-  border-radius: 5px;
-  margin-right: 20px;
-`;
-
-export const CardHeader = styled(Text)`
-  font-size: 19px;
-  font-weight: bold;
-  padding-top: 5px;
-  padding-bottom: 15px;
 `;
 
 export const BottomBox = styled(Box)`
