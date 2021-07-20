@@ -19,16 +19,16 @@ const DecisionCard: React.FC<DecisionCardProps> = ({ decision }) => {
               <>
                 <Text>
                   Outcome if {decision.dependency} is below {decision.threshold}
-                  : Decision #{decision.outcome1Id}
+                  : Choice #{decision.outcome1Id}
                 </Text>
                 <Text>
                   Outcome if {decision.dependency} is above {decision.threshold}
-                  : Decision #{decision.outcome2Id}
+                  : Choice #{decision.outcome2Id}
                 </Text>
               </>
             );
           default:
-            return <Text>Outcome: Decision #{decision.outcome1Id}</Text>;
+            return <Text>Outcome: Choice #{decision.outcome1Id}</Text>;
         }
       })()}
       <Text>Consequences: </Text>

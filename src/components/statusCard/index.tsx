@@ -31,11 +31,7 @@ const StatusCard: React.FC<StatusCardProps> = ({
     <BoxCard title={status.name}>
       <Text>Initial Value: {status.value}</Text>
       {showUpdateForm && (
-        <AddStatusForm
-          updateName={status.name}
-          onSuccess={updateStory}
-          message={message}
-        />
+        <AddStatusForm updateName={status.name} onSuccess={updateStory} />
       )}
       <SoftButton
         onClick={toggleShowUpdateForm}

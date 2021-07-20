@@ -14,9 +14,9 @@ const ChoiceCard: React.FC<ChoiceCardProps> = ({ choice, decisions }) => {
       {choice.options.map((option) => {
         const decision: Decision = decisions[option.decision];
         return (
-          <Text key={option.id}>{`Option #${option.id}: ${
+          <Text key={option.id}>{`Option #${option.id} (D${option.decision}): ${
             decision.description
-          } => Decision #${decision.outcome1Id} ${
+          } => Choice #${decision.outcome1Id} ${
             decision.outcome2Id > -1 ? `or #${decision.outcome2Id}` : ""
           }`}</Text>
         );

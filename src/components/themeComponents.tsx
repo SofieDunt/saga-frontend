@@ -21,6 +21,10 @@ export const StoryTitle = styled(Text)`
   padding-bottom: 20px;
 `;
 
+export const StrongText = styled(Text)`
+  font-weight: bold;
+`;
+
 export const FormContainer = styled.div`
   width: 450px;
   height: 200px;

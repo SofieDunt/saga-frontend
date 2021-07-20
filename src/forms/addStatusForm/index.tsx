@@ -1,12 +1,13 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
-import { ErrorHandlerProps } from "../../App";
 import { Input } from "@rebass/forms";
 import SoftButton from "../../components/softButton";
 import Client from "../../client/client";
 import { Text } from "rebass";
 import { WARN } from "../../themes";
+import { validateInteger } from "../utils";
+import { ErrorResponse } from "../../client/types";
 
-interface AddStatusFormProps extends ErrorHandlerProps {
+interface AddStatusFormProps {
   readonly updateName?: string;
   readonly onSuccess: () => void;
 }
@@ -14,7 +15,6 @@ interface AddStatusFormProps extends ErrorHandlerProps {
 const AddStatusForm: React.FC<AddStatusFormProps> = ({
   updateName,
   onSuccess,
-  message,
 }) => {
   const [name, setName] = useState<string>();
   const [val, setVal] = useState<number>(0);
@@ -28,22 +28,31 @@ const AddStatusForm: React.FC<AddStatusFormProps> = ({
     }
   }, [updateName]);
 
-  const validateInteger = (e: ChangeEvent<HTMLInputElement>): void => {
-    const targetValue: string = e.target.value;
-    if (targetValue.includes(".")) {
-      setFeedback("Must be an integer!");
-      setShowFeedback(true);
-    } else {
-      setShowFeedback(false);
-      setVal(Number(targetValue));
-    }
+  const triggerFeedback = (msg: string) => {
+    setFeedback(msg);
+    setShowFeedback(true);
+  };
+
+  const showIntegerError = (): void => {
+    triggerFeedback("Must be an integer!");
+  };
+
+  const changeVal = (val: number): void => {
+    setShowFeedback(false);
+    setVal(val);
+  };
+
+  const onValInputChange = (e: ChangeEvent<HTMLInputElement>): void => {
+    validateInteger(e, showIntegerError, changeVal);
   };
 
   const onAdd = (): void => {
     if (name && val) {
-      Client.addStatus(name, val).then(onSuccess, message.errorAlert);
+      Client.addStatus(name, val).then(onSuccess, (err: ErrorResponse) =>
+        triggerFeedback(err.message)
+      );
     } else {
-      message.triggerAlert("Must fill out all fields!");
+      triggerFeedback("All fields are required!");
     }
   };
 
@@ -62,7 +71,7 @@ const AddStatusForm: React.FC<AddStatusFormProps> = ({
         defaultValue={0}
         placeholder={"0"}
         type={"number"}
-        onChange={validateInteger}
+        onChange={onValInputChange}
         mb={"7px"}
       />
       {showFeedback && <Text color={WARN}>{feedback}</Text>}
