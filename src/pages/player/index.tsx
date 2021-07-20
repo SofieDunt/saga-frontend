@@ -2,14 +2,13 @@ import React, { useEffect, useState } from "react";
 import Client from "../../client/client";
 import { Box, Button, Flex, Text } from "rebass";
 import { PageContainer } from "../../components/themeComponents";
-import LinkButton from "../../components/linkButton";
-import { ParameterizedRoutes } from "../../App";
 import styled from "@emotion/styled";
 import { BLACK, BLUE, PURPLE, SOFT } from "../../themes";
 import Alert from "../../components/alert";
 import ExportForm from "../../forms/exportForm";
 import ImportForm from "../../forms/importForm";
 import PopupWindow from "../../components/popupWindow";
+import StoryPlayer from "../../components/storyPlayer";
 
 const TitleBox = styled(Box)`
   text-align: left;
@@ -47,9 +46,10 @@ const BottomBox = styled(Box)`
   right: 50px;
 `;
 
-const PlayerLibrary: React.FC = () => {
+const Player: React.FC = () => {
   const [library, setLibrary] = useState<string[]>([]);
   const [manageLibrary, setManageLibrary] = useState(false);
+  const [currentStory, setCurrentStory] = useState<string>();
   // Alert
   const [alertVisible, setAlertVisible] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
@@ -99,6 +99,18 @@ const PlayerLibrary: React.FC = () => {
     }
   };
 
+  const loadStory = (name: string): void => {
+    Client.loadStory(name)
+      .then(() => setCurrentStory(name))
+      .catch((err) => triggerAlert(err.data.message, true));
+  };
+
+  const quitStory = (): void => {
+    Client.quitStory()
+      .then(() => setCurrentStory(undefined))
+      .catch((err) => triggerAlert(err.data.message, true));
+  };
+
   return (
     <PageContainer>
       <TitleBox>
@@ -114,12 +126,9 @@ const PlayerLibrary: React.FC = () => {
                   case false:
                     return (
                       <Flex mb={"5px"}>
-                        <LinkButton
-                          to={ParameterizedRoutes.PLAY(title)}
-                          bg={BLUE}
-                        >
+                        <Button onClick={() => loadStory(title)} bg={BLUE}>
                           Play
-                        </LinkButton>
+                        </Button>
                         <Box mx={"auto"} />
                         <Button
                           onClick={() => onClickExport(title)}
@@ -174,6 +183,12 @@ const PlayerLibrary: React.FC = () => {
         </PopupWindow>
       )}
 
+      {currentStory && (
+        <PopupWindow visible={true} onClose={quitStory}>
+          <StoryPlayer storyName={currentStory} />
+        </PopupWindow>
+      )}
+
       <PopupWindow
         visible={importVisible}
         onClose={() => setImportVisible(false)}
@@ -191,4 +206,4 @@ const PlayerLibrary: React.FC = () => {
   );
 };
 
-export default PlayerLibrary;
+export default Player;

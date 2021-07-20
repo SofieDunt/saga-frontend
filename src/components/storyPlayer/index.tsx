@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { PageContainer } from "../../components/themeComponents";
 import Client from "../../client/client";
-import Alert from "../../components/alert";
+import Alert from "../alert";
 import { Option, Story } from "../../client/types";
 import { Box, Button, Flex, Text } from "rebass";
 import styled from "@emotion/styled";
 import { SOFT, WARN, WHITE } from "../../themes";
+
+const PlayContainer = styled(Box)`
+  height: 90vh;
+  width: 90vw;
+  padding: 30px;
+`;
 
 const StoryTitle = styled(Text)`
   padding-top: 20px;
@@ -43,16 +47,19 @@ const DecisionText = styled(ScriptText)`
   padding-bottom: 5px;
 `;
 
-const PlayPage: React.FC = () => {
+interface StoryPlayerProps {
+  readonly storyName: string;
+}
+
+const StoryPlayer: React.FC<StoryPlayerProps> = ({ storyName }) => {
   const [story, setStory] = useState<Story>();
   const [prevChoices, setPrevChoices] = useState<string[]>([]);
   const [prevDecisions, setPrevDecisions] = useState<string[]>([]);
+  const [noStoryMessage, setNoStoryMessage] = useState("Loading...");
   // Alert
   const [alertVisible, setAlertVisible] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
   const [alertWarn, setAlertWarn] = useState(false);
-
-  const { name } = useParams<{ name: string }>();
 
   useEffect(() => {
     const effectShowError = (err: any): void => {
@@ -71,11 +78,16 @@ const PlayPage: React.FC = () => {
         .catch(effectShowError);
     };
 
-    Client.loadStory(name).then(effectGetCurrentStory).catch(effectShowError);
+    Client.loadStory(storyName)
+      .then(effectGetCurrentStory)
+      .catch((err) => {
+        effectShowError(err);
+        setNoStoryMessage("Oops! Looks like this story doesn't exist.");
+      });
     if (prevChoices.length === 0) {
       effectGetCurrentDescription();
     }
-  }, [name, prevChoices.length]);
+  }, [storyName, prevChoices.length]);
 
   const showError = (err: any): void => {
     triggerAlert(err.response.data.message, true);
@@ -119,15 +131,11 @@ const PlayPage: React.FC = () => {
   };
 
   return (
-    <PageContainer>
+    <PlayContainer>
       {(() => {
         switch (story) {
           case undefined:
-            return (
-              <StoryTitle>
-                Oops! Looks like this story doesn't exist.
-              </StoryTitle>
-            );
+            return <StoryTitle>{noStoryMessage}</StoryTitle>;
           default:
             const storyOptions: Option[] = story.choices[story.choice].options;
             return (
@@ -179,8 +187,8 @@ const PlayPage: React.FC = () => {
         warn={alertWarn}
         onClose={() => setAlertVisible(false)}
       />
-    </PageContainer>
+    </PlayContainer>
   );
 };
 
-export default PlayPage;
+export default StoryPlayer;
