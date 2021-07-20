@@ -48,3 +48,28 @@ export enum StatusUpdateTypes {
   ADD = "ADD",
   SET = "SET",
 }
+
+export interface AddSimpleDecisionRequest {
+  readonly description: string;
+  readonly choiceId: number;
+  readonly outcomeId: number;
+}
+
+export interface AddConsequentialDecisionRequest
+  extends AddSimpleDecisionRequest {
+  readonly consequences: string[];
+}
+
+export interface AddSimpleDependentRequest {
+  readonly description: string;
+  readonly choiceId: number;
+  readonly dependency: string;
+  readonly threshold: number;
+  readonly outcomeBelowId: number;
+  readonly outcomeAboveId: number;
+}
+
+export interface AddConsequentialDependentRequest
+  extends AddSimpleDependentRequest {
+  readonly consequences: string[];
+}
