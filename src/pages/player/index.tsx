@@ -12,11 +12,11 @@ import ExportForm from "../../forms/exportForm";
 import ImportForm from "../../forms/importForm";
 import PopupWindow from "../../components/popupWindow";
 import StoryPlayer from "../../components/storyPlayer";
-import { PageProps } from "../../App";
+import { ErrorHandlerProps } from "../../App";
 import { ApplicationTypes, ErrorResponse } from "../../client/types";
 import BoxCard from "../../components/boxCard";
 
-const Player: React.FC<PageProps> = ({ message }) => {
+const Player: React.FC<ErrorHandlerProps> = ({ message }) => {
   const [library, setLibrary] = useState<string[]>([]);
   const [manageLibrary, setManageLibrary] = useState(false);
   const [currentStory, setCurrentStory] = useState<string>();

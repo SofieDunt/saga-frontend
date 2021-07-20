@@ -23,6 +23,7 @@ export interface ApiClient {
   readonly removeStory: (name: string) => Promise<void>;
   readonly getAllWorkNames: () => Promise<string[]>;
   readonly getCurrentWorkName: () => Promise<string>;
+  readonly getCurrentStatuses: () => Promise<StoryStatus[]>;
   readonly getCurrentWork: () => Promise<Story>;
   readonly exportWork: (path: string, name: string) => Promise<void>;
   readonly importWork: (path: string) => Promise<void>;

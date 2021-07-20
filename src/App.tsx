@@ -13,6 +13,7 @@ const Top = styled(Box)`
   position: absolute;
   top: 20px;
   left: 50%;
+  transform: translate(-50%, 0);
 `;
 
 export enum Routes {
@@ -27,7 +28,7 @@ export interface Messenger {
   readonly errorAlert: (err: ErrorResponse) => void;
 }
 
-export interface PageProps {
+export interface ErrorHandlerProps {
   readonly message: Messenger;
 }
 

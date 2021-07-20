@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Client from "../../client/client";
 import styled from "@emotion/styled";
-import { PageProps } from "../../App";
+import { ErrorHandlerProps } from "../../App";
 import { Input } from "@rebass/forms";
 import SoftButton from "../../components/softButton";
 import { StoryTitle } from "../../components/themeComponents";
@@ -10,7 +10,7 @@ const InlineSoftButton = styled(SoftButton)`
   display: inline-block;
 `;
 
-interface TitleFormProps extends PageProps {
+interface TitleFormProps extends ErrorHandlerProps {
   readonly title: string;
   readonly onFinish: () => void;
 }

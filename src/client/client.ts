@@ -6,6 +6,7 @@ import {
   AddSimpleDependentRequest,
   ApiClient,
   Story,
+  StoryStatus,
 } from "./types";
 import { handleAxiosResponse, PLAYER_INSTANCE, WRITER_INSTANCE } from "./axios";
 
@@ -24,6 +25,7 @@ export enum ClientRoutes {
   QUIT = "/quit",
   REMOVE = "/remove",
   EXPORT_TO_PLAYER = "/export-to-player",
+  GET_CURRENT_STATUSES = "/current/statuses",
   RENAME = "/rename",
   START_NEW_WORK = "/start",
   SET_NAME = "/set/name",
@@ -166,6 +168,12 @@ const getCurrentWork = (): Promise<Story> => {
   return getCurrentAsStory(WRITER_INSTANCE);
 };
 
+const getCurrentStatuses = (): Promise<StoryStatus[]> => {
+  return handleAxiosResponse(() =>
+    WRITER_INSTANCE.get(ClientRoutes.GET_CURRENT_STATUSES)
+  );
+};
+
 const exportWork = (path: string, name: string): Promise<void> => {
   return exportOriginal(WRITER_INSTANCE, path, name);
 };
@@ -230,7 +238,7 @@ const addStatus = (name: string, val: number): Promise<void> => {
 
 const removeStatus = (name: string): Promise<void> => {
   return handleAxiosResponse(() =>
-    WRITER_INSTANCE.post(ClientRoutes.REMOVE_STATUS, null, { params: { name } })
+    WRITER_INSTANCE.delete(ClientRoutes.REMOVE_STATUS, { params: { name } })
   );
 };
 
@@ -317,6 +325,7 @@ const Client: ApiClient = {
   getAllWorkNames,
   getCurrentWorkName,
   getCurrentWork,
+  getCurrentStatuses,
   exportWork,
   importWork,
   exportToPlayer,

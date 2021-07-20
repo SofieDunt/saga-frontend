@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "@emotion/styled";
-import { Box, Button, Text } from "rebass";
+import { Button, Text } from "rebass";
 import { BLACK, WHITE } from "../../themes";
 
 const CloseBackground = styled(Button)`

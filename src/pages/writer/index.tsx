@@ -11,12 +11,12 @@ import { BLUE, PURPLE, SOFT } from "../../themes";
 import ExportForm from "../../forms/exportForm";
 import ImportForm from "../../forms/importForm";
 import PopupWindow from "../../components/popupWindow";
-import { PageProps } from "../../App";
+import { ErrorHandlerProps } from "../../App";
 import WorkEditor from "../../components/workEditor";
 import { ApplicationTypes, ErrorResponse } from "../../client/types";
 import BoxCard from "../../components/boxCard";
 
-const Writer: React.FC<PageProps> = ({ message }) => {
+const Writer: React.FC<ErrorHandlerProps> = ({ message }) => {
   const [library, setLibrary] = useState<string[]>([]);
   const [manageLibrary, setManageLibrary] = useState(false);
   const [currentWork, setCurrentWork] = useState<string>();

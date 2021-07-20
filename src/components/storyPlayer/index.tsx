@@ -4,7 +4,7 @@ import { ErrorResponse, Option, Story } from "../../client/types";
 import { Box, Button, Flex, Text } from "rebass";
 import styled from "@emotion/styled";
 import { WARN } from "../../themes";
-import { PageProps } from "../../App";
+import { ErrorHandlerProps } from "../../App";
 import { CurrentContainer, StoryTitle } from "../themeComponents";
 import SoftButton from "../softButton";
 
@@ -24,7 +24,7 @@ const DecisionText = styled(ScriptText)`
   padding-bottom: 5px;
 `;
 
-interface StoryPlayerProps extends PageProps {
+interface StoryPlayerProps extends ErrorHandlerProps {
   readonly storyName: string;
 }
 

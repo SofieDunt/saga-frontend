@@ -4,7 +4,7 @@ import { Box, Flex, Text } from "rebass";
 import { PageContainer } from "../../components/themeComponents";
 import { PURPLE, BLUE } from "../../themes";
 import LinkButton from "../../components/linkButton";
-import { PageProps, Routes } from "../../App";
+import { ErrorHandlerProps, Routes } from "../../App";
 
 const HomePageContainer = styled.div`
   padding-left: 40px;
@@ -36,7 +36,7 @@ const ButtonLabel = styled(Text)`
   padding: 0 20px;
 `;
 
-const Home: React.FC<PageProps> = () => {
+const Home: React.FC<ErrorHandlerProps> = () => {
   return (
     <PageContainer>
       <HomePageContainer>
