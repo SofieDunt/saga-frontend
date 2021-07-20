@@ -1,35 +1,12 @@
 import React, { useEffect, useState } from "react";
 import Client from "../../client/client";
-import Alert from "../alert";
-import { Option, Story } from "../../client/types";
+import { ErrorResponse, Option, Story } from "../../client/types";
 import { Box, Button, Flex, Text } from "rebass";
 import styled from "@emotion/styled";
-import { SOFT, WARN, WHITE } from "../../themes";
-
-const PlayContainer = styled(Box)`
-  height: 90vh;
-  width: 90vw;
-  padding: 30px;
-`;
-
-const StoryTitle = styled(Text)`
-  padding-top: 20px;
-  font-size: 48px;
-  font-weight: bold;
-  padding-bottom: 20px;
-`;
-
-const OptionBox = styled(Box)`
-  margin-right: 10px;
-`;
-
-const OptionButton = styled(Button)`
-  background: ${SOFT};
-`;
-
-const OptionText = styled(Text)`
-  color: ${WHITE};
-`;
+import { WARN } from "../../themes";
+import { PageProps } from "../../App";
+import { CurrentContainer, StoryTitle } from "../themeComponents";
+import SoftButton from "../softButton";
 
 const BottomBox = styled(Box)`
   position: absolute;
@@ -47,62 +24,49 @@ const DecisionText = styled(ScriptText)`
   padding-bottom: 5px;
 `;
 
-interface StoryPlayerProps {
+interface StoryPlayerProps extends PageProps {
   readonly storyName: string;
 }
 
-const StoryPlayer: React.FC<StoryPlayerProps> = ({ storyName }) => {
+const StoryPlayer: React.FC<StoryPlayerProps> = ({ storyName, message }) => {
   const [story, setStory] = useState<Story>();
   const [prevChoices, setPrevChoices] = useState<string[]>([]);
   const [prevDecisions, setPrevDecisions] = useState<string[]>([]);
   const [noStoryMessage, setNoStoryMessage] = useState("Loading...");
-  // Alert
-  const [alertVisible, setAlertVisible] = useState(false);
-  const [alertMessage, setAlertMessage] = useState("");
-  const [alertWarn, setAlertWarn] = useState(false);
 
   useEffect(() => {
-    const effectShowError = (err: any): void => {
-      triggerAlert(err.response.data.message, true);
-    };
-
     const effectGetCurrentStory = (): void => {
-      Client.getCurrentStory()
-        .then((res) => setStory(res))
-        .catch(effectShowError);
+      Client.getCurrentStory().then((res) => setStory(res), message.errorAlert);
     };
 
     const effectGetCurrentDescription = (): void => {
-      Client.getCurrentChoice()
-        .then((res) => setPrevChoices((prev) => [...prev, res]))
-        .catch(effectShowError);
+      Client.getCurrentChoice().then(
+        (res) => setPrevChoices((prev) => [...prev, res]),
+        message.errorAlert
+      );
     };
 
-    Client.loadStory(storyName)
-      .then(effectGetCurrentStory)
-      .catch((err) => {
-        effectShowError(err);
+    Client.loadStory(storyName).then(
+      effectGetCurrentStory,
+      (err: ErrorResponse) => {
+        message.triggerAlert(err.message);
         setNoStoryMessage("Oops! Looks like this story doesn't exist.");
-      });
+      }
+    );
     if (prevChoices.length === 0) {
       effectGetCurrentDescription();
     }
-  }, [storyName, prevChoices.length]);
-
-  const showError = (err: any): void => {
-    triggerAlert(err.response.data.message, true);
-  };
+  }, [message, storyName, prevChoices.length]);
 
   const getCurrentStory = (): void => {
-    Client.getCurrentStory()
-      .then((res) => setStory(res))
-      .catch(showError);
+    Client.getCurrentStory().then((res) => setStory(res), message.errorAlert);
   };
 
   const getCurrentDescription = (): void => {
-    Client.getCurrentChoice()
-      .then((res) => setPrevChoices((prev) => [...prev, res]))
-      .catch(showError);
+    Client.getCurrentChoice().then(
+      (res) => setPrevChoices((prev) => [...prev, res]),
+      message.errorAlert
+    );
   };
 
   const choose = (decision: number): void => {
@@ -111,27 +75,22 @@ const StoryPlayer: React.FC<StoryPlayerProps> = ({ storyName }) => {
         ...prev,
         story.decisions[decision].description,
       ]);
-      Client.choose(decision).then(getCurrentStory).catch(showError);
+      Client.choose(decision).then(getCurrentStory, message.errorAlert);
       getCurrentDescription();
     }
   };
 
   const onRestart = (): void => {
-    Client.restart().then(getCurrentStory).catch(showError);
-    setPrevDecisions((prev) => [...prev, "Restarted the story"]);
-    getCurrentDescription();
-  };
-
-  const triggerAlert = (message: string, warn?: boolean): void => {
-    setAlertMessage(message);
-    setAlertVisible(true);
-    if (warn) {
-      setAlertWarn(warn);
-    }
+    const afterRestart = (): void => {
+      getCurrentStory();
+      setPrevDecisions((prev) => [...prev, "Restarted the story"]);
+      getCurrentDescription();
+    };
+    Client.restart().then(afterRestart, message.errorAlert);
   };
 
   return (
-    <PlayContainer>
+    <CurrentContainer>
       {(() => {
         switch (story) {
           case undefined:
@@ -159,13 +118,12 @@ const StoryPlayer: React.FC<StoryPlayerProps> = ({ storyName }) => {
                     {story &&
                       story.choices[story.choice].options.map((opt) => {
                         return (
-                          <OptionBox key={opt.id}>
-                            <OptionButton onClick={() => choose(opt.id)}>
-                              <OptionText>
-                                {story.decisions[opt.decision].description}
-                              </OptionText>
-                            </OptionButton>
-                          </OptionBox>
+                          <SoftButton
+                            key={opt.id}
+                            onClick={() => choose(opt.id)}
+                            text={story.decisions[opt.decision].description}
+                            margin={"0 10px 0 0"}
+                          />
                         );
                       })}
                   </Flex>
@@ -180,14 +138,7 @@ const StoryPlayer: React.FC<StoryPlayerProps> = ({ storyName }) => {
           Start Over
         </Button>
       </BottomBox>
-
-      <Alert
-        visible={alertVisible}
-        message={alertMessage}
-        warn={alertWarn}
-        onClose={() => setAlertVisible(false)}
-      />
-    </PlayContainer>
+    </CurrentContainer>
   );
 };
 

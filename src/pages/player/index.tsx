@@ -9,6 +9,7 @@ import ImportForm from "../../forms/importForm";
 import PopupWindow from "../../components/popupWindow";
 import StoryPlayer from "../../components/storyPlayer";
 import { PageProps } from "../../App";
+import { ApplicationTypes, ErrorResponse } from "../../client/types";
 
 const TitleBox = styled(Box)`
   text-align: left;
@@ -57,11 +58,17 @@ const Player: React.FC<PageProps> = ({ message }) => {
   const [importVisible, setImportVisible] = useState(false);
 
   useEffect(() => {
-    updateLibrary();
+    Client.getAllStoryNames().then(
+      (res) => setLibrary(res),
+      (err: ErrorResponse) => window.alert(err.message)
+    );
   });
 
   const updateLibrary = (): void => {
-    Client.getAllStoryNames().then((res) => setLibrary(res));
+    Client.getAllStoryNames().then(
+      (res) => setLibrary(res),
+      message.errorAlert
+    );
   };
 
   const onClickExport = (name: string): void => {
@@ -80,23 +87,25 @@ const Player: React.FC<PageProps> = ({ message }) => {
   };
 
   const onDelete = (name: string): void => {
-    Client.removeStory(name)
-      .then()
-      .catch((err) =>
-        message.triggerAlert("Could not delete: " + err.data.response.message)
-      );
+    Client.removeStory(name).then(
+      () => {},
+      (err: ErrorResponse) =>
+        message.triggerAlert("Could not delete: " + err.message)
+    );
   };
 
   const loadStory = (name: string): void => {
-    Client.loadStory(name)
-      .then(() => setCurrentStory(name))
-      .catch((err) => message.triggerAlert(err.data.message));
+    Client.loadStory(name).then(
+      () => setCurrentStory(name),
+      message.errorAlert
+    );
   };
 
   const quitStory = (): void => {
-    Client.quitStory()
-      .then(() => setCurrentStory(undefined))
-      .catch((err) => message.triggerAlert(err.data.message));
+    Client.quitStory().then(
+      () => setCurrentStory(undefined),
+      message.errorAlert
+    );
   };
 
   return (
@@ -167,13 +176,17 @@ const Player: React.FC<PageProps> = ({ message }) => {
           visible={exportVisible}
           onClose={() => setExportVisible(false)}
         >
-          <ExportForm name={exportName} onSuccess={onExportSuccess} />
+          <ExportForm
+            name={exportName}
+            onSuccess={onExportSuccess}
+            exportType={ApplicationTypes.STORY}
+          />
         </PopupWindow>
       )}
 
       {currentStory && (
         <PopupWindow visible={true} onClose={quitStory}>
-          <StoryPlayer storyName={currentStory} />
+          <StoryPlayer storyName={currentStory} message={message} />
         </PopupWindow>
       )}
 
@@ -181,7 +194,10 @@ const Player: React.FC<PageProps> = ({ message }) => {
         visible={importVisible}
         onClose={() => setImportVisible(false)}
       >
-        <ImportForm onSuccess={onImportSuccess} />
+        <ImportForm
+          onSuccess={onImportSuccess}
+          importType={ApplicationTypes.STORY}
+        />
       </PopupWindow>
     </PageContainer>
   );

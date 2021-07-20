@@ -7,6 +7,7 @@ import Alert, { AlertMessage } from "./components/alert";
 import Writer from "./pages/writer";
 import styled from "@emotion/styled";
 import { Box } from "rebass";
+import { ErrorResponse } from "./client/types";
 
 const Top = styled(Box)`
   position: absolute;
@@ -23,6 +24,7 @@ export enum Routes {
 export interface Messenger {
   readonly triggerMessage: (message: string) => void;
   readonly triggerAlert: (message: string) => void;
+  readonly errorAlert: (err: ErrorResponse) => void;
 }
 
 export interface PageProps {
@@ -47,9 +49,14 @@ function App() {
     ]);
   };
 
+  const errorAlert = (err: ErrorResponse): void => {
+    triggerAlert(err.message);
+  };
+
   const message: Messenger = {
     triggerMessage,
     triggerAlert,
+    errorAlert,
   };
 
   const deleteAlert = (i: number): void => {

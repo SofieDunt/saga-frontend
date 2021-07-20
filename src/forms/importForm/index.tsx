@@ -4,6 +4,7 @@ import { Button, Text } from "rebass";
 import { Input, Label } from "@rebass/forms";
 import styled from "@emotion/styled";
 import { BLACK, BLUE, WARN } from "../../themes";
+import { ApplicationTypes, ErrorResponse } from "../../client/types";
 
 const FormContainer = styled.div`
   width: 450px;
@@ -16,9 +17,10 @@ const FormContainer = styled.div`
 
 interface ImportFormProps {
   readonly onSuccess: () => void;
+  readonly importType: ApplicationTypes;
 }
 
-const ImportForm: React.FC<ImportFormProps> = ({ onSuccess }) => {
+const ImportForm: React.FC<ImportFormProps> = ({ onSuccess, importType }) => {
   // Error message
   const [errorVisible, setErrorVisible] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -29,11 +31,17 @@ const ImportForm: React.FC<ImportFormProps> = ({ onSuccess }) => {
     if (!importPath) {
       showError("File path is required.");
     } else {
-      Client.importStory(importPath)
-        .then(onSuccess)
-        .catch((err) =>
-          showError("Could not import: " + err.response.data.message)
-        );
+      let promise;
+      switch (importType) {
+        case ApplicationTypes.STORY:
+          promise = Client.importStory(importPath);
+          break;
+        case ApplicationTypes.WORK:
+          promise = Client.importWork(importPath);
+      }
+      promise.then(onSuccess, (err: ErrorResponse) =>
+        showError("Could not import: " + err.message)
+      );
     }
   };
 
