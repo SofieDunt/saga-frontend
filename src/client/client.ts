@@ -5,6 +5,8 @@ import {
   AddSimpleDecisionRequest,
   AddSimpleDependentRequest,
   ApiClient,
+  Choice,
+  Decision,
   Story,
   StoryStatus,
 } from "./types";
@@ -25,7 +27,10 @@ export enum ClientRoutes {
   QUIT = "/quit",
   REMOVE = "/remove",
   EXPORT_TO_PLAYER = "/export-to-player",
+  GET_CURRENT_WORK_STORY_NAME = "/current/story-name",
   GET_CURRENT_STATUSES = "/current/statuses",
+  GET_CURRENT_CHOICES = "/current/choices",
+  GET_CURRENT_DECISIONS = "/current/decisions",
   RENAME = "/rename",
   START_NEW_WORK = "/start",
   SET_NAME = "/set/name",
@@ -168,9 +173,27 @@ const getCurrentWork = (): Promise<Story> => {
   return getCurrentAsStory(WRITER_INSTANCE);
 };
 
+const getCurrentWorkStoryName = (): Promise<string> => {
+  return handleAxiosResponse(() =>
+    WRITER_INSTANCE.get(ClientRoutes.GET_CURRENT_WORK_STORY_NAME)
+  );
+};
+
 const getCurrentStatuses = (): Promise<StoryStatus[]> => {
   return handleAxiosResponse(() =>
     WRITER_INSTANCE.get(ClientRoutes.GET_CURRENT_STATUSES)
+  );
+};
+
+const getCurrentChoices = (): Promise<Choice[]> => {
+  return handleAxiosResponse(() =>
+    WRITER_INSTANCE.get(ClientRoutes.GET_CURRENT_CHOICES)
+  );
+};
+
+const getCurrentDecisions = (): Promise<Decision[]> => {
+  return handleAxiosResponse(() =>
+    WRITER_INSTANCE.get(ClientRoutes.GET_CURRENT_DECISIONS)
   );
 };
 
@@ -325,7 +348,10 @@ const Client: ApiClient = {
   getAllWorkNames,
   getCurrentWorkName,
   getCurrentWork,
+  getCurrentWorkStoryName,
   getCurrentStatuses,
+  getCurrentChoices,
+  getCurrentDecisions,
   exportWork,
   importWork,
   exportToPlayer,

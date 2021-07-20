@@ -23,8 +23,11 @@ export interface ApiClient {
   readonly removeStory: (name: string) => Promise<void>;
   readonly getAllWorkNames: () => Promise<string[]>;
   readonly getCurrentWorkName: () => Promise<string>;
-  readonly getCurrentStatuses: () => Promise<StoryStatus[]>;
   readonly getCurrentWork: () => Promise<Story>;
+  readonly getCurrentWorkStoryName: () => Promise<string>;
+  readonly getCurrentStatuses: () => Promise<StoryStatus[]>;
+  readonly getCurrentChoices: () => Promise<Choice[]>;
+  readonly getCurrentDecisions: () => Promise<Decision[]>;
   readonly exportWork: (path: string, name: string) => Promise<void>;
   readonly importWork: (path: string) => Promise<void>;
   readonly exportToPlayer: () => Promise<void>;
