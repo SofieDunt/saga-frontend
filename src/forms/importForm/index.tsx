@@ -3,12 +3,12 @@ import Client from "../../client/client";
 import { Button, Text } from "rebass";
 import { Input, Label } from "@rebass/forms";
 import styled from "@emotion/styled";
-import { BLUE, WARN } from "../../themes";
+import { BLACK, BLUE, WARN } from "../../themes";
 
 const FormContainer = styled.div`
   width: 450px;
   height: 200px;
-  color: black;
+  color: ${BLACK};
   padding: 50px;
   text-align: left;
   line-height: 20px;
@@ -19,26 +19,29 @@ interface ImportFormProps {
 }
 
 const ImportForm: React.FC<ImportFormProps> = ({ onSuccess }) => {
-  // Alert
-  const [alertVisible, setAlertVisible] = useState(false);
-  const [alertMessage, setAlertMessage] = useState("");
+  // Error message
+  const [errorVisible, setErrorVisible] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   // Import Form
   const [importPath, setImportPath] = useState<string>();
 
   const handleImport = (): void => {
     if (!importPath) {
-      triggerAlert("File path is required.");
+      showError("File path is required.");
     } else {
       Client.importStory(importPath)
         .then(onSuccess)
-        .catch((err) => triggerAlert("Could not import: " + err.response.data));
+        .catch((err) =>
+          showError("Could not import: " + err.response.data.message)
+        );
     }
   };
 
-  const triggerAlert = (message: string): void => {
-    setAlertMessage(message);
-    setAlertVisible(true);
+  const showError = (message: string): void => {
+    setErrorMessage(message);
+    setErrorVisible(true);
   };
+
   return (
     <>
       <FormContainer>
@@ -53,7 +56,7 @@ const ImportForm: React.FC<ImportFormProps> = ({ onSuccess }) => {
         <Button bg={BLUE} onClick={handleImport}>
           Submit
         </Button>
-        {alertVisible && <Text color={WARN}>{alertMessage}</Text>}
+        {errorVisible && <Text color={WARN}>{errorMessage}</Text>}
       </FormContainer>
     </>
   );

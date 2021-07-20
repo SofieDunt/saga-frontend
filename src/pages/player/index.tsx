@@ -4,11 +4,11 @@ import { Box, Button, Flex, Text } from "rebass";
 import { PageContainer } from "../../components/themeComponents";
 import styled from "@emotion/styled";
 import { BLACK, BLUE, PURPLE, SOFT } from "../../themes";
-import Alert from "../../components/alert";
 import ExportForm from "../../forms/exportForm";
 import ImportForm from "../../forms/importForm";
 import PopupWindow from "../../components/popupWindow";
 import StoryPlayer from "../../components/storyPlayer";
+import { PageProps } from "../../App";
 
 const TitleBox = styled(Box)`
   text-align: left;
@@ -46,14 +46,10 @@ const BottomBox = styled(Box)`
   right: 50px;
 `;
 
-const Player: React.FC = () => {
+const Player: React.FC<PageProps> = ({ message }) => {
   const [library, setLibrary] = useState<string[]>([]);
   const [manageLibrary, setManageLibrary] = useState(false);
   const [currentStory, setCurrentStory] = useState<string>();
-  // Alert
-  const [alertVisible, setAlertVisible] = useState(false);
-  const [alertMessage, setAlertMessage] = useState("");
-  const [alertWarn, setAlertWarn] = useState(false);
   // Export Form
   const [exportVisible, setExportVisible] = useState(false);
   const [exportName, setExportName] = useState<string>();
@@ -79,7 +75,7 @@ const Player: React.FC = () => {
   };
 
   const onExportSuccess = (): void => {
-    triggerAlert("Exported successfully!");
+    message.triggerMessage("Exported successfully!");
     setExportVisible(false);
   };
 
@@ -87,28 +83,20 @@ const Player: React.FC = () => {
     Client.removeStory(name)
       .then()
       .catch((err) =>
-        triggerAlert("Could not delete: " + err.data.response.message, true)
+        message.triggerAlert("Could not delete: " + err.data.response.message)
       );
-  };
-
-  const triggerAlert = (message: string, warn?: boolean): void => {
-    setAlertMessage(message);
-    setAlertVisible(true);
-    if (warn) {
-      setAlertWarn(warn);
-    }
   };
 
   const loadStory = (name: string): void => {
     Client.loadStory(name)
       .then(() => setCurrentStory(name))
-      .catch((err) => triggerAlert(err.data.message, true));
+      .catch((err) => message.triggerAlert(err.data.message));
   };
 
   const quitStory = (): void => {
     Client.quitStory()
       .then(() => setCurrentStory(undefined))
-      .catch((err) => triggerAlert(err.data.message, true));
+      .catch((err) => message.triggerAlert(err.data.message));
   };
 
   return (
@@ -195,13 +183,6 @@ const Player: React.FC = () => {
       >
         <ImportForm onSuccess={onImportSuccess} />
       </PopupWindow>
-
-      <Alert
-        visible={alertVisible}
-        message={alertMessage}
-        warn={alertWarn}
-        onClose={() => setAlertVisible(false)}
-      />
     </PageContainer>
   );
 };

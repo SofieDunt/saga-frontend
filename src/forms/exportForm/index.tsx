@@ -20,9 +20,9 @@ interface ExportFormProps {
 }
 
 const ExportForm: React.FC<ExportFormProps> = ({ name, onSuccess }) => {
-  // Alert
-  const [alertVisible, setAlertVisible] = useState(false);
-  const [alertMessage, setAlertMessage] = useState("");
+  // Error message
+  const [errorVisible, setErrorVisible] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   // Export Form
   const [path, setPath] = useState<string>();
   const [exportOriginal, setExportOriginal] = useState(true);
@@ -33,21 +33,25 @@ const ExportForm: React.FC<ExportFormProps> = ({ name, onSuccess }) => {
 
   const handleExport = (): void => {
     if (!path) {
-      triggerAlert("Export path is required.");
+      showError("Export path is required.");
     } else if (exportOriginal) {
       Client.exportStory(path, name)
         .then(onSuccess)
-        .catch((err) => triggerAlert("Could not export: " + err.response.data));
+        .catch((err) =>
+          showError("Could not export: " + err.response.data.message)
+        );
     } else {
       Client.exportStoryInProgress(path, name)
-        .then(() => triggerAlert("Successfully exported"))
-        .catch((err) => triggerAlert("Could not export: " + err.response.data));
+        .then(() => showError("Successfully exported"))
+        .catch((err) =>
+          showError("Could not export: " + err.response.data.message)
+        );
     }
   };
 
-  const triggerAlert = (message: string): void => {
-    setAlertMessage(message);
-    setAlertVisible(true);
+  const showError = (message: string): void => {
+    setErrorMessage(message);
+    setErrorVisible(true);
   };
 
   return (
@@ -73,7 +77,7 @@ const ExportForm: React.FC<ExportFormProps> = ({ name, onSuccess }) => {
         <Button bg={BLUE} onClick={handleExport}>
           Submit
         </Button>
-        {alertVisible && <Text color={WARN}>{alertMessage}</Text>}
+        {errorVisible && <Text color={WARN}>{errorMessage}</Text>}
       </FormContainer>
     </>
   );
