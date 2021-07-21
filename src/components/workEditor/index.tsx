@@ -18,6 +18,7 @@ import SoftButton from "../softButton";
 import { CurrentContainer, StoryTitle } from "../themeComponents";
 import AddStatusForm from "../../forms/addStatusForm";
 import AddSimpleDecisionForm from "../../forms/addSimpleDecisionForm";
+import AddConsequentialDecisionForm from "../../forms/addConsequentialDecisionForm";
 
 const Header = styled(Text)`
   font-size: 24px;
@@ -179,6 +180,16 @@ const WorkEditor: React.FC<WorkEditorProps> = ({ message, workName }) => {
                   </>
                 );
               case SwitchFormTypes.ADD_CONSEQUENTIAL:
+                return (
+                  <>
+                    <Header>Add Consequential Decision</Header>
+                    <AddConsequentialDecisionForm
+                      onSuccess={updateChoicesAndDecisions}
+                      choices={work.choices}
+                      statuses={work.statuses}
+                    />
+                  </>
+                );
               case SwitchFormTypes.ADD_SIMPLE_DEPENDENT:
               case SwitchFormTypes.ADD_CONSEQUENTIAL_DEPENDENT:
               case SwitchFormTypes.NONE:
