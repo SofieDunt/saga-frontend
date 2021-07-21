@@ -125,7 +125,7 @@ export interface AddSimpleDependentRequest {
   readonly dependency: string;
   readonly threshold: number;
   readonly outcomeBelowId: number;
-  readonly outcomeAboveId: number;
+  readonly outcomeMeetsId: number;
 }
 
 export interface AddConsequentialDependentRequest

@@ -41,6 +41,9 @@ function App() {
       ...prev,
       { visible: true, message: message, warn: false },
     ]);
+    if (alerts.length > 5) {
+      deleteAlert(0);
+    }
   };
 
   const triggerAlert = (message: string): void => {
@@ -48,6 +51,9 @@ function App() {
       ...prev,
       { visible: true, message: message, warn: true },
     ]);
+    if (alerts.length > 5) {
+      deleteAlert(0);
+    }
   };
 
   const errorAlert = (err: ErrorResponse): void => {

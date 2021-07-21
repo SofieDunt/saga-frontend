@@ -19,6 +19,8 @@ import { CurrentContainer, StoryTitle } from "../themeComponents";
 import AddStatusForm from "../../forms/addStatusForm";
 import AddSimpleDecisionForm from "../../forms/addSimpleDecisionForm";
 import AddConsequentialDecisionForm from "../../forms/addConsequentialDecisionForm";
+import AddSimpleDependentDecisionForm from "../../forms/addSimpleDependentDecisionForm";
+import AddConsequentialDependentDecisionForm from "../../forms/addConsequentialDependentDecisionForm";
 
 const Header = styled(Text)`
   font-size: 24px;
@@ -191,51 +193,74 @@ const WorkEditor: React.FC<WorkEditorProps> = ({ message, workName }) => {
                   </>
                 );
               case SwitchFormTypes.ADD_SIMPLE_DEPENDENT:
+                return (
+                  <>
+                    <Header>Add Simple Dependent Decision</Header>
+                    <AddSimpleDependentDecisionForm
+                      onSuccess={updateChoicesAndDecisions}
+                      choices={work.choices}
+                      statuses={work.statuses}
+                    />
+                  </>
+                );
               case SwitchFormTypes.ADD_CONSEQUENTIAL_DEPENDENT:
+                return (
+                  <>
+                    <Header>Add Consequential Dependent Decision</Header>
+                    <AddConsequentialDependentDecisionForm
+                      onSuccess={updateChoicesAndDecisions}
+                      choices={work.choices}
+                      statuses={work.statuses}
+                    />
+                  </>
+                );
               case SwitchFormTypes.NONE:
               default:
+                return (
+                  <>
+                    <SoftButton
+                      text={"Add Status"}
+                      margin={actionButtonMargin}
+                      onClick={() => setCurrentForm(SwitchFormTypes.ADD_STATUS)}
+                    />
+                    <br />
+                    <SoftButton
+                      text={"Add Simple Decision"}
+                      margin={actionButtonMargin}
+                      onClick={() => setCurrentForm(SwitchFormTypes.ADD_SIMPLE)}
+                    />
+                    <SoftButton
+                      text={"Add Consequential Decision"}
+                      margin={actionButtonMargin}
+                      onClick={() =>
+                        setCurrentForm(SwitchFormTypes.ADD_CONSEQUENTIAL)
+                      }
+                    />
+                    <SoftButton
+                      text={"Add Simple Dependent Decision"}
+                      margin={actionButtonMargin}
+                      onClick={() =>
+                        setCurrentForm(SwitchFormTypes.ADD_SIMPLE_DEPENDENT)
+                      }
+                    />
+                    <SoftButton
+                      text={"Add Consequential Dependent Decision"}
+                      margin={actionButtonMargin}
+                      onClick={() =>
+                        setCurrentForm(
+                          SwitchFormTypes.ADD_CONSEQUENTIAL_DEPENDENT
+                        )
+                      }
+                    />
+                  </>
+                );
             }
           })()}
-          {currentForm !== SwitchFormTypes.NONE ? (
+          {currentForm !== SwitchFormTypes.NONE && (
             <SoftButton
               text={"Cancel"}
               onClick={() => setCurrentForm(SwitchFormTypes.NONE)}
             />
-          ) : (
-            <>
-              <SoftButton
-                text={"Add Status"}
-                margin={actionButtonMargin}
-                onClick={() => setCurrentForm(SwitchFormTypes.ADD_STATUS)}
-              />
-              <br />
-              <SoftButton
-                text={"Add Simple Decision"}
-                margin={actionButtonMargin}
-                onClick={() => setCurrentForm(SwitchFormTypes.ADD_SIMPLE)}
-              />
-              <SoftButton
-                text={"Add Consequential Decision"}
-                margin={actionButtonMargin}
-                onClick={() =>
-                  setCurrentForm(SwitchFormTypes.ADD_CONSEQUENTIAL)
-                }
-              />
-              <SoftButton
-                text={"Add Simple Dependent Decision"}
-                margin={actionButtonMargin}
-                onClick={() =>
-                  setCurrentForm(SwitchFormTypes.ADD_SIMPLE_DEPENDENT)
-                }
-              />
-              <SoftButton
-                text={"Add Consequential Dependent Decision"}
-                margin={actionButtonMargin}
-                onClick={() =>
-                  setCurrentForm(SwitchFormTypes.ADD_CONSEQUENTIAL_DEPENDENT)
-                }
-              />
-            </>
           )}
         </Box>
         <Header>Export</Header>
