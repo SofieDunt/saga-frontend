@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import Client from "../../client/client";
-import { ErrorResponse, Option, Story } from "../../client/types";
+import { Option, Story } from "../../client/types";
 import { Box, Button, Flex, Text } from "rebass";
 import styled from "@emotion/styled";
 import { WARN } from "../../themes";
 import { ErrorHandlerProps } from "../../App";
-import { CurrentContainer, StoryTitle } from "../themeComponents";
-import SoftButton from "../softButton";
+import { PageContainer, StoryTitle } from "../../components/themeComponents";
+import SoftButton from "../../components/softButton";
 
 const BottomBox = styled(Box)`
   position: absolute;
@@ -24,21 +24,22 @@ const DecisionText = styled(ScriptText)`
   padding-bottom: 5px;
 `;
 
-interface StoryPlayerProps extends ErrorHandlerProps {
-  readonly storyName: string;
-}
-
-const StoryPlayer: React.FC<StoryPlayerProps> = ({ storyName, message }) => {
+const StoryPlayer: React.FC<ErrorHandlerProps> = ({ message }) => {
   const [story, setStory] = useState<Story>();
   const [prevChoices, setPrevChoices] = useState<string[]>([]);
   const [prevDecisions, setPrevDecisions] = useState<string[]>([]);
   const [noStoryMessage, setNoStoryMessage] = useState("Loading...");
 
   useEffect(() => {
-    const effectGetCurrentStory = (): void => {
-      Client.getCurrentStory().then((res) => setStory(res), message.errorAlert);
+    const handleQuit = (): void => {
+      Client.quitStory().then(null, message.errorAlert);
     };
 
+    window.addEventListener("unload", handleQuit);
+    return () => window.removeEventListener("unload", handleQuit);
+  });
+
+  useEffect(() => {
     const effectGetCurrentDescription = (): void => {
       Client.getCurrentChoice().then(
         (res) => setPrevChoices((prev) => [...prev, res]),
@@ -46,17 +47,21 @@ const StoryPlayer: React.FC<StoryPlayerProps> = ({ storyName, message }) => {
       );
     };
 
-    Client.loadStory(storyName).then(
-      effectGetCurrentStory,
-      (err: ErrorResponse) => {
-        message.triggerAlert(err.message);
-        setNoStoryMessage("Oops! Looks like this story doesn't exist.");
+    const handleLoaded = (res: Story) => {
+      if (res) {
+        setStory(res);
+        if (prevChoices.length === 0) {
+          effectGetCurrentDescription();
+        }
+      } else {
+        setNoStoryMessage(
+          "Oops! Looks like this story doesn't exist. Load a story from your library!"
+        );
       }
-    );
-    if (prevChoices.length === 0) {
-      effectGetCurrentDescription();
-    }
-  }, [message, storyName, prevChoices.length]);
+    };
+
+    Client.getCurrentStory().then(handleLoaded, message.errorAlert);
+  }, [message, prevChoices.length]);
 
   const getCurrentStory = (): void => {
     Client.getCurrentStory().then((res) => setStory(res), message.errorAlert);
@@ -90,7 +95,7 @@ const StoryPlayer: React.FC<StoryPlayerProps> = ({ storyName, message }) => {
   };
 
   return (
-    <CurrentContainer>
+    <PageContainer>
       {(() => {
         switch (story) {
           case undefined:
@@ -138,7 +143,7 @@ const StoryPlayer: React.FC<StoryPlayerProps> = ({ storyName, message }) => {
           Start Over
         </Button>
       </BottomBox>
-    </CurrentContainer>
+    </PageContainer>
   );
 };
 

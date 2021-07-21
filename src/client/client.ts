@@ -60,16 +60,6 @@ const getCurrentAsStory = (instance: AxiosInstance): Promise<Story> => {
   );
 };
 
-const exportOriginal = (
-  instance: AxiosInstance,
-  path: string,
-  name: string
-): Promise<void> => {
-  return handleAxiosResponse(() =>
-    instance.post(ClientRoutes.EXPORT, null, { params: { path, name } })
-  );
-};
-
 const importFromPath = async (
   instance: AxiosInstance,
   path: string
@@ -116,7 +106,9 @@ const getAllStoryNames = (): Promise<string[]> => {
 };
 
 const exportStory = (path: string, name: string): Promise<void> => {
-  return exportOriginal(PLAYER_INSTANCE, path, name);
+  return handleAxiosResponse(() =>
+    PLAYER_INSTANCE.post(ClientRoutes.EXPORT, null, { params: { path, name } })
+  );
 };
 
 const exportStoryInProgress = (path: string, name: string): Promise<void> => {
@@ -197,8 +189,8 @@ const getCurrentDecisions = (): Promise<Decision[]> => {
   );
 };
 
-const exportWork = (path: string, name: string): Promise<void> => {
-  return exportOriginal(WRITER_INSTANCE, path, name);
+const exportWork = (path: string): Promise<void> => {
+  return WRITER_INSTANCE.post(ClientRoutes.EXPORT, null, { params: { path } });
 };
 
 const importWork = (path: string): Promise<void> => {

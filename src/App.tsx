@@ -8,6 +8,8 @@ import Writer from "./pages/writer";
 import styled from "@emotion/styled";
 import { Box } from "rebass";
 import { ErrorResponse } from "./client/types";
+import WorkEditor from "./pages/workEditor";
+import StoryPlayer from "./pages/storyPlayer";
 
 const Top = styled(Box)`
   position: absolute;
@@ -20,6 +22,8 @@ export enum Routes {
   HOME = "/",
   PLAYER_LIBRARY = "/player",
   WRITER_LIBRARY = "/writer",
+  PLAYER_PLAY = "/player/play",
+  WRITER_EDIT = "/writer/edit",
 }
 
 export interface Messenger {
@@ -85,6 +89,12 @@ function App() {
           </Route>
           <Route path={Routes.WRITER_LIBRARY} exact>
             <Writer message={message} />
+          </Route>
+          <Route path={Routes.PLAYER_PLAY} exact>
+            <StoryPlayer message={message} />
+          </Route>
+          <Route path={Routes.WRITER_EDIT} exact>
+            <WorkEditor message={message} />
           </Route>
         </Switch>
       </Router>

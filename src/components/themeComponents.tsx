@@ -6,14 +6,6 @@ export const PageContainer = styled.div`
   padding: 3vh 3vw;
 `;
 
-export const CurrentContainer = styled(Box)`
-  height: 90vh;
-  width: 90vw;
-  padding: 30px;
-  overflow-y: auto;
-  overflow-x: hidden;
-`;
-
 export const StoryTitle = styled(Text)`
   padding-top: 20px;
   font-size: 48px;
@@ -23,6 +15,17 @@ export const StoryTitle = styled(Text)`
 
 export const StrongText = styled(Text)`
   font-weight: bold;
+`;
+
+export const Header = styled(Text)`
+  font-size: 24px;
+  font-weight: bold;
+  padding: 15px 0 5px;
+`;
+
+export const ButtonLabel = styled(Text)`
+  font-size: 25px;
+  padding: 0 20px;
 `;
 
 export const FormContainer = styled.div`

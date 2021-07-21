@@ -4,7 +4,7 @@ import styled from "@emotion/styled";
 import { ErrorHandlerProps } from "../../App";
 import { Input } from "@rebass/forms";
 import SoftButton from "../../components/softButton";
-import { StoryTitle } from "../../components/themeComponents";
+import { Header } from "../../components/themeComponents";
 
 const InlineSoftButton = styled(SoftButton)`
   display: inline-block;
@@ -30,11 +30,13 @@ const TitleForm: React.FC<TitleFormProps> = ({ message, title, onFinish }) => {
     setEditing((prev) => !prev);
   };
 
+  // remove expoprt button from library and add to individuaal ediotr
+
   return (
     <>
-      <StoryTitle display={"inline-block"} mr={"15px"}>
+      <Header display={"inline-block"} mr={"15px"}>
         Story Title: {title}
-      </StoryTitle>
+      </Header>
       {editing && (
         <>
           <Input

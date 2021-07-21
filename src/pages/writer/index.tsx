@@ -1,30 +1,27 @@
 import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 import Client from "../../client/client";
-import { Box, Button, Flex, Text } from "rebass";
+import { Button, Flex, Text } from "rebass";
 import {
   BottomBox,
   EmptyLibrary,
   PageContainer,
   TitleBox,
 } from "../../components/themeComponents";
-import { BLUE, PURPLE, SOFT } from "../../themes";
-import ExportForm from "../../forms/exportForm";
+import { BLUE, SOFT } from "../../themes";
 import ImportForm from "../../forms/importForm";
 import PopupWindow from "../../components/popupWindow";
-import { ErrorHandlerProps } from "../../App";
-import WorkEditor from "../../components/workEditor";
+import { ErrorHandlerProps, Routes } from "../../App";
 import { ApplicationTypes, ErrorResponse } from "../../client/types";
 import BoxCard from "../../components/boxCard";
 
 const Writer: React.FC<ErrorHandlerProps> = ({ message }) => {
   const [library, setLibrary] = useState<string[]>([]);
   const [manageLibrary, setManageLibrary] = useState(false);
-  const [currentWork, setCurrentWork] = useState<string>();
-  // Export Form
-  const [exportVisible, setExportVisible] = useState(false);
-  const [exportName, setExportName] = useState<string>();
   // Import Form
   const [importVisible, setImportVisible] = useState(false);
+
+  const history = useHistory();
 
   useEffect(() => {
     Client.getAllWorkNames().then(
@@ -37,19 +34,9 @@ const Writer: React.FC<ErrorHandlerProps> = ({ message }) => {
     Client.getAllWorkNames().then((res) => setLibrary(res), message.errorAlert);
   };
 
-  const onClickExport = (name: string): void => {
-    setExportVisible(true);
-    setExportName(name);
-  };
-
   const onImportSuccess = (): void => {
     setImportVisible(false);
     updateLibrary();
-  };
-
-  const onExportSuccess = (): void => {
-    message.triggerMessage("Exported successfully!");
-    setExportVisible(false);
   };
 
   const onDelete = (name: string): void => {
@@ -62,13 +49,7 @@ const Writer: React.FC<ErrorHandlerProps> = ({ message }) => {
 
   const loadWork = (name: string): void => {
     Client.loadWork(name)
-      .then(() => setCurrentWork(name))
-      .catch((err: ErrorResponse) => message.triggerAlert(err.message));
-  };
-
-  const quitWork = (): void => {
-    Client.quitWork()
-      .then(() => setCurrentWork(undefined))
+      .then(() => history.push(Routes.WRITER_EDIT))
       .catch((err: ErrorResponse) => message.triggerAlert(err.message));
   };
 
@@ -85,18 +66,13 @@ const Writer: React.FC<ErrorHandlerProps> = ({ message }) => {
                 switch (manageLibrary) {
                   case false:
                     return (
-                      <Flex mb={"5px"}>
-                        <Button onClick={() => loadWork(title)} bg={BLUE}>
-                          Edit
-                        </Button>
-                        <Box mx={"auto"} />
-                        <Button
-                          onClick={() => onClickExport(title)}
-                          bg={PURPLE}
-                        >
-                          Export
-                        </Button>
-                      </Flex>
+                      <Button
+                        onClick={() => loadWork(title)}
+                        bg={BLUE}
+                        mb={"5px"}
+                      >
+                        Edit
+                      </Button>
                     );
                   case true:
                     return (
@@ -132,25 +108,6 @@ const Writer: React.FC<ErrorHandlerProps> = ({ message }) => {
           {manageLibrary ? "Stop Managing Library" : "Manage Library"}
         </Button>
       </BottomBox>
-
-      {exportName && (
-        <PopupWindow
-          visible={exportVisible}
-          onClose={() => setExportVisible(false)}
-        >
-          <ExportForm
-            name={exportName}
-            onSuccess={onExportSuccess}
-            exportType={ApplicationTypes.WORK}
-          />
-        </PopupWindow>
-      )}
-
-      {currentWork && (
-        <PopupWindow visible={true} onClose={quitWork}>
-          <WorkEditor message={message} workName={currentWork} />
-        </PopupWindow>
-      )}
 
       <PopupWindow
         visible={importVisible}

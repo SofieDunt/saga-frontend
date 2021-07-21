@@ -28,7 +28,7 @@ export interface ApiClient {
   readonly getCurrentStatuses: () => Promise<StoryStatus[]>;
   readonly getCurrentChoices: () => Promise<Choice[]>;
   readonly getCurrentDecisions: () => Promise<Decision[]>;
-  readonly exportWork: (path: string, name: string) => Promise<void>;
+  readonly exportWork: (path: string) => Promise<void>;
   readonly importWork: (path: string) => Promise<void>;
   readonly exportToPlayer: () => Promise<void>;
   readonly loadWork: (name: string) => Promise<void>;

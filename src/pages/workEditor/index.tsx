@@ -1,32 +1,33 @@
 import React, { useEffect, useState } from "react";
 import Client from "../../client/client";
 import {
+  ApplicationTypes,
   Choice,
   Decision,
-  ErrorResponse,
   Story,
   StoryStatus,
 } from "../../client/types";
-import { Box, Flex, Text } from "rebass";
-import styled from "@emotion/styled";
-import { ErrorHandlerProps } from "../../App";
-import ChoiceCard from "../choiceCard";
+import { Box, Flex } from "rebass";
+import { ErrorHandlerProps, Routes } from "../../App";
+import ChoiceCard from "../../components/choiceCard";
 import TitleForm from "../../forms/titleForm";
-import StatusCard from "../statusCard";
-import DecisionCard from "../decisionCard";
-import SoftButton from "../softButton";
-import { CurrentContainer, StoryTitle } from "../themeComponents";
+import StatusCard from "../../components/statusCard";
+import DecisionCard from "../../components/decisionCard";
+import SoftButton from "../../components/softButton";
+import {
+  ButtonLabel,
+  Header,
+  PageContainer,
+  StoryTitle,
+} from "../../components/themeComponents";
 import AddStatusForm from "../../forms/addStatusForm";
 import AddSimpleDecisionForm from "../../forms/addSimpleDecisionForm";
 import AddConsequentialDecisionForm from "../../forms/addConsequentialDecisionForm";
 import AddSimpleDependentDecisionForm from "../../forms/addSimpleDependentDecisionForm";
 import AddConsequentialDependentDecisionForm from "../../forms/addConsequentialDependentDecisionForm";
-
-const Header = styled(Text)`
-  font-size: 24px;
-  font-weight: bold;
-  padding: 15px 0 5px;
-`;
+import LinkButton from "../../components/linkButton";
+import { PURPLE } from "../../themes";
+import ExportForm from "../../forms/exportForm";
 
 const actionButtonMargin = "0 5px 5px 0";
 
@@ -47,33 +48,43 @@ const noStory: Story = {
   choice: -1,
 };
 
-interface WorkEditorProps extends ErrorHandlerProps {
-  readonly workName: string;
-}
-
-const WorkEditor: React.FC<WorkEditorProps> = ({ message, workName }) => {
+const WorkEditor: React.FC<ErrorHandlerProps> = ({ message }) => {
+  const [workName, setWorkName] = useState<string>();
   const [work, setWork] = useState<Story>(noStory);
   const [noWorkMessage, setNoWorkMessage] = useState("Loading...");
   const [currentForm, setCurrentForm] = useState<SwitchFormTypes>(
     SwitchFormTypes.NONE
   );
+  // Export Work Form
+  const [exportVisible, setExportVisible] = useState(false);
 
   useEffect(() => {
-    const effectGetCurrentWork = (): void => {
-      Client.getCurrentWork().then(
-        (res: Story) => setWork(res),
-        message.errorAlert
-      );
+    const handleQuit = (): void => {
+      Client.quitWork().then(null, message.errorAlert);
     };
 
-    Client.loadWork(workName).then(
-      effectGetCurrentWork,
-      (err: ErrorResponse) => {
-        message.triggerAlert(err.message);
-        setNoWorkMessage("Oops! Looks like this work doesn't exist.");
+    window.addEventListener("unload", handleQuit);
+    return () => window.removeEventListener("unload", handleQuit);
+  });
+
+  useEffect(() => {
+    const handleLoaded = (res: Story): void => {
+      if (res) {
+        setWork(res);
+        Client.getCurrentWorkName().then(
+          (res: string) => setWorkName(res),
+          message.errorAlert
+        );
+      } else {
+        setWorkName(undefined);
+        setNoWorkMessage(
+          "Oops! Looks like you haven't loaded a story to edit!"
+        );
       }
-    );
-  }, [message, workName]);
+    };
+
+    Client.getCurrentWork().then(handleLoaded, message.errorAlert);
+  }, [message]);
 
   const getCurrentWork = (): void => {
     Client.getCurrentWork().then(
@@ -123,11 +134,29 @@ const WorkEditor: React.FC<WorkEditorProps> = ({ message, workName }) => {
     );
   };
 
-  if (!work) {
-    return <StoryTitle>{noWorkMessage}</StoryTitle>;
+  const onClickExport = (): void => {
+    setExportVisible(true);
+  };
+
+  const onExportSuccess = (): void => {
+    message.triggerMessage("Exported successfully!");
+    setExportVisible(false);
+  };
+
+  if (!workName) {
+    return (
+      <PageContainer>
+        <StoryTitle>{noWorkMessage}</StoryTitle>
+        <LinkButton to={Routes.WRITER_LIBRARY} bg={PURPLE}>
+          <ButtonLabel>Go back to your library!</ButtonLabel>
+        </LinkButton>
+      </PageContainer>
+    );
   } else {
     return (
-      <CurrentContainer>
+      <PageContainer>
+        <StoryTitle>Story Editor</StoryTitle>
+        <Header>Work: {workName}</Header>
         <TitleForm
           title={work.name}
           message={message}
@@ -161,6 +190,7 @@ const WorkEditor: React.FC<WorkEditorProps> = ({ message, workName }) => {
             );
           })}
         </Flex>
+        <Header>Initial Choice: {work.choice}</Header>
 
         <Header>Decisions</Header>
         <Flex flexWrap={"wrap"}>
@@ -273,12 +303,34 @@ const WorkEditor: React.FC<WorkEditorProps> = ({ message, workName }) => {
           )}
         </Box>
         <Header>Export</Header>
-        <SoftButton
-          text={"Export to Player"}
-          onClick={exportToPlayer}
-          margin={actionButtonMargin}
-        />
-      </CurrentContainer>
+        {!exportVisible ? (
+          <Flex>
+            <SoftButton
+              text={"Export"}
+              onClick={onClickExport}
+              margin={actionButtonMargin}
+            />
+            <SoftButton
+              text={"Export to Player"}
+              onClick={exportToPlayer}
+              margin={actionButtonMargin}
+            />
+          </Flex>
+        ) : (
+          <Box minWidth={"400px"} mr={"10px"} width={"50%"}>
+            <ExportForm
+              name={workName}
+              onSuccess={onExportSuccess}
+              exportType={ApplicationTypes.WORK}
+            />
+            <SoftButton
+              text={"Cancel"}
+              onClick={() => setExportVisible(false)}
+              margin={"10px 0 0 0"}
+            />
+          </Box>
+        )}
+      </PageContainer>
     );
   }
 };

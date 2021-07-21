@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Client from "../../client/client";
-import { Button, Text } from "rebass";
+import { Box, Button, Text } from "rebass";
 import { Checkbox, Input, Label } from "@rebass/forms";
 import { BLUE, WARN } from "../../themes";
 import { ApplicationTypes, ErrorResponse } from "../../client/types";
-import { FormContainer } from "../../components/themeComponents";
 
 interface ExportFormProps {
   readonly name: string;
@@ -44,7 +43,7 @@ const ExportForm: React.FC<ExportFormProps> = ({
     if (!path) {
       showError("Export path is required.");
     } else {
-      Client.exportWork(path, name).then(onSuccess, handleError);
+      Client.exportWork(path).then(onSuccess, handleError);
     }
   };
 
@@ -58,7 +57,7 @@ const ExportForm: React.FC<ExportFormProps> = ({
   };
 
   return (
-    <FormContainer>
+    <Box>
       <Text mb={20}>Exporting: {name}</Text>
       <Label>Path to export to</Label>
       <Input
@@ -85,7 +84,7 @@ const ExportForm: React.FC<ExportFormProps> = ({
         Submit
       </Button>
       {errorVisible && <Text color={WARN}>{errorMessage}</Text>}
-    </FormContainer>
+    </Box>
   );
 };
 

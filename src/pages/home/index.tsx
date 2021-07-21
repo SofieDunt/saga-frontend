@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "@emotion/styled";
 import { Box, Flex, Text } from "rebass";
-import { PageContainer } from "../../components/themeComponents";
+import { ButtonLabel, PageContainer } from "../../components/themeComponents";
 import { PURPLE, BLUE } from "../../themes";
 import LinkButton from "../../components/linkButton";
 import { ErrorHandlerProps, Routes } from "../../App";
@@ -29,11 +29,6 @@ const GetStarted = styled(Text)`
 const Italic = styled(Text)`
   display: inline-block;
   font-style: italic;
-`;
-
-const ButtonLabel = styled(Text)`
-  font-size: 25px;
-  padding: 0 20px;
 `;
 
 const Home: React.FC<ErrorHandlerProps> = () => {

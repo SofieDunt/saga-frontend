@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 import Client from "../../client/client";
 import { Box, Button, Flex, Text } from "rebass";
 import {
   BottomBox,
   EmptyLibrary,
+  FormContainer,
   PageContainer,
   TitleBox,
 } from "../../components/themeComponents";
@@ -11,20 +13,20 @@ import { BLUE, PURPLE, SOFT } from "../../themes";
 import ExportForm from "../../forms/exportForm";
 import ImportForm from "../../forms/importForm";
 import PopupWindow from "../../components/popupWindow";
-import StoryPlayer from "../../components/storyPlayer";
-import { ErrorHandlerProps } from "../../App";
+import { ErrorHandlerProps, Routes } from "../../App";
 import { ApplicationTypes, ErrorResponse } from "../../client/types";
 import BoxCard from "../../components/boxCard";
 
 const Player: React.FC<ErrorHandlerProps> = ({ message }) => {
   const [library, setLibrary] = useState<string[]>([]);
   const [manageLibrary, setManageLibrary] = useState(false);
-  const [currentStory, setCurrentStory] = useState<string>();
   // Export Form
   const [exportVisible, setExportVisible] = useState(false);
   const [exportName, setExportName] = useState<string>();
   // Import Form
   const [importVisible, setImportVisible] = useState(false);
+
+  const history = useHistory();
 
   useEffect(() => {
     Client.getAllStoryNames().then(
@@ -65,14 +67,7 @@ const Player: React.FC<ErrorHandlerProps> = ({ message }) => {
 
   const loadStory = (name: string): void => {
     Client.loadStory(name).then(
-      () => setCurrentStory(name),
-      message.errorAlert
-    );
-  };
-
-  const quitStory = (): void => {
-    Client.quitStory().then(
-      () => setCurrentStory(undefined),
+      () => history.push(Routes.PLAYER_PLAY),
       message.errorAlert
     );
   };
@@ -144,17 +139,13 @@ const Player: React.FC<ErrorHandlerProps> = ({ message }) => {
           visible={exportVisible}
           onClose={() => setExportVisible(false)}
         >
-          <ExportForm
-            name={exportName}
-            onSuccess={onExportSuccess}
-            exportType={ApplicationTypes.STORY}
-          />
-        </PopupWindow>
-      )}
-
-      {currentStory && (
-        <PopupWindow visible={true} onClose={quitStory}>
-          <StoryPlayer storyName={currentStory} message={message} />
+          <FormContainer>
+            <ExportForm
+              name={exportName}
+              onSuccess={onExportSuccess}
+              exportType={ApplicationTypes.STORY}
+            />
+          </FormContainer>
         </PopupWindow>
       )}
 
