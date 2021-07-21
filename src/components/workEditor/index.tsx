@@ -116,6 +116,13 @@ const WorkEditor: React.FC<WorkEditorProps> = ({ message, workName }) => {
     setCurrentForm(SwitchFormTypes.NONE);
   };
 
+  const exportToPlayer = (): void => {
+    Client.exportToPlayer().then(
+      () => message.triggerMessage("Successfully exported!"),
+      message.errorAlert
+    );
+  };
+
   if (!work) {
     return <StoryTitle>{noWorkMessage}</StoryTitle>;
   } else {
@@ -148,6 +155,8 @@ const WorkEditor: React.FC<WorkEditorProps> = ({ message, workName }) => {
                 key={choice.id}
                 choice={choice}
                 decisions={work?.decisions}
+                onSuccess={updateChoicesAndDecisions}
+                message={message}
               />
             );
           })}
@@ -264,7 +273,11 @@ const WorkEditor: React.FC<WorkEditorProps> = ({ message, workName }) => {
           )}
         </Box>
         <Header>Export</Header>
-        <SoftButton text={"Export to Player"} margin={actionButtonMargin} />
+        <SoftButton
+          text={"Export to Player"}
+          onClick={exportToPlayer}
+          margin={actionButtonMargin}
+        />
       </CurrentContainer>
     );
   }
