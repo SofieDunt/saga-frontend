@@ -28,12 +28,14 @@ import AddConsequentialDependentDecisionForm from "../../forms/addConsequentialD
 import LinkButton from "../../components/linkButton";
 import { PURPLE } from "../../themes";
 import ExportForm from "../../forms/exportForm";
+import SetInitialChoiceForm from "../../forms/setInitialChoiceForm";
 
 const actionButtonMargin = "0 5px 5px 0";
 
 enum SwitchFormTypes {
   ADD_STATUS,
   ADD_SIMPLE,
+  SET_INITIAL,
   ADD_CONSEQUENTIAL,
   ADD_SIMPLE_DEPENDENT,
   ADD_CONSEQUENTIAL_DEPENDENT,
@@ -110,6 +112,23 @@ const WorkEditor: React.FC<ErrorHandlerProps> = ({ message }) => {
     setCurrentForm(SwitchFormTypes.NONE);
   };
 
+  const updateInitialChoice = (): void => {
+    Client.getInitialChoice().then(
+      (res: number) =>
+        setWork((prev) => {
+          return {
+            name: prev.name,
+            statuses: prev.statuses,
+            choices: prev.choices,
+            decisions: prev.decisions,
+            choice: res,
+          };
+        }),
+      message.errorAlert
+    );
+    setCurrentForm(SwitchFormTypes.NONE);
+  };
+
   const updateChoicesAndDecisions = (): void => {
     Client.getCurrentChoices().then((res: Choice[]) => {
       Client.getCurrentDecisions().then((dRes: Decision[]) => {
@@ -141,6 +160,10 @@ const WorkEditor: React.FC<ErrorHandlerProps> = ({ message }) => {
   const onExportSuccess = (): void => {
     message.triggerMessage("Exported successfully!");
     setExportVisible(false);
+  };
+
+  const onAddChoice = (): void => {
+    Client.addChoice().then(updateChoicesAndDecisions, message.errorAlert);
   };
 
   if (!workName) {
@@ -210,6 +233,17 @@ const WorkEditor: React.FC<ErrorHandlerProps> = ({ message }) => {
                     <AddStatusForm onSuccess={updateStatuses} />
                   </>
                 );
+              case SwitchFormTypes.SET_INITIAL:
+                return (
+                  <>
+                    <Header>Set Initial Choice</Header>
+                    <SetInitialChoiceForm
+                      choices={work.choices}
+                      onSuccess={updateInitialChoice}
+                      message={message}
+                    />
+                  </>
+                );
               case SwitchFormTypes.ADD_SIMPLE:
                 return (
                   <>
@@ -261,6 +295,19 @@ const WorkEditor: React.FC<ErrorHandlerProps> = ({ message }) => {
                       text={"Add Status"}
                       margin={actionButtonMargin}
                       onClick={() => setCurrentForm(SwitchFormTypes.ADD_STATUS)}
+                    />
+                    <SoftButton
+                      text={"Add Choice"}
+                      margin={actionButtonMargin}
+                      onClick={onAddChoice}
+                    />
+                    <br />
+                    <SoftButton
+                      text={"Set Initial Choice"}
+                      margin={actionButtonMargin}
+                      onClick={() =>
+                        setCurrentForm(SwitchFormTypes.SET_INITIAL)
+                      }
                     />
                     <br />
                     <SoftButton

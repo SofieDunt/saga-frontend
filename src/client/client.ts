@@ -29,6 +29,7 @@ export enum ClientRoutes {
   EXPORT_TO_PLAYER = "/export-to-player",
   GET_CURRENT_WORK_STORY_NAME = "/current/story-name",
   GET_CURRENT_STATUSES = "/current/statuses",
+  GET_INITIAL_CHOICE = "/current/initial-choice",
   GET_CURRENT_CHOICES = "/current/choices",
   GET_CURRENT_DECISIONS = "/current/decisions",
   RENAME = "/rename",
@@ -174,6 +175,12 @@ const getCurrentWorkStoryName = (): Promise<string> => {
 const getCurrentStatuses = (): Promise<StoryStatus[]> => {
   return handleAxiosResponse(() =>
     WRITER_INSTANCE.get(ClientRoutes.GET_CURRENT_STATUSES)
+  );
+};
+
+const getInitialChoice = (): Promise<number> => {
+  return handleAxiosResponse(() =>
+    WRITER_INSTANCE.get(ClientRoutes.GET_INITIAL_CHOICE)
   );
 };
 
@@ -342,6 +349,7 @@ const Client: ApiClient = {
   getCurrentWork,
   getCurrentWorkStoryName,
   getCurrentStatuses,
+  getInitialChoice,
   getCurrentChoices,
   getCurrentDecisions,
   exportWork,
