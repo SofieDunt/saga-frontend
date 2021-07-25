@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
-import { Box, Text } from "rebass";
-import { BLACK } from "../themes";
+import { Box, Button, Flex, Text } from "rebass";
+import { BLACK, BLUE } from "../themes";
 
 export const PageContainer = styled.div`
   padding: 3vh 3vw;
@@ -52,8 +52,12 @@ export const EmptyLibrary = styled(Box)`
   padding-top: 30px;
 `;
 
-export const BottomBox = styled(Box)`
+export const BottomFlex = styled(Flex)`
   position: absolute;
   bottom: 50px;
   right: 50px;
+`;
+
+export const PrimaryButton = styled(Button)`
+  background: ${BLUE};
 `;

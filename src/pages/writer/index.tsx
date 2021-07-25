@@ -3,9 +3,11 @@ import { useHistory } from "react-router-dom";
 import Client from "../../client/client";
 import { Button, Flex, Text } from "rebass";
 import {
-  BottomBox,
+  BottomFlex,
   EmptyLibrary,
+  FormContainer,
   PageContainer,
+  PrimaryButton,
   TitleBox,
 } from "../../components/themeComponents";
 import { BLUE, SOFT } from "../../themes";
@@ -14,24 +16,37 @@ import PopupWindow from "../../components/popupWindow";
 import { ErrorHandlerProps, Routes } from "../../App";
 import { ApplicationTypes, ErrorResponse } from "../../client/types";
 import BoxCard from "../../components/boxCard";
+import StartWorkForm from "../../forms/startWorkForm";
+import RenameWorkForm from "../../forms/renameWorkForm";
 
 const Writer: React.FC<ErrorHandlerProps> = ({ message }) => {
   const [library, setLibrary] = useState<string[]>([]);
   const [manageLibrary, setManageLibrary] = useState(false);
-  // Import Form
+  // Form visibility
+  const [renameVisible, setRenameVisible] = useState(false);
+  const [startVisible, setStartVisible] = useState(false);
   const [importVisible, setImportVisible] = useState(false);
 
   const history = useHistory();
 
   useEffect(() => {
-    Client.getAllWorkNames().then(
-      (res) => setLibrary(res),
-      (err: ErrorResponse) => window.alert(err.message)
-    );
+    Client.getAllWorkNames()
+      .then((res) => setLibrary(res))
+      .catch((err) => window.alert(err.message));
   });
 
   const updateLibrary = (): void => {
     Client.getAllWorkNames().then((res) => setLibrary(res), message.errorAlert);
+  };
+
+  const onRenameSuccess = (): void => {
+    setRenameVisible(false);
+    updateLibrary();
+  };
+
+  const onStartNewSuccess = (): void => {
+    setStartVisible(false);
+    updateLibrary();
   };
 
   const onImportSuccess = (): void => {
@@ -40,17 +55,16 @@ const Writer: React.FC<ErrorHandlerProps> = ({ message }) => {
   };
 
   const onDelete = (name: string): void => {
-    Client.removeWork(name)
-      .then()
-      .catch((err: ErrorResponse) =>
-        message.triggerAlert("Could not delete: " + err.message)
-      );
+    Client.removeWork(name).then(updateLibrary, (err: ErrorResponse) =>
+      message.triggerAlert("Could not delete: " + err.message)
+    );
   };
 
   const loadWork = (name: string): void => {
-    Client.loadWork(name)
-      .then(() => history.push(Routes.WRITER_EDIT))
-      .catch((err: ErrorResponse) => message.triggerAlert(err.message));
+    Client.loadWork(name).then(
+      () => history.push(Routes.WRITER_EDIT),
+      message.errorAlert
+    );
   };
 
   return (
@@ -76,9 +90,29 @@ const Writer: React.FC<ErrorHandlerProps> = ({ message }) => {
                     );
                   case true:
                     return (
-                      <Button onClick={() => onDelete(title)} bg={"red"}>
-                        Delete
-                      </Button>
+                      <Flex>
+                        <PopupWindow
+                          visible={renameVisible}
+                          onClose={() => setRenameVisible(false)}
+                        >
+                          <FormContainer>
+                            <RenameWorkForm
+                              currentName={title}
+                              onSuccess={onRenameSuccess}
+                              message={message}
+                            />
+                          </FormContainer>
+                        </PopupWindow>
+                        <PrimaryButton
+                          onClick={() => setRenameVisible(true)}
+                          mr={"5px"}
+                        >
+                          Rename
+                        </PrimaryButton>
+                        <Button onClick={() => onDelete(title)} bg={"red"}>
+                          Delete
+                        </Button>
+                      </Flex>
                     );
                 }
               })()}
@@ -94,12 +128,13 @@ const Writer: React.FC<ErrorHandlerProps> = ({ message }) => {
         )}
       </Flex>
 
-      <BottomBox>
-        {manageLibrary && (
-          <Button onClick={() => setImportVisible(true)} bg={BLUE} mr={20}>
-            Import
-          </Button>
-        )}
+      <BottomFlex>
+        <PrimaryButton onClick={() => setStartVisible(true)}>
+          Start New Story
+        </PrimaryButton>
+        <PrimaryButton onClick={() => setImportVisible(true)} mx={"10px"}>
+          Import
+        </PrimaryButton>
         <Button
           onClick={() => setManageLibrary((prev) => !prev)}
           padding={"15px 25px"}
@@ -107,7 +142,16 @@ const Writer: React.FC<ErrorHandlerProps> = ({ message }) => {
         >
           {manageLibrary ? "Stop Managing Library" : "Manage Library"}
         </Button>
-      </BottomBox>
+      </BottomFlex>
+
+      <PopupWindow
+        visible={startVisible}
+        onClose={() => setStartVisible(false)}
+      >
+        <FormContainer>
+          <StartWorkForm onSuccess={onStartNewSuccess} message={message} />
+        </FormContainer>
+      </PopupWindow>
 
       <PopupWindow
         visible={importVisible}

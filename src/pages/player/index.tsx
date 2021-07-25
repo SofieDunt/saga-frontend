@@ -3,10 +3,11 @@ import { useHistory } from "react-router-dom";
 import Client from "../../client/client";
 import { Box, Button, Flex, Text } from "rebass";
 import {
-  BottomBox,
+  BottomFlex,
   EmptyLibrary,
   FormContainer,
   PageContainer,
+  PrimaryButton,
   TitleBox,
 } from "../../components/themeComponents";
 import { BLUE, PURPLE, SOFT } from "../../themes";
@@ -119,12 +120,10 @@ const Player: React.FC<ErrorHandlerProps> = ({ message }) => {
         )}
       </Flex>
 
-      <BottomBox>
-        {manageLibrary && (
-          <Button onClick={() => setImportVisible(true)} bg={BLUE} mr={20}>
-            Import
-          </Button>
-        )}
+      <BottomFlex>
+        <PrimaryButton onClick={() => setImportVisible(true)} mr={"10px"}>
+          Import
+        </PrimaryButton>
         <Button
           onClick={() => setManageLibrary((prev) => !prev)}
           padding={"15px 25px"}
@@ -132,7 +131,7 @@ const Player: React.FC<ErrorHandlerProps> = ({ message }) => {
         >
           {manageLibrary ? "Stop Managing Library" : "Manage Library"}
         </Button>
-      </BottomBox>
+      </BottomFlex>
 
       {exportName && (
         <PopupWindow
