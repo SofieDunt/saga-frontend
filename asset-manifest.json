@@ -1,22 +1,22 @@
 {
   "files": {
     "main.css": "/saga-frontend/static/css/main.4a4137e4.chunk.css",
-    "main.js": "/saga-frontend/static/js/main.409750a7.chunk.js",
-    "main.js.map": "/saga-frontend/static/js/main.409750a7.chunk.js.map",
+    "main.js": "/saga-frontend/static/js/main.a4ef9ee2.chunk.js",
+    "main.js.map": "/saga-frontend/static/js/main.a4ef9ee2.chunk.js.map",
     "runtime-main.js": "/saga-frontend/static/js/runtime-main.2c3860e1.js",
     "runtime-main.js.map": "/saga-frontend/static/js/runtime-main.2c3860e1.js.map",
-    "static/js/2.ee7e792f.chunk.js": "/saga-frontend/static/js/2.ee7e792f.chunk.js",
-    "static/js/2.ee7e792f.chunk.js.map": "/saga-frontend/static/js/2.ee7e792f.chunk.js.map",
+    "static/js/2.2ab1c98a.chunk.js": "/saga-frontend/static/js/2.2ab1c98a.chunk.js",
+    "static/js/2.2ab1c98a.chunk.js.map": "/saga-frontend/static/js/2.2ab1c98a.chunk.js.map",
     "static/js/3.4a9150db.chunk.js": "/saga-frontend/static/js/3.4a9150db.chunk.js",
     "static/js/3.4a9150db.chunk.js.map": "/saga-frontend/static/js/3.4a9150db.chunk.js.map",
     "index.html": "/saga-frontend/index.html",
     "static/css/main.4a4137e4.chunk.css.map": "/saga-frontend/static/css/main.4a4137e4.chunk.css.map",
-    "static/js/2.ee7e792f.chunk.js.LICENSE.txt": "/saga-frontend/static/js/2.ee7e792f.chunk.js.LICENSE.txt"
+    "static/js/2.2ab1c98a.chunk.js.LICENSE.txt": "/saga-frontend/static/js/2.2ab1c98a.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.2c3860e1.js",
-    "static/js/2.ee7e792f.chunk.js",
+    "static/js/2.2ab1c98a.chunk.js",
     "static/css/main.4a4137e4.chunk.css",
-    "static/js/main.409750a7.chunk.js"
+    "static/js/main.a4ef9ee2.chunk.js"
   ]
 }
