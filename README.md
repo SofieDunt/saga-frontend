@@ -1,6 +1,27 @@
-# Getting Started with Create React App
+# Saga Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Overview
+
+This is a simple user interface for an [application](https://github.com/SofieDunt/saga) that allows users to play and create interactive stories. A demo is hosted using Github pages at https://sofiedunt.github.io/saga-frontend/. Built off of the [demo branch](https://github.com/SofieDunt/saga-frontend/tree/demo), it is not connected to the backend and is intended to demonstrate layout and user flow rather than functionality.
+
+To run the full application, follow the setup for this repository and https://github.com/SofieDunt/saga, then run both.
+
+## Setup
+Download or clone this repository and run `npm install` to install all dependencies.
+
+## Code Walkthrough
+
+Inside the source folder, there are four directories:
+
+- **client** contains all functions and types relevant to interacting with the backend
+- **forms** contains all forms through which users can submit information via the client
+- **components** contains reusable components used to build the pages and may contain forms
+- **pages** contains each page, which are composed of components and forms
+
+Other notable files:
+
+- `App.tsx` renders each page at its respective route
+- `themes.ts` contains colors and styles used throughout the front en
 
 ## Available Scripts
 
@@ -10,9 +31,6 @@ In the project directory, you can run:
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
 
 ### `npm test`
 
@@ -24,23 +42,6 @@ See the section about [running tests](https://facebook.github.io/create-react-ap
 Builds the app for production to the `build` folder.\
 It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
