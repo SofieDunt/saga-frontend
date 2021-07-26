@@ -1,4 +1,3 @@
-import { AxiosInstance } from "axios";
 import {
   AddConsequentialDecisionRequest,
   AddConsequentialDependentRequest,
@@ -7,327 +6,425 @@ import {
   ApiClient,
   Choice,
   Decision,
+  DecisionTypes,
   Story,
   StoryStatus,
 } from "./types";
-import { handleAxiosResponse, PLAYER_INSTANCE, WRITER_INSTANCE } from "./axios";
 
-export enum ClientRoutes {
-  GET_CURRENT_NAME = "/current/name",
-  GET_CURRENT_CHOICE = "/current/choice",
-  GET_CURRENT_STORY = "/current/story",
-  GET_ALL_NAMES = "/stories",
-  EXPORT = "/export",
-  EXPORT_IN_PROGRESS = "/export-in-progress",
-  IMPORT = "/import",
-  NEXT = "/next",
-  CHOOSE = "/choose",
-  LOAD = "/load",
-  RESTART = "/restart",
-  QUIT = "/quit",
-  REMOVE = "/remove",
-  EXPORT_TO_PLAYER = "/export-to-player",
-  GET_CURRENT_WORK_STORY_NAME = "/current/story-name",
-  GET_CURRENT_STATUSES = "/current/statuses",
-  GET_INITIAL_CHOICE = "/current/initial-choice",
-  GET_CURRENT_CHOICES = "/current/choices",
-  GET_CURRENT_DECISIONS = "/current/decisions",
-  RENAME = "/rename",
-  START_NEW_WORK = "/start",
-  SET_NAME = "/set/name",
-  ADD_STATUS = "/add/status",
-  REMOVE_STATUS = "/remove/status",
-  ADD_CHOICE = "/add/choice",
-  SET_INITIAL_CHOICE = "/set/initial",
-  ADD_SIMPLE_DECISION = "/add/simple-decision",
-  ADD_CONSEQUENTIAL_DECISION = "/add/consequential-decision",
-  ADD_SIMPLE_DEPENDENT_DECISION = "/add/simple-dependent-decision",
-  ADD_CONSEQUENTIAL_DEPENDENT_DECISION = "/add/consequential-dependent-decision",
-  REMOVE_OPTION = "/remove/option",
-  REMOVE_CHOICE = "/remove/choice",
-}
+let loadedPlayerName: string = "";
+let loadedEditorName: string = "";
+const allPlayerNames: string[] = [
+  "A Magical Adventure",
+  "A Sci-Fi Adventure",
+  "A Nonfiction Adventure",
+];
+const allEditorNames: string[] = [
+  "A Magical Adventure",
+  "A Sci-Fi Adventure",
+  "A Nonfiction Adventure",
+];
 
-const getAllNames = (instance: AxiosInstance): Promise<string[]> => {
-  return handleAxiosResponse(() => instance.get(ClientRoutes.GET_ALL_NAMES));
+const defaultStory: Story = {
+  name: "",
+  statuses: [
+    {
+      name: "points",
+      value: 0,
+    },
+  ],
+  choices: [
+    {
+      id: 0,
+      options: [
+        {
+          id: 0,
+          decision: 0,
+        },
+      ],
+    },
+    {
+      id: 1,
+      options: [
+        {
+          id: 0,
+          decision: 1,
+        },
+        {
+          id: 1,
+          decision: 2,
+        },
+        {
+          id: 2,
+          decision: 3,
+        },
+      ],
+    },
+    {
+      id: 2,
+      options: [
+        {
+          id: 0,
+          decision: 4,
+        },
+      ],
+    },
+    {
+      id: 3,
+      options: [],
+    },
+  ],
+  decisions: [
+    {
+      id: 0,
+      type: DecisionTypes.SIMPLE,
+      description: "Next",
+      threshold: 0,
+      outcome1Id: 1,
+      outcome2Id: 0,
+    },
+    {
+      id: 1,
+      type: DecisionTypes.SIMPLE,
+      description: "Iceland",
+      threshold: 0,
+      outcome1Id: 2,
+      outcome2Id: 0,
+    },
+    {
+      id: 2,
+      type: DecisionTypes.SIMPLE,
+      description: "Venice",
+      threshold: 0,
+      outcome1Id: 2,
+      outcome2Id: 0,
+    },
+    {
+      id: 3,
+      type: DecisionTypes.SIMPLE,
+      description: "Disneyland",
+      threshold: 0,
+      outcome1Id: 2,
+      outcome2Id: 0,
+    },
+    {
+      id: 4,
+      type: DecisionTypes.SIMPLE,
+      description: "Next",
+      threshold: 0,
+      outcome1Id: 3,
+      outcome2Id: 0,
+    },
+  ],
+  choice: 0,
 };
 
-const getCurrentName = (instance: AxiosInstance): Promise<string> => {
-  return handleAxiosResponse(() => instance.get(ClientRoutes.GET_CURRENT_NAME));
+let loadedPlayerStory: Story = defaultStory;
+let loadedEditorStory: Story = defaultStory;
+
+const importFromPath = async (): Promise<void> => {
+  return Promise.reject({ message: "This is not supported in the demo." });
 };
 
-const getCurrentAsStory = (instance: AxiosInstance): Promise<Story> => {
-  return handleAxiosResponse(() =>
-    instance.get(ClientRoutes.GET_CURRENT_STORY)
-  );
-};
-
-const importFromPath = async (
-  instance: AxiosInstance,
-  path: string
-): Promise<void> => {
-  return handleAxiosResponse(() =>
-    instance.post(ClientRoutes.IMPORT, null, { params: { path } })
-  );
-};
-
-const quit = (instance: AxiosInstance): Promise<void> => {
-  return handleAxiosResponse(() => instance.post(ClientRoutes.QUIT));
-};
-
-const load = (instance: AxiosInstance, name: string): Promise<void> => {
-  return handleAxiosResponse(() =>
-    instance.post(ClientRoutes.LOAD, null, { params: { name } })
-  );
-};
-
-const remove = (instance: AxiosInstance, name: string): Promise<void> => {
-  return handleAxiosResponse(() =>
-    instance.delete(ClientRoutes.REMOVE, { params: { name } })
-  );
+const quit = (): Promise<void> => {
+  loadedEditorName = "";
+  return Promise.resolve();
 };
 
 // PLAYER
 
 const getCurrentStoryName = (): Promise<string> => {
-  return getCurrentName(PLAYER_INSTANCE);
+  return Promise.resolve(loadedPlayerName);
 };
 
 const getCurrentChoice = (): Promise<string> => {
-  return handleAxiosResponse(() =>
-    PLAYER_INSTANCE.get(ClientRoutes.GET_CURRENT_CHOICE)
-  );
+  let description = "";
+
+  switch (loadedPlayerStory.choice) {
+    case 0:
+      description =
+        "This is a sample interactive story demo! Here you can see how players read their options and make decisions.";
+      break;
+    case 1:
+      description = "Try making a decision! Where will you go for vacation?";
+      break;
+    case 2:
+      description = "Nice decision! That's all for this demo!";
+      break;
+    case 3:
+      description = "Game over, no choices left.";
+      break;
+  }
+
+  return Promise.resolve(description);
 };
 
 const getCurrentStory = (): Promise<Story> => {
-  return getCurrentAsStory(PLAYER_INSTANCE);
+  const loaded: Story = {
+    name: loadedPlayerName,
+    statuses: loadedPlayerStory.statuses,
+    choices: loadedPlayerStory.choices,
+    decisions: loadedPlayerStory.decisions,
+    choice: loadedPlayerStory.choice,
+  };
+  return Promise.resolve(loaded);
 };
 
 const getAllStoryNames = (): Promise<string[]> => {
-  return getAllNames(PLAYER_INSTANCE);
+  return Promise.resolve(allPlayerNames);
 };
 
 const exportStory = (path: string, name: string): Promise<void> => {
-  return handleAxiosResponse(() =>
-    PLAYER_INSTANCE.post(ClientRoutes.EXPORT, null, { params: { path, name } })
-  );
+  return Promise.reject({ message: "This is not supported in the demo." });
 };
 
 const exportStoryInProgress = (path: string, name: string): Promise<void> => {
-  return handleAxiosResponse(() =>
-    PLAYER_INSTANCE.post(ClientRoutes.EXPORT_IN_PROGRESS, null, {
-      params: { path, name },
-    })
-  );
+  return Promise.reject({ message: "This is not supported in the demo." });
 };
 
 const importStory = (path: string): Promise<void> => {
-  return importFromPath(PLAYER_INSTANCE, path);
+  return importFromPath();
 };
 
 const next = (): Promise<void> => {
-  return handleAxiosResponse(() => PLAYER_INSTANCE.post(ClientRoutes.NEXT));
+  return Promise.reject({ message: "This is not supported in the demo." });
 };
 
 const choose = (decision: number): Promise<void> => {
-  return handleAxiosResponse(() =>
-    PLAYER_INSTANCE.post(ClientRoutes.CHOOSE, null, { params: { decision } })
-  );
+  loadedPlayerStory = {
+    name: loadedPlayerStory.name,
+    statuses: loadedPlayerStory.statuses,
+    choices: loadedPlayerStory.choices,
+    decisions: loadedPlayerStory.decisions,
+    choice: loadedPlayerStory.decisions[decision].outcome1Id,
+  };
+  return Promise.resolve();
 };
 
 const loadStory = (name: string): Promise<void> => {
-  return handleAxiosResponse(() =>
-    PLAYER_INSTANCE.post(ClientRoutes.LOAD, null, { params: { name } })
-  );
+  loadedPlayerName = name;
+  return Promise.resolve();
 };
 
 const restart = (): Promise<void> => {
-  return handleAxiosResponse(() => PLAYER_INSTANCE.post(ClientRoutes.RESTART));
+  loadedPlayerStory = defaultStory;
+  return Promise.resolve();
 };
 
 const quitStory = (): Promise<void> => {
-  return quit(PLAYER_INSTANCE);
+  return quit();
 };
 
 const removeStory = (name: string): Promise<void> => {
-  return remove(PLAYER_INSTANCE, name);
+  allPlayerNames.splice(allPlayerNames.indexOf(name), 1);
+  return Promise.resolve();
 };
 
 // WRITER
 
 const getAllWorkNames = (): Promise<string[]> => {
-  return getAllNames(WRITER_INSTANCE);
+  return Promise.resolve(allEditorNames);
 };
 
 const getCurrentWorkName = (): Promise<string> => {
-  return getCurrentName(WRITER_INSTANCE);
+  return Promise.resolve(loadedEditorName);
 };
 
 const getCurrentWork = (): Promise<Story> => {
-  return getCurrentAsStory(WRITER_INSTANCE);
+  const loaded: Story = {
+    name: loadedEditorName,
+    statuses: loadedEditorStory.statuses,
+    choices: loadedEditorStory.choices,
+    decisions: loadedEditorStory.decisions,
+    choice: loadedEditorStory.choice,
+  };
+
+  return Promise.resolve(loaded);
 };
 
 const getCurrentWorkStoryName = (): Promise<string> => {
-  return handleAxiosResponse(() =>
-    WRITER_INSTANCE.get(ClientRoutes.GET_CURRENT_WORK_STORY_NAME)
-  );
+  if (loadedEditorName !== "") {
+    return Promise.resolve(loadedEditorStory.name);
+  } else {
+    return Promise.reject({ message: "No loaded story." });
+  }
 };
 
 const getCurrentStatuses = (): Promise<StoryStatus[]> => {
-  return handleAxiosResponse(() =>
-    WRITER_INSTANCE.get(ClientRoutes.GET_CURRENT_STATUSES)
-  );
+  if (loadedEditorName !== "") {
+    return Promise.resolve(loadedEditorStory.statuses);
+  } else {
+    return Promise.reject({ message: "No loaded story." });
+  }
 };
 
 const getInitialChoice = (): Promise<number> => {
-  return handleAxiosResponse(() =>
-    WRITER_INSTANCE.get(ClientRoutes.GET_INITIAL_CHOICE)
-  );
+  if (loadedEditorName !== "") {
+    return Promise.resolve(loadedEditorStory.choice);
+  } else {
+    return Promise.reject({ message: "No loaded story." });
+  }
 };
 
 const getCurrentChoices = (): Promise<Choice[]> => {
-  return handleAxiosResponse(() =>
-    WRITER_INSTANCE.get(ClientRoutes.GET_CURRENT_CHOICES)
-  );
+  if (loadedEditorName !== "") {
+    return Promise.resolve(loadedEditorStory.choices);
+  } else {
+    return Promise.reject({ message: "No loaded story." });
+  }
 };
 
 const getCurrentDecisions = (): Promise<Decision[]> => {
-  return handleAxiosResponse(() =>
-    WRITER_INSTANCE.get(ClientRoutes.GET_CURRENT_DECISIONS)
-  );
+  if (loadedEditorName !== "") {
+    return Promise.resolve(loadedEditorStory.decisions);
+  } else {
+    return Promise.reject({ message: "No loaded story." });
+  }
 };
 
 const exportWork = (path: string): Promise<void> => {
-  return WRITER_INSTANCE.post(ClientRoutes.EXPORT, null, { params: { path } });
+  return Promise.reject({ message: "This is not supported in the demo." });
 };
 
 const importWork = (path: string): Promise<void> => {
-  return importFromPath(WRITER_INSTANCE, path);
+  return Promise.reject({ message: "This is not supported in the demo." });
 };
 
 const exportToPlayer = (): Promise<void> => {
-  return handleAxiosResponse(() =>
-    WRITER_INSTANCE.post(ClientRoutes.EXPORT_TO_PLAYER)
-  );
+  return Promise.reject({ message: "This is not supported in the demo." });
 };
 
 const loadWork = (name: string): Promise<void> => {
-  return load(WRITER_INSTANCE, name);
+  loadedEditorName = name;
+  return Promise.resolve();
 };
 
 const quitWork = (): Promise<void> => {
-  return quit(WRITER_INSTANCE);
+  return quit();
 };
 
 const removeWork = (name: string): Promise<void> => {
-  return remove(WRITER_INSTANCE, name);
+  allEditorNames.splice(allEditorNames.indexOf(name), 1);
+  return Promise.resolve();
 };
 
 const renameWork = (name: string, newName: string): Promise<void> => {
-  return handleAxiosResponse(() =>
-    WRITER_INSTANCE.post(ClientRoutes.RENAME, null, {
-      params: {
-        name,
-        newName,
-      },
-    })
-  );
+  return Promise.reject({ message: "This is not supported in the demo." });
 };
 
 const startNewWork = (name: string): Promise<void> => {
-  return handleAxiosResponse(() =>
-    WRITER_INSTANCE.post(ClientRoutes.START_NEW_WORK, null, {
-      params: { name },
-    })
-  );
+  return Promise.reject({ message: "This is not supported in the demo." });
 };
 
 const setName = (name: string): Promise<void> => {
-  return handleAxiosResponse(() =>
-    WRITER_INSTANCE.post(ClientRoutes.SET_NAME, null, { params: { name } })
-  );
+  if (name.length < 1) {
+    return Promise.resolve();
+  }
+
+  loadedEditorName = name;
+  loadedEditorStory = {
+    name: name,
+    statuses: loadedEditorStory.statuses,
+    choices: loadedEditorStory.choices,
+    decisions: loadedEditorStory.decisions,
+    choice: loadedEditorStory.choice,
+  };
+  return Promise.resolve();
 };
 
 const addStatus = (name: string, val: number): Promise<void> => {
-  return handleAxiosResponse(() =>
-    WRITER_INSTANCE.post(ClientRoutes.ADD_STATUS, null, {
-      params: {
-        name,
-        val,
-      },
-    })
-  );
+  let res = [];
+  let existed = false;
+  for (let status of loadedEditorStory.statuses) {
+    if (status.name === name) {
+      res.push({ name, value: val });
+      existed = true;
+    } else {
+      res.push(status);
+    }
+  }
+  if (existed) {
+    loadedEditorStory = {
+      name: loadedEditorStory.name,
+      statuses: res,
+      choices: loadedEditorStory.choices,
+      decisions: loadedEditorStory.decisions,
+      choice: loadedEditorStory.choice,
+    };
+    return Promise.resolve();
+  } else {
+    loadedEditorStory = {
+      name: loadedEditorStory.name,
+      statuses: [...loadedEditorStory.statuses, { name, value: val }],
+      choices: loadedEditorStory.choices,
+      decisions: loadedEditorStory.decisions,
+      choice: loadedEditorStory.choice,
+    };
+    return Promise.resolve();
+  }
 };
 
 const removeStatus = (name: string): Promise<void> => {
-  return handleAxiosResponse(() =>
-    WRITER_INSTANCE.delete(ClientRoutes.REMOVE_STATUS, { params: { name } })
-  );
+  return Promise.reject({ message: "This is not supported in the demo." });
 };
 
 const addChoice = (): Promise<void> => {
-  return handleAxiosResponse(() =>
-    WRITER_INSTANCE.post(ClientRoutes.ADD_CHOICE)
-  );
+  loadedEditorStory = {
+    name: loadedEditorStory.name,
+    statuses: loadedEditorStory.statuses,
+    choices: [
+      ...loadedEditorStory.choices,
+      { id: loadedEditorStory.choices.length, options: [] },
+    ],
+    decisions: loadedEditorStory.decisions,
+    choice: loadedEditorStory.choice,
+  };
+  return Promise.resolve();
 };
 
 const setInitial = (choice: number): Promise<void> => {
-  return handleAxiosResponse(() =>
-    WRITER_INSTANCE.post(ClientRoutes.SET_INITIAL_CHOICE, null, {
-      params: { choice },
-    })
-  );
+  loadedEditorStory = {
+    name: loadedEditorStory.name,
+    statuses: loadedEditorStory.statuses,
+    choices: [
+      ...loadedEditorStory.choices,
+      { id: loadedEditorStory.choices.length, options: [] },
+    ],
+    decisions: loadedEditorStory.decisions,
+    choice: choice,
+  };
+  return Promise.resolve();
 };
 
 const addSimpleDecision = (
   decision: AddSimpleDecisionRequest
 ): Promise<void> => {
-  return handleAxiosResponse(() =>
-    WRITER_INSTANCE.post(ClientRoutes.ADD_SIMPLE_DECISION, decision)
-  );
+  return Promise.reject({ message: "This is not supported in the demo." });
 };
 
 const addConsequentialDecision = (
   decision: AddConsequentialDecisionRequest
 ): Promise<void> => {
-  return handleAxiosResponse(() =>
-    WRITER_INSTANCE.post(ClientRoutes.ADD_CONSEQUENTIAL_DECISION, decision)
-  );
+  return Promise.reject({ message: "This is not supported in the demo." });
 };
 
 const addSimpleDependent = (
   decision: AddSimpleDependentRequest
 ): Promise<void> => {
-  return handleAxiosResponse(() =>
-    WRITER_INSTANCE.post(ClientRoutes.ADD_SIMPLE_DEPENDENT_DECISION, decision)
-  );
+  return Promise.reject({ message: "This is not supported in the demo." });
 };
 
 const addConsequentialDependent = (
   decision: AddConsequentialDependentRequest
 ): Promise<void> => {
-  return handleAxiosResponse(() =>
-    WRITER_INSTANCE.post(
-      ClientRoutes.ADD_CONSEQUENTIAL_DEPENDENT_DECISION,
-      decision
-    )
-  );
+  return Promise.reject({ message: "This is not supported in the demo." });
 };
 
 const removeOption = (choice: number, option: number): Promise<void> => {
-  return handleAxiosResponse(() =>
-    WRITER_INSTANCE.delete(ClientRoutes.REMOVE_OPTION, {
-      params: {
-        choice,
-        option,
-      },
-    })
-  );
+  return Promise.reject({ message: "This is not supported in the demo." });
 };
 
 const removeChoice = (choice: number): Promise<void> => {
-  return handleAxiosResponse(() =>
-    WRITER_INSTANCE.delete(ClientRoutes.REMOVE_CHOICE, { params: { choice } })
-  );
+  return Promise.reject({ message: "This is not supported in the demo." });
 };
 
 const Client: ApiClient = {

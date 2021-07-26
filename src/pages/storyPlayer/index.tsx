@@ -51,7 +51,7 @@ const StoryPlayer: React.FC<ErrorHandlerProps> = ({ message }) => {
     };
 
     const handleLoaded = (res: Story) => {
-      if (res) {
+      if (res.name !== "") {
         setStory(res);
         if (prevChoices.length === 0) {
           effectGetCurrentDescription();
@@ -128,7 +128,7 @@ const StoryPlayer: React.FC<ErrorHandlerProps> = ({ message }) => {
                         return (
                           <PrimaryButton
                             key={opt.id}
-                            onClick={() => choose(opt.id)}
+                            onClick={() => choose(opt.decision)}
                             mr={"10px"}
                           >
                             {story.decisions[opt.decision].description}

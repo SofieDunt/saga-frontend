@@ -47,7 +47,7 @@ const AddStatusForm: React.FC<AddStatusFormProps> = ({
   };
 
   const onAdd = (): void => {
-    if (name && val) {
+    if (name) {
       Client.addStatus(name, val).then(onSuccess, (err: ErrorResponse) =>
         triggerFeedback(err.message)
       );
