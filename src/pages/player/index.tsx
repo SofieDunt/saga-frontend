@@ -60,10 +60,8 @@ const Player: React.FC<ErrorHandlerProps> = ({ message }) => {
   };
 
   const onDelete = (name: string): void => {
-    Client.removeStory(name).then(
-      () => {},
-      (err: ErrorResponse) =>
-        message.triggerAlert("Could not delete: " + err.message)
+    Client.removeStory(name).then(updateLibrary, (err: ErrorResponse) =>
+      message.triggerAlert("Could not delete: " + err.message)
     );
   };
 
