@@ -78,8 +78,8 @@ function App() {
 
   return (
     <>
-      <NavBar />
       <Router basename={process.env.PUBLIC_URL}>
+        <NavBar />
         <Switch>
           <Route path={Routes.HOME} exact>
             <Home message={message} />
