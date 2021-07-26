@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/saga-frontend/static/css/main.4a4137e4.chunk.css",
-    "main.js": "/saga-frontend/static/js/main.29456862.chunk.js",
-    "main.js.map": "/saga-frontend/static/js/main.29456862.chunk.js.map",
+    "main.js": "/saga-frontend/static/js/main.0321e717.chunk.js",
+    "main.js.map": "/saga-frontend/static/js/main.0321e717.chunk.js.map",
     "runtime-main.js": "/saga-frontend/static/js/runtime-main.2c3860e1.js",
     "runtime-main.js.map": "/saga-frontend/static/js/runtime-main.2c3860e1.js.map",
     "static/js/2.f9e8f190.chunk.js": "/saga-frontend/static/js/2.f9e8f190.chunk.js",
@@ -17,6 +17,6 @@
     "static/js/runtime-main.2c3860e1.js",
     "static/js/2.f9e8f190.chunk.js",
     "static/css/main.4a4137e4.chunk.css",
-    "static/js/main.29456862.chunk.js"
+    "static/js/main.0321e717.chunk.js"
   ]
 }
