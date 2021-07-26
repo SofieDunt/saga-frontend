@@ -5,7 +5,7 @@ import { Routes } from "../../App";
 import styled from "@emotion/styled";
 
 const NavFlex = styled(Flex)`
-  height: 75px;
+  height: 10vh;
   padding: 20px 25px;
   color: ${WHITE};
   background-color: ${BLUE};

@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import { ErrorHandlerProps } from "../../App";
 import Client from "../../client/client";
 import { Input } from "@rebass/forms";
-import SoftButton from "../../components/softButton";
-import { Header } from "../../components/themeComponents";
+import { Header, PrimaryButton } from "../../components/themeComponents";
 
 const DEFAULT_NAME = "Untitled";
 
@@ -31,7 +30,7 @@ const StartWorkForm: React.FC<StartWorkFormProps> = ({
         onChange={(e) => setName(e.target.value)}
         my={"10px"}
       />
-      <SoftButton text={"Create New Work"} onClick={onStartWork} />
+      <PrimaryButton onClick={onStartWork}>Create New Work</PrimaryButton>
     </>
   );
 };

@@ -5,8 +5,11 @@ import { Box, Button, Flex, Text } from "rebass";
 import styled from "@emotion/styled";
 import { WARN } from "../../themes";
 import { ErrorHandlerProps } from "../../App";
-import { PageContainer, StoryTitle } from "../../components/themeComponents";
-import SoftButton from "../../components/softButton";
+import {
+  PageContainer,
+  PrimaryButton,
+  StoryTitle,
+} from "../../components/themeComponents";
 
 const BottomBox = styled(Box)`
   position: absolute;
@@ -123,12 +126,13 @@ const StoryPlayer: React.FC<ErrorHandlerProps> = ({ message }) => {
                     {story &&
                       story.choices[story.choice].options.map((opt) => {
                         return (
-                          <SoftButton
+                          <PrimaryButton
                             key={opt.id}
                             onClick={() => choose(opt.id)}
-                            text={story.decisions[opt.decision].description}
-                            margin={"0 10px 0 0"}
-                          />
+                            mr={"10px"}
+                          >
+                            {story.decisions[opt.decision].description}
+                          </PrimaryButton>
                         );
                       })}
                   </Flex>

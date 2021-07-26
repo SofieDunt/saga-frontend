@@ -7,7 +7,6 @@ import { Feedback, validateInteger } from "../../forms/utils";
 
 interface DependentDecisionInputProps {
   readonly onDescriptionChange: (description: string) => void;
-  readonly onChoiceIdChange: (choiceId: number) => void;
   readonly onDependencyChange: (dependency: string) => void;
   readonly onThresholdChange: (threshold: number) => void;
   readonly onOutcomeBelowIdChange: (belowId: number) => void;
@@ -19,7 +18,6 @@ interface DependentDecisionInputProps {
 
 const DependentDecisionInputs: React.FC<DependentDecisionInputProps> = ({
   onDescriptionChange,
-  onChoiceIdChange,
   onDependencyChange,
   onThresholdChange,
   onOutcomeBelowIdChange,
@@ -28,10 +26,6 @@ const DependentDecisionInputs: React.FC<DependentDecisionInputProps> = ({
   statuses,
   feedback,
 }) => {
-  const onChoiceSelect = (e: ChangeEvent<HTMLSelectElement>): void => {
-    onChoiceIdChange(Number(e.currentTarget.value));
-  };
-
   const onOutcomeBelowSelect = (e: ChangeEvent<HTMLSelectElement>): void => {
     onOutcomeBelowIdChange(Number(e.currentTarget.value));
   };
@@ -62,21 +56,6 @@ const DependentDecisionInputs: React.FC<DependentDecisionInputProps> = ({
         my={"5px"}
         onChange={(e) => onDescriptionChange(e.target.value)}
       />
-
-      <StrongText>Choice to add option to</StrongText>
-      <Flex alignItems={"center"}>
-        <Text mr={"5px"}>Choice #</Text>
-        <Select
-          name="choiceId"
-          onChange={onChoiceSelect}
-          my={"5px"}
-          minWidth={"50px"}
-        >
-          {choices.map((choice) => (
-            <option key={choice.id}>{choice.id}</option>
-          ))}
-        </Select>
-      </Flex>
 
       <StrongText>Status the decision is dependent on</StrongText>
       <Select

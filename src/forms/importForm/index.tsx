@@ -4,7 +4,7 @@ import { Button, Text } from "rebass";
 import { Input, Label } from "@rebass/forms";
 import { BLUE, WARN } from "../../themes";
 import { ApplicationTypes, ErrorResponse } from "../../client/types";
-import { FormContainer } from "../../components/themeComponents";
+import { FormContainer, Header } from "../../components/themeComponents";
 
 interface ImportFormProps {
   readonly onSuccess: () => void;
@@ -43,7 +43,7 @@ const ImportForm: React.FC<ImportFormProps> = ({ onSuccess, importType }) => {
 
   return (
     <FormContainer>
-      <Text mb={20}>Import a story!</Text>
+      <Header mb={20}>Import a story!</Header>
       <Label>Path of story file:</Label>
       <Input
         name={"path"}

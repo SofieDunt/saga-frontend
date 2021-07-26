@@ -1,25 +1,24 @@
 import React from "react";
 import { Choice, ErrorResponse, StoryStatus } from "../../client/types";
 import Client from "../../client/client";
-import SoftButton from "../../components/softButton";
 import { Flex, Text } from "rebass";
 import { WARN } from "../../themes";
 import { useState } from "react";
 import DependentDecisionInputs from "../../components/dependentDecisionInputs";
 import { Feedback } from "../utils";
-import { StrongText } from "../../components/themeComponents";
+import { PrimaryButton, StrongText } from "../../components/themeComponents";
 import ConsequenceInput from "../../components/consequenceInput";
 
 interface AddConsequentialDependentDecisionFormProps {
   readonly onSuccess: () => void;
+  readonly choiceId: number;
   readonly choices: Choice[];
   readonly statuses: StoryStatus[];
 }
 
 const AddConsequentialDependentDecisionForm: React.FC<AddConsequentialDependentDecisionFormProps> =
-  ({ onSuccess, choices, statuses }) => {
+  ({ onSuccess, choiceId, choices, statuses }) => {
     const [description, setDescription] = useState<string>();
-    const [choiceId, setChoiceId] = useState<number>(0);
     const [dependency, setDependency] = useState<string>(statuses[0].name);
     const [threshold, setThreshold] = useState<number>(0);
     const [outcomeBelowId, setOutcomeBelowId] = useState<number>(0);
@@ -69,7 +68,6 @@ const AddConsequentialDependentDecisionForm: React.FC<AddConsequentialDependentD
       <>
         <DependentDecisionInputs
           onDescriptionChange={setDescription}
-          onChoiceIdChange={setChoiceId}
           onDependencyChange={setDependency}
           onThresholdChange={setThreshold}
           onOutcomeBelowIdChange={setOutcomeBelowId}
@@ -88,15 +86,15 @@ const AddConsequentialDependentDecisionForm: React.FC<AddConsequentialDependentD
             statuses={statuses}
             feedback={feedbackHandler}
           />
-          <SoftButton
-            onClick={onAddConsequence}
-            text={"Add"}
-            margin={"0 10px 0 10px"}
-          />
+          <PrimaryButton onClick={onAddConsequence} margin={"0 10px 0 10px"}>
+            Add
+          </PrimaryButton>
         </Flex>
         <br />
         {showFeedback && <Text color={WARN}>{feedback}</Text>}
-        <SoftButton onClick={onSubmit} text={"Submit"} margin={"0 10px 0 0"} />
+        <PrimaryButton onClick={onSubmit} mr={"5px"}>
+          Submit
+        </PrimaryButton>
       </>
     );
   };

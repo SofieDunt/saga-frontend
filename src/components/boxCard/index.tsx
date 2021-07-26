@@ -8,7 +8,7 @@ interface StoryCardProps {
 }
 
 export const StoryCard = styled(Box)`
-  padding: 20px 20px;
+  padding: 20px;
   min-width: ${(props: StoryCardProps) =>
     props.minWidth ? props.minWidth : `200px`};
   border: 2px solid ${BLACK};

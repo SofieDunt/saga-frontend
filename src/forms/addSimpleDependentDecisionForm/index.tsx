@@ -1,23 +1,23 @@
 import React from "react";
 import { Choice, ErrorResponse, StoryStatus } from "../../client/types";
 import Client from "../../client/client";
-import SoftButton from "../../components/softButton";
 import { Text } from "rebass";
 import { WARN } from "../../themes";
 import { useState } from "react";
 import DependentDecisionInputs from "../../components/dependentDecisionInputs";
 import { Feedback } from "../utils";
+import { PrimaryButton } from "../../components/themeComponents";
 
 interface AddSimpleDependentDecisionFormProps {
   readonly onSuccess: () => void;
+  readonly choiceId: number;
   readonly choices: Choice[];
   readonly statuses: StoryStatus[];
 }
 
 const AddSimpleDependentDecisionForm: React.FC<AddSimpleDependentDecisionFormProps> =
-  ({ onSuccess, choices, statuses }) => {
+  ({ onSuccess, choiceId, choices, statuses }) => {
     const [description, setDescription] = useState<string>();
-    const [choiceId, setChoiceId] = useState<number>(0);
     const [dependency, setDependency] = useState<string>(statuses[0].name);
     const [threshold, setThreshold] = useState<number>(0);
     const [outcomeBelowId, setOutcomeBelowId] = useState<number>(0);
@@ -55,7 +55,6 @@ const AddSimpleDependentDecisionForm: React.FC<AddSimpleDependentDecisionFormPro
       <>
         <DependentDecisionInputs
           onDescriptionChange={setDescription}
-          onChoiceIdChange={setChoiceId}
           onDependencyChange={setDependency}
           onThresholdChange={setThreshold}
           onOutcomeBelowIdChange={setOutcomeBelowId}
@@ -65,7 +64,9 @@ const AddSimpleDependentDecisionForm: React.FC<AddSimpleDependentDecisionFormPro
           feedback={feedbackHandler}
         />
         {showFeedback && <Text color={WARN}>{feedback}</Text>}
-        <SoftButton onClick={onSubmit} text={"Submit"} margin={"0 10px 0 0"} />
+        <PrimaryButton onClick={onSubmit} mr={"5px"}>
+          Submit
+        </PrimaryButton>
       </>
     );
   };

@@ -12,7 +12,6 @@ import { ErrorHandlerProps, Routes } from "../../App";
 import ChoiceCard from "../../components/choiceCard";
 import TitleForm from "../../forms/titleForm";
 import StatusCard from "../../components/statusCard";
-import DecisionCard from "../../components/decisionCard";
 import SoftButton from "../../components/softButton";
 import {
   ButtonLabel,
@@ -21,24 +20,14 @@ import {
   StoryTitle,
 } from "../../components/themeComponents";
 import AddStatusForm from "../../forms/addStatusForm";
-import AddSimpleDecisionForm from "../../forms/addSimpleDecisionForm";
-import AddConsequentialDecisionForm from "../../forms/addConsequentialDecisionForm";
-import AddSimpleDependentDecisionForm from "../../forms/addSimpleDependentDecisionForm";
-import AddConsequentialDependentDecisionForm from "../../forms/addConsequentialDependentDecisionForm";
 import LinkButton from "../../components/linkButton";
-import { PURPLE } from "../../themes";
+import { ACTION_BUTTON_MARGIN, PURPLE } from "../../themes";
 import ExportForm from "../../forms/exportForm";
 import SetInitialChoiceForm from "../../forms/setInitialChoiceForm";
 
-const actionButtonMargin = "0 5px 5px 0";
-
 enum SwitchFormTypes {
   ADD_STATUS,
-  ADD_SIMPLE,
   SET_INITIAL,
-  ADD_CONSEQUENTIAL,
-  ADD_SIMPLE_DEPENDENT,
-  ADD_CONSEQUENTIAL_DEPENDENT,
   NONE,
 }
 
@@ -206,7 +195,9 @@ const WorkEditor: React.FC<ErrorHandlerProps> = ({ message }) => {
               <ChoiceCard
                 key={choice.id}
                 choice={choice}
-                decisions={work?.decisions}
+                choices={work.choices}
+                decisions={work.decisions}
+                statuses={work.statuses}
                 onSuccess={updateChoicesAndDecisions}
                 message={message}
               />
@@ -214,13 +205,6 @@ const WorkEditor: React.FC<ErrorHandlerProps> = ({ message }) => {
           })}
         </Flex>
         <Header>Initial Choice: {work.choice}</Header>
-
-        <Header>Decisions</Header>
-        <Flex flexWrap={"wrap"}>
-          {work.decisions.map((decision: Decision) => {
-            return <DecisionCard key={decision.id} decision={decision} />;
-          })}
-        </Flex>
 
         <Header>Edit</Header>
         <Box>
@@ -244,98 +228,25 @@ const WorkEditor: React.FC<ErrorHandlerProps> = ({ message }) => {
                     />
                   </>
                 );
-              case SwitchFormTypes.ADD_SIMPLE:
-                return (
-                  <>
-                    <Header>Add Simple Decision</Header>
-                    <AddSimpleDecisionForm
-                      onSuccess={updateChoicesAndDecisions}
-                      choices={work.choices}
-                    />
-                  </>
-                );
-              case SwitchFormTypes.ADD_CONSEQUENTIAL:
-                return (
-                  <>
-                    <Header>Add Consequential Decision</Header>
-                    <AddConsequentialDecisionForm
-                      onSuccess={updateChoicesAndDecisions}
-                      choices={work.choices}
-                      statuses={work.statuses}
-                    />
-                  </>
-                );
-              case SwitchFormTypes.ADD_SIMPLE_DEPENDENT:
-                return (
-                  <>
-                    <Header>Add Simple Dependent Decision</Header>
-                    <AddSimpleDependentDecisionForm
-                      onSuccess={updateChoicesAndDecisions}
-                      choices={work.choices}
-                      statuses={work.statuses}
-                    />
-                  </>
-                );
-              case SwitchFormTypes.ADD_CONSEQUENTIAL_DEPENDENT:
-                return (
-                  <>
-                    <Header>Add Consequential Dependent Decision</Header>
-                    <AddConsequentialDependentDecisionForm
-                      onSuccess={updateChoicesAndDecisions}
-                      choices={work.choices}
-                      statuses={work.statuses}
-                    />
-                  </>
-                );
               case SwitchFormTypes.NONE:
               default:
                 return (
                   <>
                     <SoftButton
                       text={"Add Status"}
-                      margin={actionButtonMargin}
+                      margin={ACTION_BUTTON_MARGIN}
                       onClick={() => setCurrentForm(SwitchFormTypes.ADD_STATUS)}
                     />
                     <SoftButton
                       text={"Add Choice"}
-                      margin={actionButtonMargin}
+                      margin={ACTION_BUTTON_MARGIN}
                       onClick={onAddChoice}
                     />
-                    <br />
                     <SoftButton
                       text={"Set Initial Choice"}
-                      margin={actionButtonMargin}
+                      margin={ACTION_BUTTON_MARGIN}
                       onClick={() =>
                         setCurrentForm(SwitchFormTypes.SET_INITIAL)
-                      }
-                    />
-                    <br />
-                    <SoftButton
-                      text={"Add Simple Decision"}
-                      margin={actionButtonMargin}
-                      onClick={() => setCurrentForm(SwitchFormTypes.ADD_SIMPLE)}
-                    />
-                    <SoftButton
-                      text={"Add Consequential Decision"}
-                      margin={actionButtonMargin}
-                      onClick={() =>
-                        setCurrentForm(SwitchFormTypes.ADD_CONSEQUENTIAL)
-                      }
-                    />
-                    <SoftButton
-                      text={"Add Simple Dependent Decision"}
-                      margin={actionButtonMargin}
-                      onClick={() =>
-                        setCurrentForm(SwitchFormTypes.ADD_SIMPLE_DEPENDENT)
-                      }
-                    />
-                    <SoftButton
-                      text={"Add Consequential Dependent Decision"}
-                      margin={actionButtonMargin}
-                      onClick={() =>
-                        setCurrentForm(
-                          SwitchFormTypes.ADD_CONSEQUENTIAL_DEPENDENT
-                        )
                       }
                     />
                   </>
@@ -355,12 +266,12 @@ const WorkEditor: React.FC<ErrorHandlerProps> = ({ message }) => {
             <SoftButton
               text={"Export"}
               onClick={onClickExport}
-              margin={actionButtonMargin}
+              margin={ACTION_BUTTON_MARGIN}
             />
             <SoftButton
               text={"Export to Player"}
               onClick={exportToPlayer}
-              margin={actionButtonMargin}
+              margin={ACTION_BUTTON_MARGIN}
             />
           </Flex>
         ) : (

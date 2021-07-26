@@ -10,13 +10,14 @@ import {
   PrimaryButton,
   TitleBox,
 } from "../../components/themeComponents";
-import { BLUE, PURPLE, SOFT } from "../../themes";
+import { BLUE, SOFT, WARN } from "../../themes";
 import ExportForm from "../../forms/exportForm";
 import ImportForm from "../../forms/importForm";
 import PopupWindow from "../../components/popupWindow";
 import { ErrorHandlerProps, Routes } from "../../App";
 import { ApplicationTypes, ErrorResponse } from "../../client/types";
 import BoxCard from "../../components/boxCard";
+import SoftButton from "../../components/softButton";
 
 const Player: React.FC<ErrorHandlerProps> = ({ message }) => {
   const [library, setLibrary] = useState<string[]>([]);
@@ -91,17 +92,15 @@ const Player: React.FC<ErrorHandlerProps> = ({ message }) => {
                           Play
                         </Button>
                         <Box mx={"auto"} />
-                        <Button
+                        <SoftButton
+                          text={"Export"}
                           onClick={() => onClickExport(title)}
-                          bg={PURPLE}
-                        >
-                          Export
-                        </Button>
+                        />
                       </Flex>
                     );
                   case true:
                     return (
-                      <Button onClick={() => onDelete(title)} bg={"red"}>
+                      <Button onClick={() => onDelete(title)} bg={WARN}>
                         Delete
                       </Button>
                     );

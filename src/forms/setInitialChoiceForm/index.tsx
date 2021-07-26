@@ -42,7 +42,9 @@ const SetInitialChoiceForm: React.FC<SetInitialChoiceFormProps> = ({
           ))}
         </Select>
       </Flex>
-      <PrimaryButton onClick={onSetInitial}>Set Initial Choice</PrimaryButton>
+      <PrimaryButton onClick={onSetInitial} mr={"5px"}>
+        Set Initial Choice
+      </PrimaryButton>
     </>
   );
 };

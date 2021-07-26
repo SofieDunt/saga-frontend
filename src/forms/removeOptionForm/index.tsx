@@ -43,10 +43,10 @@ const RemoveOptionForm: React.FC<RemoveOptionFormProps> = ({
               <option key={opt.id}>{opt.id}</option>
             ))}
           </Select>
-          <Button onClick={onRemove} bg={WARN}>
-            Remove Option
-          </Button>
         </Flex>
+        <Button onClick={onRemove} bg={WARN}>
+          Remove Option
+        </Button>
       </>
     );
   } else {

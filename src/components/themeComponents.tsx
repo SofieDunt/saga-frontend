@@ -3,7 +3,10 @@ import { Box, Button, Flex, Text } from "rebass";
 import { BLACK, BLUE } from "../themes";
 
 export const PageContainer = styled.div`
+  height: 90vh;
   padding: 3vh 3vw;
+  overflow-y: auto;
+  box-sizing: border-box;
 `;
 
 export const StoryTitle = styled(Text)`
@@ -29,8 +32,8 @@ export const ButtonLabel = styled(Text)`
 `;
 
 export const FormContainer = styled.div`
-  width: 450px;
-  height: 200px;
+  min-width: 450px;
+  min-height: 200px;
   color: ${BLACK};
   padding: 50px;
   text-align: left;
@@ -56,6 +59,12 @@ export const BottomFlex = styled(Flex)`
   position: absolute;
   bottom: 50px;
   right: 50px;
+`;
+
+export const BottomCornerFlex = styled(Flex)`
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
 `;
 
 export const PrimaryButton = styled(Button)`

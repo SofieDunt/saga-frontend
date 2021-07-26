@@ -7,10 +7,9 @@ import {
   EmptyLibrary,
   FormContainer,
   PageContainer,
-  PrimaryButton,
   TitleBox,
 } from "../../components/themeComponents";
-import { BLUE, SOFT } from "../../themes";
+import { BLUE, SOFT, WARN } from "../../themes";
 import ImportForm from "../../forms/importForm";
 import PopupWindow from "../../components/popupWindow";
 import { ErrorHandlerProps, Routes } from "../../App";
@@ -18,6 +17,7 @@ import { ApplicationTypes, ErrorResponse } from "../../client/types";
 import BoxCard from "../../components/boxCard";
 import StartWorkForm from "../../forms/startWorkForm";
 import RenameWorkForm from "../../forms/renameWorkForm";
+import SoftButton from "../../components/softButton";
 
 const Writer: React.FC<ErrorHandlerProps> = ({ message }) => {
   const [library, setLibrary] = useState<string[]>([]);
@@ -103,13 +103,12 @@ const Writer: React.FC<ErrorHandlerProps> = ({ message }) => {
                             />
                           </FormContainer>
                         </PopupWindow>
-                        <PrimaryButton
+                        <SoftButton
+                          text={"Rename"}
                           onClick={() => setRenameVisible(true)}
-                          mr={"5px"}
-                        >
-                          Rename
-                        </PrimaryButton>
-                        <Button onClick={() => onDelete(title)} bg={"red"}>
+                          margin={"0 5px 0 0"}
+                        />
+                        <Button onClick={() => onDelete(title)} bg={WARN}>
                           Delete
                         </Button>
                       </Flex>
@@ -129,12 +128,15 @@ const Writer: React.FC<ErrorHandlerProps> = ({ message }) => {
       </Flex>
 
       <BottomFlex>
-        <PrimaryButton onClick={() => setStartVisible(true)}>
-          Start New Story
-        </PrimaryButton>
-        <PrimaryButton onClick={() => setImportVisible(true)} mx={"10px"}>
-          Import
-        </PrimaryButton>
+        <SoftButton
+          text={"Start New Story"}
+          onClick={() => setStartVisible(true)}
+        />
+        <SoftButton
+          text={"Import"}
+          onClick={() => setImportVisible(true)}
+          margin={"0 10px"}
+        />
         <Button
           onClick={() => setManageLibrary((prev) => !prev)}
           padding={"15px 25px"}

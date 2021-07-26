@@ -1,11 +1,11 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
 import { Input } from "@rebass/forms";
-import SoftButton from "../../components/softButton";
 import Client from "../../client/client";
 import { Text } from "rebass";
 import { WARN } from "../../themes";
 import { validateInteger } from "../utils";
 import { ErrorResponse } from "../../client/types";
+import { PrimaryButton } from "../../components/themeComponents";
 
 interface AddStatusFormProps {
   readonly updateName?: string;
@@ -75,7 +75,9 @@ const AddStatusForm: React.FC<AddStatusFormProps> = ({
         mb={"7px"}
       />
       {showFeedback && <Text color={WARN}>{feedback}</Text>}
-      <SoftButton onClick={onAdd} text={"Submit"} margin={"0 10px 0 0"} />
+      <PrimaryButton onClick={onAdd} mr={"5px"}>
+        Submit
+      </PrimaryButton>
     </>
   );
 };
