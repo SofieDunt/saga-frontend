@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { HashRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Player from "./pages/player";
 import NavBar from "./components/navBar";
 import Home from "./pages/home";
@@ -79,7 +79,7 @@ function App() {
   return (
     <>
       <NavBar />
-      <Router basename={"/"}>
+      <Router basename={process.env.PUBLIC_URL}>
         <Switch>
           <Route path={Routes.HOME} exact>
             <Home message={message} />
