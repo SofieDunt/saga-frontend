@@ -51,7 +51,7 @@ const WorkEditor: React.FC<ErrorHandlerProps> = ({ message }) => {
 
   useEffect(() => {
     const handleQuit = (): void => {
-      Client.quitWork().then(null, message.errorAlert);
+      Client.quitWork().then(() => {}, message.errorAlert);
     };
 
     window.addEventListener("unload", handleQuit);

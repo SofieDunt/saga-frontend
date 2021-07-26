@@ -35,7 +35,7 @@ const StoryPlayer: React.FC<ErrorHandlerProps> = ({ message }) => {
 
   useEffect(() => {
     const handleQuit = (): void => {
-      Client.quitStory().then(null, message.errorAlert);
+      Client.quitStory().then(() => {}, message.errorAlert);
     };
 
     window.addEventListener("unload", handleQuit);
