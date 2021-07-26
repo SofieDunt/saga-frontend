@@ -7,12 +7,7 @@ import { Messenger } from "../../App";
 import Client from "../../client/client";
 import { ACTION_BUTTON_MARGIN, WARN } from "../../themes";
 import PopupWindow from "../popupWindow";
-import {
-  BottomCornerFlex,
-  FormContainer,
-  Header,
-  StrongText,
-} from "../themeComponents";
+import { FormContainer, Header, StrongText } from "../themeComponents";
 import OptionCard from "../optionCard";
 import AddSimpleDecisionForm from "../../forms/addSimpleDecisionForm";
 import AddConsequentialDecisionForm from "../../forms/addConsequentialDecisionForm";
@@ -86,6 +81,7 @@ const ChoiceCard: React.FC<ChoiceCardProps> = ({
               {choice.options.map((option) => {
                 return (
                   <OptionCard
+                    key={option.id}
                     choice={choice.id}
                     option={option.id}
                     decision={decisions[option.decision]}
@@ -205,11 +201,11 @@ const ChoiceCard: React.FC<ChoiceCardProps> = ({
             })()}
           </Box>
 
-          <BottomCornerFlex>
+          <Box textAlign={"right"} mt={"10px"}>
             <Button onClick={onRemoveChoice} bg={WARN}>
               Remove Choice
             </Button>
-          </BottomCornerFlex>
+          </Box>
         </FormContainer>
       </PopupWindow>
     </>

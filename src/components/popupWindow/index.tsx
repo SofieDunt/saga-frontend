@@ -21,6 +21,8 @@ const ViewWindow = styled.div`
   background-color: ${WHITE};
   border: 2px solid ${BLACK}20;
   border-radius: 20;
+  max-height: 95vh;
+  overflow-y: auto;
 `;
 
 const CloseButton = styled(Button)`

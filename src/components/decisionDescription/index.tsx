@@ -37,7 +37,7 @@ const DecisionDescription: React.FC<DecisionDescriptionProps> = ({
         }
       })()}
       <StrongText>Consequences</StrongText>
-      {decision.consequences?.map((cons) => {
+      {decision.consequences?.map((cons, i) => {
         let text: string;
         switch (cons.type) {
           case StatusUpdateTypes.ADD:
@@ -47,7 +47,7 @@ const DecisionDescription: React.FC<DecisionDescriptionProps> = ({
             text = `Set ${cons.status} to ${cons.var}`;
             break;
         }
-        return <Text>{text}</Text>;
+        return <Text key={i}>{text}</Text>;
       })}
       {decision.consequences?.length === 0 && <Text>None</Text>}
     </>
