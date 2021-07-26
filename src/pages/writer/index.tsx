@@ -7,9 +7,10 @@ import {
   EmptyLibrary,
   FormContainer,
   PageContainer,
+  SecondaryButton,
   TitleBox,
 } from "../../components/themeComponents";
-import { BLUE, SOFT, WARN } from "../../themes";
+import { PRIMARY, TERTIARY, WARN } from "../../themes";
 import ImportForm from "../../forms/importForm";
 import PopupWindow from "../../components/popupWindow";
 import { ErrorHandlerProps, Routes } from "../../App";
@@ -82,7 +83,7 @@ const Writer: React.FC<ErrorHandlerProps> = ({ message }) => {
                     return (
                       <Button
                         onClick={() => loadWork(title)}
-                        bg={BLUE}
+                        bg={PRIMARY}
                         mb={"5px"}
                       >
                         Edit
@@ -128,19 +129,19 @@ const Writer: React.FC<ErrorHandlerProps> = ({ message }) => {
       </Flex>
 
       <BottomFlex>
-        <SoftButton
-          text={"Start New Story"}
-          onClick={() => setStartVisible(true)}
-        />
-        <SoftButton
-          text={"Import"}
+        <SecondaryButton onClick={() => setStartVisible(true)}>
+          Start New Story
+        </SecondaryButton>
+        <SecondaryButton
           onClick={() => setImportVisible(true)}
           margin={"0 10px"}
-        />
+        >
+          Import
+        </SecondaryButton>
         <Button
           onClick={() => setManageLibrary((prev) => !prev)}
           padding={"15px 25px"}
-          bg={SOFT}
+          bg={TERTIARY}
         >
           {manageLibrary ? "Stop Managing Library" : "Manage Library"}
         </Button>

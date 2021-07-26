@@ -1,14 +1,14 @@
 import React from "react";
 import { Flex, Box, Link } from "rebass";
-import { BLUE, WHITE } from "../../themes";
+import { BLACK, PRIMARY, WHITE } from "../../themes";
 import { Routes } from "../../App";
 import styled from "@emotion/styled";
 
 const NavFlex = styled(Flex)`
   height: 10vh;
   padding: 20px 25px;
-  color: ${WHITE};
-  background-color: ${BLUE};
+  color: ${PRIMARY};
+  background-color: ${BLACK};
   align-items: center;
 `;
 
@@ -22,7 +22,7 @@ const NavLink = styled(Link)`
 const NavBar: React.FC = () => {
   return (
     <NavFlex>
-      <NavLink href={Routes.HOME} fontSize={25}>
+      <NavLink href={Routes.HOME} fontSize={25} color={PRIMARY}>
         Saga
       </NavLink>
       <Box mx="auto" />

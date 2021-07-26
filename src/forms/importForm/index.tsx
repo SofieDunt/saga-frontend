@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Client from "../../client/client";
 import { Button, Text } from "rebass";
 import { Input, Label } from "@rebass/forms";
-import { BLUE, WARN } from "../../themes";
+import { PRIMARY, WARN } from "../../themes";
 import { ApplicationTypes, ErrorResponse } from "../../client/types";
 import { FormContainer, Header } from "../../components/themeComponents";
 
@@ -51,7 +51,7 @@ const ImportForm: React.FC<ImportFormProps> = ({ onSuccess, importType }) => {
         mb={20}
         onChange={(e) => setImportPath(e.target.value)}
       />
-      <Button bg={BLUE} onClick={handleImport}>
+      <Button bg={PRIMARY} onClick={handleImport}>
         Submit
       </Button>
       {errorVisible && <Text color={WARN}>{errorMessage}</Text>}

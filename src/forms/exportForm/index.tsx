@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Client from "../../client/client";
 import { Box, Button, Text } from "rebass";
 import { Checkbox, Input, Label } from "@rebass/forms";
-import { BLUE, WARN } from "../../themes";
+import { PRIMARY, WARN } from "../../themes";
 import { ApplicationTypes, ErrorResponse } from "../../client/types";
 
 interface ExportFormProps {
@@ -78,7 +78,7 @@ const ExportForm: React.FC<ExportFormProps> = ({
         </Label>
       )}
       <Button
-        bg={BLUE}
+        bg={PRIMARY}
         onClick={exportStory ? handleStoryExport : handleWorkExport}
       >
         Submit

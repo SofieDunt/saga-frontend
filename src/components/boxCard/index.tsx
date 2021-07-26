@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "@emotion/styled";
 import { Box, Text } from "rebass";
-import { BLACK } from "../../themes";
+import { SECONDARY, SOFT_BLACK } from "../../themes";
 
 interface StoryCardProps {
   minWidth?: string;
@@ -11,10 +11,11 @@ export const StoryCard = styled(Box)`
   padding: 20px;
   min-width: ${(props: StoryCardProps) =>
     props.minWidth ? props.minWidth : `200px`};
-  border: 2px solid ${BLACK};
+  border: 2px solid ${SECONDARY};
   border-radius: 5px;
   margin-right: 20px;
   margin-bottom: 10px;
+  box-shadow: 2px 3px 5px ${SOFT_BLACK};
 `;
 
 export const CardHeader = styled(Text)`

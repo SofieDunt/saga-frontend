@@ -1,8 +1,12 @@
 import React from "react";
 import styled from "@emotion/styled";
 import { Box, Flex, Text } from "rebass";
-import { ButtonLabel, PageContainer } from "../../components/themeComponents";
-import { PURPLE, BLUE } from "../../themes";
+import {
+  ButtonLabel,
+  InlineText,
+  BlackPageContainer,
+} from "../../components/themeComponents";
+import { SECONDARY, PRIMARY } from "../../themes";
 import LinkButton from "../../components/linkButton";
 import { ErrorHandlerProps, Routes } from "../../App";
 
@@ -22,10 +26,6 @@ const GreetingDescription = styled(Text)`
   padding-left: 100px;
 `;
 
-const GetStarted = styled(Text)`
-  font-size: 40px;
-`;
-
 const Italic = styled(Text)`
   display: inline-block;
   font-style: italic;
@@ -33,27 +33,28 @@ const Italic = styled(Text)`
 
 const Home: React.FC<ErrorHandlerProps> = () => {
   return (
-    <PageContainer>
+    <BlackPageContainer>
       <HomePageContainer>
         <TitleBox>
-          <Text>Welcome to Saga,</Text>
+          <Text>
+            Welcome to <InlineText color={PRIMARY}>Saga</InlineText>,
+          </Text>
           <GreetingDescription>
-            where you can <Italic>play</Italic> and <Italic>write</Italic>{" "}
-            interactive stories.
+            where you can <Italic color={PRIMARY}>play</Italic> and{" "}
+            <Italic color={SECONDARY}>write</Italic> interactive stories.
           </GreetingDescription>
         </TitleBox>
-        <GetStarted mb={20}>Get started!</GetStarted>
-        <Flex height={100} ml={50}>
-          <LinkButton to={Routes.PLAYER_LIBRARY} bg={BLUE}>
+        <Flex height={100}>
+          <LinkButton to={Routes.PLAYER_LIBRARY} bg={PRIMARY}>
             <ButtonLabel>Play a story!</ButtonLabel>
           </LinkButton>
           <Box width={15} />
-          <LinkButton to={Routes.WRITER_LIBRARY} bg={PURPLE}>
+          <LinkButton to={Routes.WRITER_LIBRARY} bg={SECONDARY}>
             <ButtonLabel>Write a new masterpiece!</ButtonLabel>
           </LinkButton>
         </Flex>
       </HomePageContainer>
-    </PageContainer>
+    </BlackPageContainer>
   );
 };
 

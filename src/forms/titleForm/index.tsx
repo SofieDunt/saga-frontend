@@ -4,7 +4,7 @@ import styled from "@emotion/styled";
 import { ErrorHandlerProps } from "../../App";
 import { Input } from "@rebass/forms";
 import SoftButton from "../../components/softButton";
-import { Header } from "../../components/themeComponents";
+import { Header, PrimaryButton } from "../../components/themeComponents";
 
 const InlineSoftButton = styled(SoftButton)`
   display: inline-block;
@@ -30,14 +30,12 @@ const TitleForm: React.FC<TitleFormProps> = ({ message, title, onFinish }) => {
     setEditing((prev) => !prev);
   };
 
-  // remove expoprt button from library and add to individuaal ediotr
-
   return (
     <>
       <Header display={"inline-block"} mr={"15px"}>
-        Story Title: {title}
+        Story Title:
       </Header>
-      {editing && (
+      {editing ? (
         <>
           <Input
             name={"name"}
@@ -47,17 +45,23 @@ const TitleForm: React.FC<TitleFormProps> = ({ message, title, onFinish }) => {
             width={"40%"}
             onChange={(e) => setTitleRequest(e.target.value)}
           />
-          <InlineSoftButton
+          <PrimaryButton
             onClick={editTitle}
-            text={"Submit"}
-            margin={"0 7px"}
-          />
+            display={"inline-block"}
+            ml={"15px"}
+            mr={"8px"}
+          >
+            Submit
+          </PrimaryButton>
         </>
+      ) : (
+        <Header display={"inline-block"} mr={"15px"}>
+          {title}
+        </Header>
       )}
       <InlineSoftButton
         onClick={toggleEditing}
         text={editing ? "Cancel" : "Change Title"}
-        margin={"0 3px"}
       />
     </>
   );

@@ -7,10 +7,10 @@ import {
   EmptyLibrary,
   FormContainer,
   PageContainer,
-  PrimaryButton,
+  SecondaryButton,
   TitleBox,
 } from "../../components/themeComponents";
-import { BLUE, SOFT, WARN } from "../../themes";
+import { PRIMARY, TERTIARY, WARN } from "../../themes";
 import ExportForm from "../../forms/exportForm";
 import ImportForm from "../../forms/importForm";
 import PopupWindow from "../../components/popupWindow";
@@ -88,7 +88,7 @@ const Player: React.FC<ErrorHandlerProps> = ({ message }) => {
                   case false:
                     return (
                       <Flex mb={"5px"}>
-                        <Button onClick={() => loadStory(title)} bg={BLUE}>
+                        <Button onClick={() => loadStory(title)} bg={PRIMARY}>
                           Play
                         </Button>
                         <Box mx={"auto"} />
@@ -120,13 +120,13 @@ const Player: React.FC<ErrorHandlerProps> = ({ message }) => {
       </Flex>
 
       <BottomFlex>
-        <PrimaryButton onClick={() => setImportVisible(true)} mr={"10px"}>
+        <SecondaryButton onClick={() => setImportVisible(true)} mr={"10px"}>
           Import
-        </PrimaryButton>
+        </SecondaryButton>
         <Button
           onClick={() => setManageLibrary((prev) => !prev)}
           padding={"15px 25px"}
-          bg={SOFT}
+          bg={TERTIARY}
         >
           {manageLibrary ? "Stop Managing Library" : "Manage Library"}
         </Button>

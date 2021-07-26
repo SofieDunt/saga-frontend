@@ -21,7 +21,7 @@ import {
 } from "../../components/themeComponents";
 import AddStatusForm from "../../forms/addStatusForm";
 import LinkButton from "../../components/linkButton";
-import { ACTION_BUTTON_MARGIN, PURPLE } from "../../themes";
+import { ACTION_BUTTON_MARGIN, SECONDARY } from "../../themes";
 import ExportForm from "../../forms/exportForm";
 import SetInitialChoiceForm from "../../forms/setInitialChoiceForm";
 
@@ -159,7 +159,7 @@ const WorkEditor: React.FC<ErrorHandlerProps> = ({ message }) => {
     return (
       <PageContainer>
         <StoryTitle>{noWorkMessage}</StoryTitle>
-        <LinkButton to={Routes.WRITER_LIBRARY} bg={PURPLE}>
+        <LinkButton to={Routes.WRITER_LIBRARY} bg={SECONDARY}>
           <ButtonLabel>Go back to your library!</ButtonLabel>
         </LinkButton>
       </PageContainer>

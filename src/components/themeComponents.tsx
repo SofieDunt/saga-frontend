@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import { Box, Button, Flex, Text } from "rebass";
-import { BLACK, BLUE } from "../themes";
+import { BLACK, PRIMARY, SECONDARY, SOFT_BLACK, WHITE } from "../themes";
 
 export const PageContainer = styled.div`
   height: 90vh;
@@ -9,11 +9,20 @@ export const PageContainer = styled.div`
   box-sizing: border-box;
 `;
 
+export const BlackPageContainer = styled(PageContainer)`
+  background: linear-gradient(45deg, ${SOFT_BLACK} 60%, #003042);
+  color: ${WHITE};
+`;
+
 export const StoryTitle = styled(Text)`
   padding-top: 20px;
   font-size: 48px;
   font-weight: bold;
   padding-bottom: 20px;
+`;
+
+export const InlineText = styled(Text)`
+  display: inline-block;
 `;
 
 export const StrongText = styled(Text)`
@@ -68,5 +77,9 @@ export const BottomCornerFlex = styled(Flex)`
 `;
 
 export const PrimaryButton = styled(Button)`
-  background: ${BLUE};
+  background: ${PRIMARY};
+`;
+
+export const SecondaryButton = styled(Button)`
+  background: ${SECONDARY};
 `;
