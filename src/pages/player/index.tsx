@@ -134,10 +134,7 @@ const Player: React.FC<ErrorHandlerProps> = ({ message }) => {
       </BottomFlex>
 
       {exportName && (
-        <Modal
-          visible={exportVisible}
-          onClose={() => setExportVisible(false)}
-        >
+        <Modal visible={exportVisible} onClose={() => setExportVisible(false)}>
           <FormContainer>
             <ExportForm
               name={exportName}
@@ -148,10 +145,7 @@ const Player: React.FC<ErrorHandlerProps> = ({ message }) => {
         </Modal>
       )}
 
-      <Modal
-        visible={importVisible}
-        onClose={() => setImportVisible(false)}
-      >
+      <Modal visible={importVisible} onClose={() => setImportVisible(false)}>
         <ImportForm
           onSuccess={onImportSuccess}
           importType={ApplicationTypes.STORY}

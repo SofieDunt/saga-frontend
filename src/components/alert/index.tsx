@@ -8,6 +8,7 @@ const Banner = styled(Flex)`
   border-radius: 20;
   padding: 5px 0 5px 15px;
   margin-bottom: 10px;
+  z-index: 4;
 `;
 
 const CloseButton = styled(Button)`

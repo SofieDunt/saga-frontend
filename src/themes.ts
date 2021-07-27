@@ -72,7 +72,7 @@ export const Header = styled(Text)`
 
 export const ButtonLabel = styled(Text)`
   font-size: 25px;
-  padding: 0 20px;
+  padding: 0 10px;
 
   @media only screen and (max-width: 813px) {
     font-size: 20px;
