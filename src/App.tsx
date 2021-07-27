@@ -36,9 +36,16 @@ export interface ErrorHandlerProps {
   readonly message: Messenger;
 }
 
+const ghPagesDisclaimer: AlertMessage = {
+  visible: true,
+  message:
+    "This is a demo hosted on Github Pages. Some features are not supported. Please do not reload any pages.",
+  warn: false,
+};
+
 function App() {
   // Alerts
-  const [alerts, setAlerts] = useState<AlertMessage[]>([]);
+  const [alerts, setAlerts] = useState<AlertMessage[]>([ghPagesDisclaimer]);
 
   const triggerMessage = (message: string): void => {
     setAlerts((prev) => [
@@ -78,7 +85,7 @@ function App() {
 
   return (
     <>
-      <Router>
+      <Router basename={process.env.PUBLIC_URL}>
         <NavBar />
         <Switch>
           <Route path={Routes.HOME} exact>

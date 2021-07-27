@@ -47,7 +47,7 @@ const StoryPlayer: React.FC<ErrorHandlerProps> = ({ message }) => {
     };
 
     const handleLoaded = (res: Story) => {
-      if (res) {
+      if (res.name !== "") {
         setStory(res);
         if (prevChoices.length === 0) {
           effectGetCurrentDescription();

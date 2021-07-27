@@ -55,7 +55,7 @@ const WorkEditor: React.FC<ErrorHandlerProps> = ({ message }) => {
 
   useEffect(() => {
     const handleLoaded = (res: Story): void => {
-      if (res) {
+      if (res.name !== "") {
         setWork(res);
         Client.getCurrentWorkName().then(
           (res: string) => setWorkName(res),
