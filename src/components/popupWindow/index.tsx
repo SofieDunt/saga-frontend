@@ -4,7 +4,8 @@ import { Button, Text } from "rebass";
 import { BLACK, WHITE } from "../../themes";
 
 const CloseBackground = styled(Button)`
-  position: absolute;
+  position: fixed;
+  z-index: 2;
   left: 0;
   top: 0;
   color: ${BLACK};
@@ -14,21 +15,22 @@ const CloseBackground = styled(Button)`
 `;
 
 const ViewWindow = styled.div`
-  position: absolute;
-  top: 50%;
+  position: fixed;
+  z-index: 3;
+  top: 60%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -55%);
   background-color: ${WHITE};
   border: 2px solid ${BLACK}20;
   border-radius: 20;
-  max-height: 95vh;
+  max-height: 85vh;
   max-width: 95vw;
   overflow-y: auto;
 `;
 
 const CloseButton = styled(Button)`
   background: ${WHITE};
-  position: absolute;
+  position: fixed;
   right: 0;
 `;
 

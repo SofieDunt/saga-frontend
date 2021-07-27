@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from "react";
 import Client from "../../client/client";
 import { Option, Story } from "../../client/types";
-import { Box, Button, Flex, Text } from "rebass";
+import { Button, Flex, Text } from "rebass";
 import styled from "@emotion/styled";
 import { WARN } from "../../themes";
 import { ErrorHandlerProps } from "../../App";
-import { PageContainer, PrimaryButton, StoryTitle } from "../../themes";
-
-const BottomBox = styled(Box)`
-  position: absolute;
-  bottom: 50px;
-  right: 50px;
-`;
+import {
+  BottomFlex,
+  FooterPageContainer,
+  PrimaryButton,
+  StoryTitle,
+} from "../../themes";
 
 const ScriptText = styled(Text)`
   font-size: 16px;
@@ -94,7 +93,7 @@ const StoryPlayer: React.FC<ErrorHandlerProps> = ({ message }) => {
   };
 
   return (
-    <PageContainer>
+    <FooterPageContainer>
       {(() => {
         switch (story) {
           case undefined:
@@ -138,12 +137,12 @@ const StoryPlayer: React.FC<ErrorHandlerProps> = ({ message }) => {
         }
       })()}
 
-      <BottomBox>
+      <BottomFlex>
         <Button onClick={onRestart} padding={"15px 25px"} bg={WARN}>
           Start Over
         </Button>
-      </BottomBox>
-    </PageContainer>
+      </BottomFlex>
+    </FooterPageContainer>
   );
 };
 

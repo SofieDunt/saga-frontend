@@ -6,7 +6,7 @@ import {
   BottomFlex,
   EmptyLibrary,
   FormContainer,
-  PageContainer,
+  FooterPageContainer,
   SecondaryButton,
   TitleBox,
 } from "../../themes";
@@ -69,7 +69,7 @@ const Writer: React.FC<ErrorHandlerProps> = ({ message }) => {
   };
 
   return (
-    <PageContainer>
+    <FooterPageContainer>
       <TitleBox>
         <Text>Write your next story!</Text>
       </TitleBox>
@@ -165,7 +165,7 @@ const Writer: React.FC<ErrorHandlerProps> = ({ message }) => {
           importType={ApplicationTypes.WORK}
         />
       </PopupWindow>
-    </PageContainer>
+    </FooterPageContainer>
   );
 };
 

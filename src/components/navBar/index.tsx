@@ -6,7 +6,10 @@ import styled from "@emotion/styled";
 import NavLink from "../navLink";
 
 const NavFlex = styled(Flex)`
+  position: fixed;
+  width: 100vw;
   height: 10vh;
+  z-index: 1;
   padding: 20px 25px;
   color: ${PRIMARY};
   background-color: ${BLACK};

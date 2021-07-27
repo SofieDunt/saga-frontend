@@ -11,7 +11,10 @@ export const SOFT_BLACK = "#00171f";
 
 export const ACTION_BUTTON_MARGIN = "0 5px 5px 0";
 
-export const PageContainer = styled.div`
+export const FooterPageContainer = styled.div`
+  position: fixed;
+  top: 10vh;
+  width: 100vw;
   height: 90vh;
   padding: 20px 40px 100px;
   overflow-y: auto;
@@ -22,9 +25,28 @@ export const PageContainer = styled.div`
   }
 `;
 
+export const PageContainer = styled.div`
+  position: fixed;
+  top: 10vh;
+  width: 100vw;
+  height: 90vh;
+  padding: 20px 40px;
+  overflow-y: auto;
+  box-sizing: border-box;
+
+  @media only screen and (max-width: 813px) {
+    padding: 20px;
+  }
+`;
+
 export const BlackPageContainer = styled(PageContainer)`
+  padding: 20px 40px;
   background: linear-gradient(45deg, ${SOFT_BLACK} 60%, #003042);
   color: ${WHITE};
+
+  @media only screen and (max-width: 813px) {
+    padding: 20px;
+  }
 `;
 
 export const StoryTitle = styled(Text)`
@@ -98,9 +120,9 @@ export const EndFlexElement = styled(Box)`
 `;
 
 export const BottomFlex = styled(Flex)`
-  position: absolute;
+  position: fixed;
   bottom: 0;
-  right: 0;
+  left: 0;
   background: ${SOFT_BLACK};
   padding: 10px 20px;
   width: 100%;

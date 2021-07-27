@@ -77,7 +77,7 @@ const ChoiceCard: React.FC<ChoiceCardProps> = ({
         <FormContainer>
           <Header>Edit Choice #{choice.id}</Header>
           <Box width={"80vw"}>
-            <Flex mt={"20px"} flexWrap={"wrap"}>
+            <Flex mt={"20px"} flexWrap={"wrap"} width={"60vw"}>
               {choice.options.map((option) => {
                 return (
                   <OptionCard
