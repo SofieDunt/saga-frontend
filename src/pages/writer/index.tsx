@@ -147,19 +147,13 @@ const Writer: React.FC<ErrorHandlerProps> = ({ message }) => {
         </Button>
       </BottomFlex>
 
-      <Modal
-        visible={startVisible}
-        onClose={() => setStartVisible(false)}
-      >
+      <Modal visible={startVisible} onClose={() => setStartVisible(false)}>
         <FormContainer>
           <StartWorkForm onSuccess={onStartNewSuccess} message={message} />
         </FormContainer>
       </Modal>
 
-      <Modal
-        visible={importVisible}
-        onClose={() => setImportVisible(false)}
-      >
+      <Modal visible={importVisible} onClose={() => setImportVisible(false)}>
         <ImportForm
           onSuccess={onImportSuccess}
           importType={ApplicationTypes.WORK}

@@ -47,7 +47,7 @@ const Spacer = styled(Box)`
   height: 25vh;
 
   @media only screen and (max-height: 813px) {
-    height: 20vh;
+    height: 15vh;
   }
 `;
 

@@ -16,6 +16,7 @@ const Top = styled(Box)`
   top: 20px;
   left: 50%;
   transform: translate(-50%, 0);
+  z-index: 4;
 `;
 
 export enum Routes {

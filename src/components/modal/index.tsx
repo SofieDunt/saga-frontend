@@ -45,11 +45,7 @@ interface ModalProps {
   readonly onClose: () => void;
 }
 
-const Modal: React.FC<ModalProps> = ({
-  visible,
-  onClose,
-  children,
-}) => {
+const Modal: React.FC<ModalProps> = ({ visible, onClose, children }) => {
   return (
     <>
       {visible && (
