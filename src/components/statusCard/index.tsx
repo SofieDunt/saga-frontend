@@ -7,7 +7,7 @@ import SoftButton from "../softButton";
 import Client from "../../client/client";
 import AddStatusForm from "../../forms/addStatusForm";
 import { WARN } from "../../themes";
-import PopupWindow from "../popupWindow";
+import Modal from "../modal";
 import {
   BottomCornerFlex,
   FormContainer,
@@ -40,7 +40,7 @@ const StatusCard: React.FC<StatusCardProps> = ({
         </Box>
       </BoxCard>
 
-      <PopupWindow visible={editing} onClose={() => setEditing(false)}>
+      <Modal visible={editing} onClose={() => setEditing(false)}>
         <FormContainer>
           <Header>Update Status: {status.name}</Header>
           <StrongText my={"10px"}>Update Initial Value</StrongText>
@@ -52,7 +52,7 @@ const StatusCard: React.FC<StatusCardProps> = ({
             </Button>
           </BottomCornerFlex>
         </FormContainer>
-      </PopupWindow>
+      </Modal>
     </>
   );
 };

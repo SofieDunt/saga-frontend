@@ -7,23 +7,18 @@ import LinkButton from "../../components/linkButton";
 import { ErrorHandlerProps, Routes } from "../../App";
 
 const HomePageContainer = styled(Flex)`
-  padding: 20vh 80px 80px 40px;
-  height: 100%;
+  padding-left: 40px;
   flex-direction: column;
   justify-content: center;
 
   @media only screen and (max-width: 813px) {
-    padding: 5px;
+    padding-left: 0;
   }
 `;
 
 const TitleBox = styled(Box)`
   font-size: 52px;
   font-weight: bold;
-
-  @media only screen and (max-width: 813px) {
-    margin-bottom: 50px;
-  }
 `;
 
 const GreetingDescription = styled(Text)`
@@ -44,14 +39,27 @@ const ButtonFlex = styled(Flex)`
   height: 100px;
 
   @media only screen and (max-width: 813px) {
-    height: 75px;
+    height: 80px;
   }
+`;
+
+const Spacer = styled(Box)`
+  height: 25vh;
+
+  @media only screen and (max-height: 813px) {
+    height: 20vh;
+  }
+`;
+
+const SmallSpacer = styled(Box)`
+  height: 10vh;
 `;
 
 const Home: React.FC<ErrorHandlerProps> = () => {
   return (
     <BlackPageContainer>
       <HomePageContainer>
+        <Spacer />
         <TitleBox>
           <Text>
             Welcome to <InlineText color={PRIMARY}>Saga</InlineText>,
@@ -61,7 +69,7 @@ const Home: React.FC<ErrorHandlerProps> = () => {
             <Italic color={SECONDARY}>write</Italic> interactive stories.
           </GreetingDescription>
         </TitleBox>
-        <Box my={"auto"} />
+        <SmallSpacer />
         <ButtonFlex>
           <LinkButton to={Routes.PLAYER_LIBRARY} bg={PRIMARY}>
             <ButtonLabel>Play a story!</ButtonLabel>

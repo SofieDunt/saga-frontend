@@ -6,14 +6,14 @@ import {
   BottomFlex,
   EmptyLibrary,
   FormContainer,
-  PageContainer,
+  FooterPageContainer,
   SecondaryButton,
   TitleBox,
 } from "../../themes";
 import { PRIMARY, TERTIARY, WARN } from "../../themes";
 import ExportForm from "../../forms/exportForm";
 import ImportForm from "../../forms/importForm";
-import PopupWindow from "../../components/popupWindow";
+import Modal from "../../components/modal";
 import { ErrorHandlerProps, Routes } from "../../App";
 import { ApplicationTypes, ErrorResponse } from "../../client/types";
 import BoxCard from "../../components/boxCard";
@@ -73,79 +73,52 @@ const Player: React.FC<ErrorHandlerProps> = ({ message }) => {
   };
 
   return (
-    <>
-      <PageContainer>
-        <TitleBox>
-          <Text>Play stories in your library!</Text>
-        </TitleBox>
-        <Flex flexWrap={"wrap"}>
-          {library.map((title) => {
-            return (
-              <BoxCard key={title} title={title}>
-                {(() => {
-                  switch (manageLibrary) {
-                    case false:
-                      return (
-                        <Flex mb={"5px"}>
-                          <Button
-                            onClick={() => loadStory(title)}
-                            mr={"5px"}
-                            bg={PRIMARY}
-                          >
-                            Play
-                          </Button>
-                          <SoftButton
-                            text={"Export"}
-                            onClick={() => onClickExport(title)}
-                          />
-                        </Flex>
-                      );
-                    case true:
-                      return (
-                        <Button onClick={() => onDelete(title)} bg={WARN}>
-                          Delete
+    <FooterPageContainer>
+      <TitleBox>
+        <Text>Play stories in your library!</Text>
+      </TitleBox>
+      <Flex flexWrap={"wrap"}>
+        {library.map((title) => {
+          return (
+            <BoxCard key={title} title={title}>
+              {(() => {
+                switch (manageLibrary) {
+                  case false:
+                    return (
+                      <Flex mb={"5px"}>
+                        <Button
+                          onClick={() => loadStory(title)}
+                          mr={"5px"}
+                          bg={PRIMARY}
+                        >
+                          Play
                         </Button>
-                      );
-                  }
-                })()}
-              </BoxCard>
-            );
-          })}
-          {library.length === 0 && (
-            <EmptyLibrary>
-              <Text>
-                You don't have any stories in your library. Import some by
-                clicking "Manage Library." Then click "Import!"
-              </Text>
-            </EmptyLibrary>
-          )}
-        </Flex>
-
-        {exportName && (
-          <PopupWindow
-            visible={exportVisible}
-            onClose={() => setExportVisible(false)}
-          >
-            <FormContainer>
-              <ExportForm
-                name={exportName}
-                onSuccess={onExportSuccess}
-                exportType={ApplicationTypes.STORY}
-              />
-            </FormContainer>
-          </PopupWindow>
+                        <SoftButton
+                          text={"Export"}
+                          onClick={() => onClickExport(title)}
+                        />
+                      </Flex>
+                    );
+                  case true:
+                    return (
+                      <Button onClick={() => onDelete(title)} bg={WARN}>
+                        Delete
+                      </Button>
+                    );
+                }
+              })()}
+            </BoxCard>
+          );
+        })}
+        {library.length === 0 && (
+          <EmptyLibrary>
+            <Text>
+              You don't have any stories in your library. Import some by
+              clicking "Manage Library." Then click "Import!"
+            </Text>
+          </EmptyLibrary>
         )}
-
-        <PopupWindow
-          visible={importVisible}
-          onClose={() => setImportVisible(false)}
-        >
-          <ImportForm
-            onSuccess={onImportSuccess}
-            importType={ApplicationTypes.STORY}
-          />
-        </PopupWindow>
-      </PageContainer>
+      </Flex>
 
       <BottomFlex>
         <SecondaryButton onClick={() => setImportVisible(true)} mr={"10px"}>
@@ -159,7 +132,32 @@ const Player: React.FC<ErrorHandlerProps> = ({ message }) => {
           {manageLibrary ? "Stop Managing Library" : "Manage Library"}
         </Button>
       </BottomFlex>
-    </>
+
+      {exportName && (
+        <Modal
+          visible={exportVisible}
+          onClose={() => setExportVisible(false)}
+        >
+          <FormContainer>
+            <ExportForm
+              name={exportName}
+              onSuccess={onExportSuccess}
+              exportType={ApplicationTypes.STORY}
+            />
+          </FormContainer>
+        </Modal>
+      )}
+
+      <Modal
+        visible={importVisible}
+        onClose={() => setImportVisible(false)}
+      >
+        <ImportForm
+          onSuccess={onImportSuccess}
+          importType={ApplicationTypes.STORY}
+        />
+      </Modal>
+    </FooterPageContainer>
   );
 };
 
