@@ -7,6 +7,7 @@ This is a simple user interface for an [application](https://github.com/SofieDun
 To run the full application, follow the setup for this repository and https://github.com/SofieDunt/saga, then run both.
 
 ## Setup
+
 Download or clone this repository and run `npm install` to install all dependencies.
 
 ## Code Walkthrough
