@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
 import { Input, Select } from "@rebass/forms";
 import { Box, Flex } from "rebass";
-import { StrongText } from "../themeComponents";
+import { MidFlexElement, StrongText } from "../themeComponents";
 import { StatusUpdateTypes, StoryStatus } from "../../client/types";
 import { Feedback, validateInteger } from "../../forms/utils";
 
@@ -40,7 +40,7 @@ const ConsequenceInput: React.FC<ConsequenceInputProps> = ({
   };
 
   return (
-    <Flex>
+    <Flex flexWrap={"wrap"}>
       <Box minWidth={"150px"}>
         <StrongText>Type</StrongText>
         <Select
@@ -51,7 +51,7 @@ const ConsequenceInput: React.FC<ConsequenceInputProps> = ({
           <option>{StatusUpdateTypes.SET}</option>
         </Select>
       </Box>
-      <Box mx={"10px"} minWidth={"150px"}>
+      <MidFlexElement minWidth={"150px"}>
         <StrongText>
           {type === StatusUpdateTypes.ADD
             ? "Amount to Add"
@@ -64,7 +64,7 @@ const ConsequenceInput: React.FC<ConsequenceInputProps> = ({
           value={val}
           onChange={onValInputChange}
         />
-      </Box>
+      </MidFlexElement>
       <Box minWidth={"150px"}>
         <StrongText>Status to Impact</StrongText>
         <Select

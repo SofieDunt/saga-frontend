@@ -275,7 +275,7 @@ const WorkEditor: React.FC<ErrorHandlerProps> = ({ message }) => {
             />
           </Flex>
         ) : (
-          <Box minWidth={"400px"} mr={"10px"} width={"50%"}>
+          <Box mr={"10px"} width={"70%"}>
             <ExportForm
               name={workName}
               onSuccess={onExportSuccess}

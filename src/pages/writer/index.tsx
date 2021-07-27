@@ -130,7 +130,7 @@ const Writer: React.FC<ErrorHandlerProps> = ({ message }) => {
 
       <BottomFlex>
         <SecondaryButton onClick={() => setStartVisible(true)}>
-          Start New Story
+          Start New
         </SecondaryButton>
         <SecondaryButton
           onClick={() => setImportVisible(true)}

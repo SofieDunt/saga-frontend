@@ -4,9 +4,13 @@ import { BLACK, PRIMARY, SECONDARY, SOFT_BLACK, WHITE } from "../themes";
 
 export const PageContainer = styled.div`
   height: 90vh;
-  padding: 3vh 3vw;
+  padding: 20px 40px 100px;
   overflow-y: auto;
   box-sizing: border-box;
+
+  @media only screen and (max-width: 813px) {
+    padding: 20px 20px 60px;
+  }
 `;
 
 export const BlackPageContainer = styled(PageContainer)`
@@ -45,7 +49,7 @@ export const ButtonLabel = styled(Text)`
 `;
 
 export const FormContainer = styled.div`
-  min-width: 450px;
+  width: 60vw;
   min-height: 200px;
   color: ${BLACK};
   padding: 50px;
@@ -68,10 +72,34 @@ export const EmptyLibrary = styled(Box)`
   padding-top: 30px;
 `;
 
+export const MidFlexElement = styled(Box)`
+  margin: 0 10px;
+
+  @media only screen and (max-width: 813px) {
+    margin: 0;
+  }
+`;
+
+export const EndFlexElement = styled(Box)`
+  margin-left: 10px;
+
+  @media only screen and (max-width: 813px) {
+    margin: 10px 0 0 0;
+  }
+`;
+
 export const BottomFlex = styled(Flex)`
   position: absolute;
-  bottom: 50px;
-  right: 50px;
+  bottom: 0;
+  right: 0;
+  background: ${SOFT_BLACK};
+  padding: 10px 20px;
+  width: 100%;
+  justify-content: flex-end;
+
+  @media only screen and (max-width: 813px) {
+    padding: 5px;
+  }
 `;
 
 export const BottomCornerFlex = styled(Flex)`
