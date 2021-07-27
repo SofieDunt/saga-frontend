@@ -22,6 +22,7 @@ const ViewWindow = styled.div`
   border: 2px solid ${BLACK}20;
   border-radius: 20;
   max-height: 95vh;
+  max-width: 95vw;
   overflow-y: auto;
 `;
 

@@ -7,7 +7,7 @@ import { Messenger } from "../../App";
 import Client from "../../client/client";
 import { ACTION_BUTTON_MARGIN, WARN } from "../../themes";
 import PopupWindow from "../popupWindow";
-import { FormContainer, Header, StrongText } from "../themeComponents";
+import { FormContainer, Header, StrongText } from "../../themes";
 import OptionCard from "../optionCard";
 import AddSimpleDecisionForm from "../../forms/addSimpleDecisionForm";
 import AddConsequentialDecisionForm from "../../forms/addConsequentialDecisionForm";

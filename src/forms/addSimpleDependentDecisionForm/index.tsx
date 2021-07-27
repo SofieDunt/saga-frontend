@@ -6,7 +6,7 @@ import { WARN } from "../../themes";
 import { useState } from "react";
 import DependentDecisionInputs from "../../components/dependentDecisionInputs";
 import { Feedback } from "../utils";
-import { PrimaryButton } from "../../components/themeComponents";
+import { PrimaryButton } from "../../themes";
 
 interface AddSimpleDependentDecisionFormProps {
   readonly onSuccess: () => void;

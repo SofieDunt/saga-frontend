@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import { Messenger } from "../../App";
 import { Option } from "../../client/types";
-import { StrongText } from "../../components/themeComponents";
 import { Button, Flex, Text } from "rebass";
 import { Select } from "@rebass/forms";
 import Client from "../../client/client";
-import { WARN } from "../../themes";
+import { WARN, StrongText } from "../../themes";
 
 interface RemoveOptionFormProps {
   readonly choice: number;

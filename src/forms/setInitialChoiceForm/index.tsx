@@ -3,7 +3,7 @@ import { ErrorHandlerProps } from "../../App";
 import Client from "../../client/client";
 import { Select } from "@rebass/forms";
 import { Choice } from "../../client/types";
-import { PrimaryButton, StrongText } from "../../components/themeComponents";
+import { PrimaryButton, StrongText } from "../../themes";
 import { Flex, Text } from "rebass";
 
 interface SetInitialChoiceFormProps extends ErrorHandlerProps {

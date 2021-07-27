@@ -1,7 +1,7 @@
 import React from "react";
 import { Decision, DecisionTypes, StatusUpdateTypes } from "../../client/types";
 import { Text } from "rebass";
-import { StrongText } from "../themeComponents";
+import { StrongText } from "../../themes";
 
 interface DecisionDescriptionProps {
   readonly decision: Decision;

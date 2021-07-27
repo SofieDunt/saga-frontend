@@ -5,7 +5,7 @@ import { Text } from "rebass";
 import { WARN } from "../../themes";
 import { validateInteger } from "../utils";
 import { ErrorResponse } from "../../client/types";
-import { PrimaryButton } from "../../components/themeComponents";
+import { PrimaryButton } from "../../themes";
 
 interface AddStatusFormProps {
   readonly updateName?: string;

@@ -4,7 +4,7 @@ import { Button, Text } from "rebass";
 import { Input, Label } from "@rebass/forms";
 import { PRIMARY, WARN } from "../../themes";
 import { ApplicationTypes, ErrorResponse } from "../../client/types";
-import { FormContainer, Header } from "../../components/themeComponents";
+import { FormContainer, Header } from "../../themes";
 
 interface ImportFormProps {
   readonly onSuccess: () => void;

@@ -2,7 +2,7 @@ import React, { ChangeEvent } from "react";
 import { Choice } from "../../client/types";
 import { Input, Select } from "@rebass/forms";
 import { Flex, Text } from "rebass";
-import { StrongText } from "../themeComponents";
+import { StrongText } from "../../themes";
 
 interface SimpleDecisionInputsProps {
   readonly onDescriptionChange: (description: string) => void;

@@ -9,7 +9,7 @@ import {
   PageContainer,
   SecondaryButton,
   TitleBox,
-} from "../../components/themeComponents";
+} from "../../themes";
 import { PRIMARY, TERTIARY, WARN } from "../../themes";
 import ImportForm from "../../forms/importForm";
 import PopupWindow from "../../components/popupWindow";
@@ -130,7 +130,7 @@ const Writer: React.FC<ErrorHandlerProps> = ({ message }) => {
 
       <BottomFlex>
         <SecondaryButton onClick={() => setStartVisible(true)}>
-          Start New Story
+          Start New
         </SecondaryButton>
         <SecondaryButton
           onClick={() => setImportVisible(true)}

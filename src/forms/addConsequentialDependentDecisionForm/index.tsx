@@ -6,7 +6,7 @@ import { WARN } from "../../themes";
 import { useState } from "react";
 import DependentDecisionInputs from "../../components/dependentDecisionInputs";
 import { Feedback } from "../utils";
-import { PrimaryButton, StrongText } from "../../components/themeComponents";
+import { EndFlexElement, PrimaryButton, StrongText } from "../../themes";
 import ConsequenceInput from "../../components/consequenceInput";
 
 interface AddConsequentialDependentDecisionFormProps {
@@ -80,15 +80,15 @@ const AddConsequentialDependentDecisionForm: React.FC<AddConsequentialDependentD
         {consequences.map((str, i) => {
           return <Text key={i}>{str}</Text>;
         })}
-        <Flex alignItems={"flex-end"} mt={"5px"}>
+        <Flex alignItems={"flex-end"} flexWrap={"wrap"} mt={"5px"}>
           <ConsequenceInput
             onChange={setCurrentConsequence}
             statuses={statuses}
             feedback={feedbackHandler}
           />
-          <PrimaryButton onClick={onAddConsequence} margin={"0 10px 0 10px"}>
-            Add
-          </PrimaryButton>
+          <EndFlexElement>
+            <PrimaryButton onClick={onAddConsequence}>Add</PrimaryButton>
+          </EndFlexElement>
         </Flex>
         <br />
         {showFeedback && <Text color={WARN}>{feedback}</Text>}

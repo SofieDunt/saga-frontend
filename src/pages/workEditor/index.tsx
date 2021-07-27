@@ -13,12 +13,7 @@ import ChoiceCard from "../../components/choiceCard";
 import TitleForm from "../../forms/titleForm";
 import StatusCard from "../../components/statusCard";
 import SoftButton from "../../components/softButton";
-import {
-  ButtonLabel,
-  Header,
-  PageContainer,
-  StoryTitle,
-} from "../../components/themeComponents";
+import { ButtonLabel, Header, PageContainer, StoryTitle } from "../../themes";
 import AddStatusForm from "../../forms/addStatusForm";
 import LinkButton from "../../components/linkButton";
 import { ACTION_BUTTON_MARGIN, SECONDARY } from "../../themes";
@@ -275,7 +270,7 @@ const WorkEditor: React.FC<ErrorHandlerProps> = ({ message }) => {
             />
           </Flex>
         ) : (
-          <Box minWidth={"400px"} mr={"10px"} width={"50%"}>
+          <Box mr={"10px"} width={"70%"}>
             <ExportForm
               name={workName}
               onSuccess={onExportSuccess}
