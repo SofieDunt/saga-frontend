@@ -13,12 +13,7 @@ import ChoiceCard from "../../components/choiceCard";
 import TitleForm from "../../forms/titleForm";
 import StatusCard from "../../components/statusCard";
 import SoftButton from "../../components/softButton";
-import {
-  ButtonLabel,
-  Header,
-  PageContainer,
-  StoryTitle,
-} from "../../components/themeComponents";
+import { ButtonLabel, Header, PageContainer, StoryTitle } from "../../themes";
 import AddStatusForm from "../../forms/addStatusForm";
 import LinkButton from "../../components/linkButton";
 import { ACTION_BUTTON_MARGIN, SECONDARY } from "../../themes";

@@ -13,7 +13,7 @@ import {
   FormContainer,
   Header,
   StrongText,
-} from "../themeComponents";
+} from "../../themes";
 
 interface StatusCardProps extends ErrorHandlerProps {
   readonly status: StoryStatus;

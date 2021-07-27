@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
 import { Input, Select } from "@rebass/forms";
 import { Box, Flex } from "rebass";
-import { MidFlexElement, StrongText } from "../themeComponents";
+import { MidFlexElement, StrongText } from "../../themes";
 import { StatusUpdateTypes, StoryStatus } from "../../client/types";
 import { Feedback, validateInteger } from "../../forms/utils";
 

@@ -2,7 +2,7 @@ import React, { ChangeEvent } from "react";
 import { Choice, StoryStatus } from "../../client/types";
 import { Input, Select } from "@rebass/forms";
 import { Flex, Text } from "rebass";
-import { StrongText } from "../themeComponents";
+import { StrongText } from "../../themes";
 import { Feedback, validateInteger } from "../../forms/utils";
 
 interface DependentDecisionInputProps {

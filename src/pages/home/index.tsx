@@ -1,11 +1,7 @@
 import React from "react";
 import styled from "@emotion/styled";
 import { Box, Flex, Text } from "rebass";
-import {
-  ButtonLabel,
-  InlineText,
-  BlackPageContainer,
-} from "../../components/themeComponents";
+import { ButtonLabel, InlineText, BlackPageContainer } from "../../themes";
 import { SECONDARY, PRIMARY } from "../../themes";
 import LinkButton from "../../components/linkButton";
 import { ErrorHandlerProps, Routes } from "../../App";

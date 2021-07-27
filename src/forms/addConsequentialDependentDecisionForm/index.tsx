@@ -6,11 +6,7 @@ import { WARN } from "../../themes";
 import { useState } from "react";
 import DependentDecisionInputs from "../../components/dependentDecisionInputs";
 import { Feedback } from "../utils";
-import {
-  EndFlexElement,
-  PrimaryButton,
-  StrongText,
-} from "../../components/themeComponents";
+import { EndFlexElement, PrimaryButton, StrongText } from "../../themes";
 import ConsequenceInput from "../../components/consequenceInput";
 
 interface AddConsequentialDependentDecisionFormProps {

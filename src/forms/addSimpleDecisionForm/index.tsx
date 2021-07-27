@@ -5,7 +5,7 @@ import { Text } from "rebass";
 import { WARN } from "../../themes";
 import { useState } from "react";
 import SimpleDecisionInputs from "../../components/simpleDecisionInputs";
-import { PrimaryButton } from "../../components/themeComponents";
+import { PrimaryButton } from "../../themes";
 
 interface AddSimpleDecisionFormProps {
   readonly onSuccess: () => void;

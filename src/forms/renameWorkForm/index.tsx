@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { ErrorHandlerProps } from "../../App";
-import { Header, PrimaryButton } from "../../components/themeComponents";
+import { Header, PrimaryButton } from "../../themes";
 import Client from "../../client/client";
 import { Input } from "@rebass/forms";
 

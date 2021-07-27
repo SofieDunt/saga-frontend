@@ -9,7 +9,7 @@ import {
   PageContainer,
   SecondaryButton,
   TitleBox,
-} from "../../components/themeComponents";
+} from "../../themes";
 import { PRIMARY, TERTIARY, WARN } from "../../themes";
 import ImportForm from "../../forms/importForm";
 import PopupWindow from "../../components/popupWindow";

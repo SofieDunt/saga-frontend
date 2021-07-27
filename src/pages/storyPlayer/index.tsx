@@ -5,11 +5,7 @@ import { Box, Button, Flex, Text } from "rebass";
 import styled from "@emotion/styled";
 import { WARN } from "../../themes";
 import { ErrorHandlerProps } from "../../App";
-import {
-  PageContainer,
-  PrimaryButton,
-  StoryTitle,
-} from "../../components/themeComponents";
+import { PageContainer, PrimaryButton, StoryTitle } from "../../themes";
 
 const BottomBox = styled(Box)`
   position: absolute;

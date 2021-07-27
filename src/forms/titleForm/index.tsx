@@ -4,7 +4,7 @@ import styled from "@emotion/styled";
 import { ErrorHandlerProps } from "../../App";
 import { Input } from "@rebass/forms";
 import SoftButton from "../../components/softButton";
-import { Header, PrimaryButton } from "../../components/themeComponents";
+import { Header, PrimaryButton } from "../../themes";
 
 const InlineSoftButton = styled(SoftButton)`
   display: inline-block;
