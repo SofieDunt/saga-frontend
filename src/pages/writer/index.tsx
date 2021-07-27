@@ -12,7 +12,7 @@ import {
 } from "../../themes";
 import { PRIMARY, TERTIARY, WARN } from "../../themes";
 import ImportForm from "../../forms/importForm";
-import PopupWindow from "../../components/popupWindow";
+import Modal from "../../components/modal";
 import { ErrorHandlerProps, Routes } from "../../App";
 import { ApplicationTypes, ErrorResponse } from "../../client/types";
 import BoxCard from "../../components/boxCard";
@@ -92,7 +92,7 @@ const Writer: React.FC<ErrorHandlerProps> = ({ message }) => {
                   case true:
                     return (
                       <Flex>
-                        <PopupWindow
+                        <Modal
                           visible={renameVisible}
                           onClose={() => setRenameVisible(false)}
                         >
@@ -103,7 +103,7 @@ const Writer: React.FC<ErrorHandlerProps> = ({ message }) => {
                               message={message}
                             />
                           </FormContainer>
-                        </PopupWindow>
+                        </Modal>
                         <SoftButton
                           text={"Rename"}
                           onClick={() => setRenameVisible(true)}
@@ -147,16 +147,16 @@ const Writer: React.FC<ErrorHandlerProps> = ({ message }) => {
         </Button>
       </BottomFlex>
 
-      <PopupWindow
+      <Modal
         visible={startVisible}
         onClose={() => setStartVisible(false)}
       >
         <FormContainer>
           <StartWorkForm onSuccess={onStartNewSuccess} message={message} />
         </FormContainer>
-      </PopupWindow>
+      </Modal>
 
-      <PopupWindow
+      <Modal
         visible={importVisible}
         onClose={() => setImportVisible(false)}
       >
@@ -164,7 +164,7 @@ const Writer: React.FC<ErrorHandlerProps> = ({ message }) => {
           onSuccess={onImportSuccess}
           importType={ApplicationTypes.WORK}
         />
-      </PopupWindow>
+      </Modal>
     </FooterPageContainer>
   );
 };

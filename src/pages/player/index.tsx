@@ -13,7 +13,7 @@ import {
 import { PRIMARY, TERTIARY, WARN } from "../../themes";
 import ExportForm from "../../forms/exportForm";
 import ImportForm from "../../forms/importForm";
-import PopupWindow from "../../components/popupWindow";
+import Modal from "../../components/modal";
 import { ErrorHandlerProps, Routes } from "../../App";
 import { ApplicationTypes, ErrorResponse } from "../../client/types";
 import BoxCard from "../../components/boxCard";
@@ -134,7 +134,7 @@ const Player: React.FC<ErrorHandlerProps> = ({ message }) => {
       </BottomFlex>
 
       {exportName && (
-        <PopupWindow
+        <Modal
           visible={exportVisible}
           onClose={() => setExportVisible(false)}
         >
@@ -145,10 +145,10 @@ const Player: React.FC<ErrorHandlerProps> = ({ message }) => {
               exportType={ApplicationTypes.STORY}
             />
           </FormContainer>
-        </PopupWindow>
+        </Modal>
       )}
 
-      <PopupWindow
+      <Modal
         visible={importVisible}
         onClose={() => setImportVisible(false)}
       >
@@ -156,7 +156,7 @@ const Player: React.FC<ErrorHandlerProps> = ({ message }) => {
           onSuccess={onImportSuccess}
           importType={ApplicationTypes.STORY}
         />
-      </PopupWindow>
+      </Modal>
     </FooterPageContainer>
   );
 };

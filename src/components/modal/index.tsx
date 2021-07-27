@@ -40,12 +40,12 @@ const ButtonText = styled(Text)`
   padding: 5px;
 `;
 
-interface PopupWindowProps {
+interface ModalProps {
   readonly visible: boolean;
   readonly onClose: () => void;
 }
 
-const PopupWindow: React.FC<PopupWindowProps> = ({
+const Modal: React.FC<ModalProps> = ({
   visible,
   onClose,
   children,
@@ -67,4 +67,4 @@ const PopupWindow: React.FC<PopupWindowProps> = ({
   );
 };
 
-export default PopupWindow;
+export default Modal;
