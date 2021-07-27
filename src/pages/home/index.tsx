@@ -11,7 +11,7 @@ import LinkButton from "../../components/linkButton";
 import { ErrorHandlerProps, Routes } from "../../App";
 
 const HomePageContainer = styled(Flex)`
-  padding-left: 40px;
+  padding: 20vh 80px 80px 40px;
   height: 100%;
   flex-direction: column;
   justify-content: center;
@@ -24,7 +24,6 @@ const HomePageContainer = styled(Flex)`
 const TitleBox = styled(Box)`
   font-size: 52px;
   font-weight: bold;
-  margin-bottom: 200px;
 
   @media only screen and (max-width: 813px) {
     margin-bottom: 50px;
@@ -32,7 +31,6 @@ const TitleBox = styled(Box)`
 `;
 
 const GreetingDescription = styled(Text)`
-  padding-top: 5vh;
   padding-left: 100px;
 
   @media only screen and (max-width: 813px) {
@@ -67,6 +65,7 @@ const Home: React.FC<ErrorHandlerProps> = () => {
             <Italic color={SECONDARY}>write</Italic> interactive stories.
           </GreetingDescription>
         </TitleBox>
+        <Box my={"auto"} />
         <ButtonFlex>
           <LinkButton to={Routes.PLAYER_LIBRARY} bg={PRIMARY}>
             <ButtonLabel>Play a story!</ButtonLabel>

@@ -78,8 +78,8 @@ function App() {
 
   return (
     <>
-      <NavBar />
       <Router>
+        <NavBar />
         <Switch>
           <Route path={Routes.HOME} exact>
             <Home message={message} />

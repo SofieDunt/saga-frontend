@@ -1,8 +1,9 @@
 import React from "react";
-import { Flex, Box, Link } from "rebass";
-import { BLACK, PRIMARY, WHITE } from "../../themes";
+import { Flex, Box } from "rebass";
+import { BLACK, PRIMARY } from "../../themes";
 import { Routes } from "../../App";
 import styled from "@emotion/styled";
+import NavLink from "../navLink";
 
 const NavFlex = styled(Flex)`
   height: 10vh;
@@ -10,13 +11,6 @@ const NavFlex = styled(Flex)`
   color: ${PRIMARY};
   background-color: ${BLACK};
   align-items: center;
-`;
-
-const NavLink = styled(Link)`
-  color: ${WHITE};
-  font-weight: bold;
-  text-decoration: none;
-  font-size: 20px;
 `;
 
 const NavBar: React.FC = () => {
