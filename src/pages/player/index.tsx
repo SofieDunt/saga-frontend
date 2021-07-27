@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import Client from "../../client/client";
-import { Box, Button, Flex, Text } from "rebass";
+import { Button, Flex, Text } from "rebass";
 import {
   BottomFlex,
   EmptyLibrary,
@@ -86,10 +86,13 @@ const Player: React.FC<ErrorHandlerProps> = ({ message }) => {
                   case false:
                     return (
                       <Flex mb={"5px"}>
-                        <Button onClick={() => loadStory(title)} bg={PRIMARY}>
+                        <Button
+                          onClick={() => loadStory(title)}
+                          mr={"5px"}
+                          bg={PRIMARY}
+                        >
                           Play
                         </Button>
-                        <Box mx={"auto"} />
                         <SoftButton
                           text={"Export"}
                           onClick={() => onClickExport(title)}
